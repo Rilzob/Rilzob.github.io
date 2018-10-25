@@ -79,17 +79,14 @@
 
 
 
-<meta name="description" content="Django中path和url的区别django中url和path都是配置路径，有什么不同？ from django.urls import path  from django.conf.urls import url  path和url是两个不同的模块，效果都是响应返回界面，path调用的是python第三方模块或框架，而url则是自定义的模块。 例如： 1234url(r&apos;^login&apos;, v">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Django中path和url的区别">
-<meta property="og:url" content="http://yoursite.com/2018/10/21/Django中path和url的区别/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="categories">
+<meta property="og:url" content="http://yoursite.com/categories/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Django中path和url的区别django中url和path都是配置路径，有什么不同？ from django.urls import path  from django.conf.urls import url  path和url是两个不同的模块，效果都是响应返回界面，path调用的是python第三方模块或框架，而url则是自定义的模块。 例如： 1234url(r&apos;^login&apos;, v">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-25T12:28:47.763Z">
+<meta property="og:updated_time" content="2018-10-25T12:19:22.559Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Django中path和url的区别">
-<meta name="twitter:description" content="Django中path和url的区别django中url和path都是配置路径，有什么不同？ from django.urls import path  from django.conf.urls import url  path和url是两个不同的模块，效果都是响应返回界面，path调用的是python第三方模块或框架，而url则是自定义的模块。 例如： 1234url(r&apos;^login&apos;, v">
+<meta name="twitter:title" content="categories">
 
 
 
@@ -119,13 +116,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/10/21/Django中path和url的区别/"/>
+  <link rel="canonical" href="http://yoursite.com/categories/"/>
 
 
 
 
 
-  <title>Django中path和url的区别 | Hexo</title>
+  <title>categories | Hexo</title>
   
 
 
@@ -220,175 +217,40 @@
 
   <div id="posts" class="posts-expand">
     
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/21/Django中path和url的区别/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
     
+    
+    <div class="post-block page">
       <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">Django中path和url的区别</h1>
-        
+	<h1 class="post-title" itemprop="name headline">categories</h1>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-21T09:00:29+08:00">
-                2018-10-21
-              </time>
-            
 
-            
 
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</header>
 
       
       
-
       
-        <h1 id="Django中path和url的区别"><a href="#Django中path和url的区别" class="headerlink" title="Django中path和url的区别"></a>Django中path和url的区别</h1><p>django中url和path都是配置路径，有什么不同？</p>
-<p>from django.urls import path</p>
-
-<p>from django.conf.urls import url</p>
-
-<p>path和url是两个不同的模块，效果都是响应返回界面，path调用的是python第三方模块或框架，而url则是自定义的模块。</p>
-<p>例如：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">url(<span class="string">r'^login'</span>, views.login)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(request)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> render(request, <span class="string">'login.html'</span>)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>引用自：<a href="https://blog.csdn.net/qq_26079279/article/details/80143365" target="_blank" rel="noopener">Django中path和url的用法总结</a></p>
-</blockquote>
-<p>当然，主要问题在于版本，1.x版本用url，2.x版本用path。</p>
-
+      <div class="post-body">
+        
+        
+          <div class="category-all-page">
+            <div class="category-all-title">
+                2 categories in total
+            </div>
+            <div class="category-all">
+              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li></ul>
+            </div>
+          </div>
+        
+      </div>
+      
+      
       
     </div>
     
     
     
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/04/25/介绍/" rel="next" title="介绍">
-                <i class="fa fa-chevron-left"></i> 介绍
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/21/通过Hexo将文章上传到git.io的方法/" rel="prev" title="通过Hexo将文章上传到git.io的方法">
-                通过Hexo将文章上传到git.io的方法 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
 
@@ -421,17 +283,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -482,22 +335,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Django中path和url的区别"><span class="nav-number">1.</span> <span class="nav-text">Django中path和url的区别</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
