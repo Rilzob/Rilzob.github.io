@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Python中的高阶函数在熟悉了Python基础知识后，我们已经可以做一些脚本开发，或者简单的程序。然而，当我们开发较为复杂的程序时，仅使用基础知识内容就会显得比较吃力。这时，了解Python中的一些高级特性会使我们的开发过程变得简单和快乐。 在函数式编程中，我们可以将函数当做变量一样自由使用。一个函数接收另一个函数作为参数，这种函数称之为高阶函数(Higher-order-Functions)。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python中的高阶函数">
+<meta property="og:url" content="http://yoursite.com/2018/10/29/Python中的高阶函数/index.html">
+<meta property="og:site_name" content="极氙世界">
+<meta property="og:description" content="Python中的高阶函数在熟悉了Python基础知识后，我们已经可以做一些脚本开发，或者简单的程序。然而，当我们开发较为复杂的程序时，仅使用基础知识内容就会显得比较吃力。这时，了解Python中的一些高级特性会使我们的开发过程变得简单和快乐。 在函数式编程中，我们可以将函数当做变量一样自由使用。一个函数接收另一个函数作为参数，这种函数称之为高阶函数(Higher-order-Functions)。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-10-30T01:40:04.219Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python中的高阶函数">
+<meta name="twitter:description" content="Python中的高阶函数在熟悉了Python基础知识后，我们已经可以做一些脚本开发，或者简单的程序。然而，当我们开发较为复杂的程序时，仅使用基础知识内容就会显得比较吃力。这时，了解Python中的一些高级特性会使我们的开发过程变得简单和快乐。 在函数式编程中，我们可以将函数当做变量一样自由使用。一个函数接收另一个函数作为参数，这种函数称之为高阶函数(Higher-order-Functions)。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/29/Python中的高阶函数/"/>
+
+
+
+
+
+  <title>Python中的高阶函数 | 极氙世界</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">极氙世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/29/Python中的高阶函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rilzob">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="极氙世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python中的高阶函数</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-29T23:06:28+08:00">
+                2018-10-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Python中的高阶函数"><a href="#Python中的高阶函数" class="headerlink" title="Python中的高阶函数"></a>Python中的高阶函数</h1><p>在熟悉了Python基础知识后，我们已经可以做一些脚本开发，或者简单的程序。然而，当我们开发较为复杂的程序时，仅使用基础知识内容就会显得比较吃力。这时，了解Python中的一些高级特性会使我们的开发过程变得简单和快乐。</p>
+<p>在函数式编程中，我们可以将函数当做变量一样自由使用。一个函数接收另一个函数作为参数，这种函数称之为<strong>高阶函数(Higher-order-Functions)</strong>。</p>
+<a id="more"></a>
+<p>看一个简单的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(g, arr)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> [g(x) <span class="keyword">for</span> x <span class="keyword">in</span> arr]</span><br></pre></td></tr></table></figure>
+<p>上面的代码中<code>func</code>是一个高阶函数，它接收两个参数，第一个参数是函数，第二个参数是数组，<code>func</code>的功能是将函数g逐个作用于数组arr上，并返回一个新的数组。比如，我们可以这样用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">double</span><span class="params">(x)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">2</span> * x</span><br><span class="line">	</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span><span class="params">(x)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> x * x</span><br><span class="line"></span><br><span class="line">list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">arr1 = func(double, list) <span class="comment"># arr1 = [2, 4, 6, 8]</span></span><br><span class="line">arr2 = func(square, list) <span class="comment"># arr2 = [1, 4, 9, 16]</span></span><br></pre></td></tr></table></figure>
+<p>说到高阶函数，就不得不提到<strong>闭包</strong>，这里介绍一下Python中闭包的定义：</p>
+<blockquote>
+<p>如果在一个内部函数里，对外部作用域(但不是全局作用域)的变量进行引用，那么内部函数就被认为是闭包(closure)。</p>
+</blockquote>
+<p>就拿此例来说，内部函数<code>double</code>中包含了对函数<code>func</code>中局部变量<code>list</code>的引用，这就是闭包。</p>
+<p><code>map</code> <code>reduce</code> <code>filter</code> <code>sorted</code>是Python中较为常用的内置高阶函数，它们为函数式编程提供了不少便利。</p>
+<p><em>说明：本文介绍的内置高阶函数的定义可能会因为Python版本的不同而有所不同，文章以Python3.x版本中的定义为标准。</em></p>
+<h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><p><code>map</code>函数的使用形式如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map(function, iterable, ...)</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：这里函数一定要作为map的第一个参数，而不是第二个参数，否则会产生报错。</p>
+<p><strong>解释</strong>：function函数会作用于可迭代对象的每一个元素，生成结果，并返回一个迭代器。更加具体一点说就是<code>map</code>函数接收两个参数，一个是函数，一个是Iterable，<code>map</code>将传入的函数依次作用到Iterable的每个元素，并把结果作为新的Iterator返回。</p>
+<p>举例说明，比如我们一个函数f(x)=x^2，要把这个函数作用在一个list[1, 2, 3, 4, 5, 6, 7, 8, 9]上，就可以用<code>map()</code>实现。</p>
+<p>现在，我们用Python代码实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(x)</span>:</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> x * x</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>r = map(f, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(r)</span><br><span class="line">[<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span>, <span class="number">36</span>, <span class="number">49</span>, <span class="number">64</span>, <span class="number">81</span>]</span><br></pre></td></tr></table></figure>
+<p><code>map</code>传入的第一个参数是<code>f</code>，即函数对象本身。由于结果<code>r</code>是一个Iterator，Iterator是惰性序列，因此需要通过<code>list()</code>函数让它把整个序列都计算出来并返回一个list。</p>
+<p>你可能会想，不需要<code>map</code>函数，写一个循环，也可以计算出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">L = []</span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]:</span><br><span class="line">    L.append(f(n))</span><br><span class="line">print(L)</span><br></pre></td></tr></table></figure>
+<p>的确可以，但是，从上面的循环代码，能一眼看明白“把f(x)作用在list的每一个元素并把结果生成一个新的list”吗？明显可读性就差了很多。</p>
+<p>所以，<code>map</code>作为高阶函数，体现了Python的设计原则优雅、明确、简单，<strong>事实上它把运算规则抽象化</strong>。因此，我们不但可以计算简单的f(x)=x2，还可以计算任意复杂的函数，比如，把list中的所有数字转化为字符串格式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(map(str, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]))</span><br><span class="line">[<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>]</span><br></pre></td></tr></table></figure>
+<p>只需一行代码。</p>
+<p>看一些简单的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">square</span><span class="params">(x)</span>:</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> x * x</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>map(square, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">&lt;map at <span class="number">0x106adfe48</span>&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(map(square, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]))</span><br><span class="line">[<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(map(<span class="keyword">lambda</span> x: x * x, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]))   <span class="comment"># 使用 lambda</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>]</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(map(<span class="keyword">lambda</span> x, y: x + y, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]))</span><br><span class="line">[<span class="number">6</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">12</span>]</span><br></pre></td></tr></table></figure>
+<p>再来看个复杂一点例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">double</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">2</span> * x</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">triple</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">3</span> *x</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x * x</span><br><span class="line"></span><br><span class="line">funcs = [double, triple, square]  <span class="comment"># 列表元素是函数对象</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 相当于 [double(4), triple(4), square(4)]</span></span><br><span class="line">value = list(map(<span class="keyword">lambda</span> f: f(<span class="number">4</span>), funcs))</span><br><span class="line">print(value)</span><br><span class="line"></span><br><span class="line">output:</span><br><span class="line">[<span class="number">8</span>, <span class="number">12</span>, <span class="number">16</span>]</span><br></pre></td></tr></table></figure>
+<p>最后我想要说明一点，迭代器有一个特点，就是所有的迭代器对象都可以作为<code>next()</code>内置函数的参数调用，每调用一次，就按角标顺序返回一个值，还是用代码讲吧：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">iter = map(<span class="keyword">lambda</span> x: x * x, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">print(next(iter)) <span class="comment"># 打印值为：1</span></span><br><span class="line">print(next(iter)) <span class="comment"># 打印值为：4</span></span><br><span class="line">print(next(iter)) <span class="comment"># 打印值为：9</span></span><br><span class="line">print(next(iter)) <span class="comment"># 打印值为：16</span></span><br><span class="line">print(next(iter)) <span class="comment"># 抛出StopIteration 异常</span></span><br></pre></td></tr></table></figure>
+<h2 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h2><p><code>reduce</code>函数的使用形式如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reduce(function, iterable[, initializer])</span><br></pre></td></tr></table></figure>
+<p><strong>解释</strong>：<code>reduce</code>函数必须接受两个参数，先将iterable的前两个item传给function，即function(item1, item2)，函数的返回值和iterable的下一个item再传给function，即function(function(item1, item2), item3)，如此迭代，直到iterable没有元素，如果有initializer，则作为初始值调用。</p>
+<p>也就是说：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reduce(f, [x1, x2, x3, x4]) = f(f(f(x1, x2), x3), x4)</span><br><span class="line"><span class="comment"># 列表中是以从左到右作为优先顺序</span></span><br></pre></td></tr></table></figure>
+<p>看一些例子，就能很快理解了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>reduce(<span class="keyword">lambda</span> x, y: x * y, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])  <span class="comment"># 相当于 ((1 * 2) * 3) * 4</span></span><br><span class="line"><span class="number">24</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>reduce(<span class="keyword">lambda</span> x, y: x - y, [<span class="number">8</span>, <span class="number">5</span>, <span class="number">1</span>], <span class="number">20</span>)  <span class="comment"># ((20 - 8) - 5) - 1</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f = <span class="keyword">lambda</span> a, b: a <span class="keyword">if</span> (a &gt; b) <span class="keyword">else</span> b   <span class="comment"># 两两比较，取最大值</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>reduce(f, [<span class="number">5</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">10</span>])</span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">fn</span><span class="params">(x, y)</span>:</span> <span class="comment"># 把序列[1, 3, 5, 7, 9]变换成整数13579</span></span><br><span class="line"><span class="meta">... </span>    <span class="keyword">return</span> x * <span class="number">10</span> + y</span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>reduce(fn, [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>])</span><br><span class="line"><span class="number">13579</span></span><br></pre></td></tr></table></figure>
+<h2 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h2><p><code>filter</code>函数用于过滤元素，它的使用形式如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">filter(function, iterable)</span><br></pre></td></tr></table></figure>
+<p><strong>解释</strong>：和<code>map</code>类似，<code>filter</code>也接收一个函数和一个序列。但和<code>map</code>不同的是，<code>filter</code>把传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃该元素。将function依次作用于iterable的每个item上，即function(item)，用function返回值为True的item构成iterator作为<code>filter</code>的最终返回值。</p>
+<p>看一些例子。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>even_num = list(filter(<span class="keyword">lambda</span> x: x % <span class="number">2</span> == <span class="number">0</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]))</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>even_num</span><br><span class="line">[<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>odd_num = list(filter(<span class="keyword">lambda</span> x: x % <span class="number">2</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]))</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>odd_num</span><br><span class="line">[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>list(filter(<span class="keyword">lambda</span> x: x &lt; <span class="string">'g'</span>, <span class="string">'hijack'</span>))</span><br><span class="line"><span class="string">'ac'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>filter(<span class="keyword">lambda</span> x: x &lt; <span class="string">'g'</span>, <span class="string">'hijack'</span>)</span><br><span class="line">&lt;filter object at <span class="number">0x1034b4080</span>&gt;   <span class="comment"># python3</span></span><br></pre></td></tr></table></figure>
+<p>可见用<code>filter</code>这个高阶函数，关键在于正确实现一个“筛选”函数。</p>
+<p>注意到<code>filter</code>函数返回的同样是一个Iterator，也就是一个惰性序列，所以要强迫<code>filter</code>完成计算结果，需要用<code>list()</code>函数获得所有结果。</p>
+<h2 id="sorted"><a href="#sorted" class="headerlink" title="sorted"></a>sorted</h2><p><code>sorted</code>函数用于对list进行排序，它的使用形式如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sorted(iterable, *, key=<span class="keyword">None</span>, reverse=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>解释</strong>：<code>sorted</code>有两个可选参数，必须指定为关键字参数。将key指定的函数作用于iterable的每一个元素上，并根据key函数返回的结果进行排序，最终返回一个新的排序列表。key默认值为None，即直接比较元素大小。</p>
+<p>reverse是一个布尔值。如果设置为True，则列表元素将按照比较结果相反的方式进行排序。</p>
+<p>看一些例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sorted([<span class="number">36</span>, <span class="number">5</span>, <span class="number">-12</span>, <span class="number">9</span>, <span class="number">-21</span>])</span><br><span class="line">[<span class="number">-21</span>, <span class="number">-12</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">36</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sorted([<span class="number">36</span>, <span class="number">5</span>, <span class="number">-12</span>, <span class="number">9</span>, <span class="number">-21</span>], key=abs)</span><br><span class="line">[<span class="number">5</span>, <span class="number">9</span>, <span class="number">-12</span>, <span class="number">-21</span>, <span class="number">36</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sorted([<span class="string">'bob'</span>, <span class="string">'about'</span>, <span class="string">'Zoo'</span>, <span class="string">'Credit'</span>])</span><br><span class="line">[<span class="string">'Credit'</span>, <span class="string">'Zoo'</span>, <span class="string">'about'</span>, <span class="string">'bob'</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sorted([<span class="string">'bob'</span>, <span class="string">'about'</span>, <span class="string">'Zoo'</span>, <span class="string">'Credit'</span>], key=str.lower)</span><br><span class="line">[<span class="string">'about'</span>, <span class="string">'bob'</span>, <span class="string">'Credit'</span>, <span class="string">'Zoo'</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sorted([<span class="string">'bob'</span>, <span class="string">'about'</span>, <span class="string">'Zoo'</span>, <span class="string">'Credit'</span>], key=str.lower, reverse=<span class="keyword">True</span>)</span><br><span class="line">[<span class="string">'Zoo'</span>, <span class="string">'Credit'</span>, <span class="string">'bob'</span>, <span class="string">'about'</span>]</span><br></pre></td></tr></table></figure>
+<p>从上述例子可以看出，高阶函数的抽象能力是非常强大的，而且核心代码可以保持得非常简洁。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li>可接受其他函数作为参数的函数称为高阶函数；</li>
+<li><code>map</code> <code>reduce</code> <code>filter</code> <code>sorted</code>为函数式编程提供了不少便利，可使代码变得更简洁；</li>
+<li>通过<code>map()</code>来对Iterable中的每个元素进行相同的函数处理最终返回一个Iterator。</li>
+<li><code>reduce()</code>类似栈的思想，先让栈顶的两个元素出栈作为函数的两个参数，再将函数的返回值入栈，然后再让栈顶两个元素出栈，不断循环下去，直到栈里没有元素为止。</li>
+<li><code>filter()</code>的作用是从一个序列中筛选出符合条件的元素。由于<code>filter()</code>使用了惰性计算，所以只有在取<code>filter()</code>结果的时候，才会真正筛选并每次返回下一个筛出的元素。</li>
+<li><code>sorted()</code>也是一个高阶函数。用<code>sorted()</code>排序的关键在于实现一个映射函数。</li>
+</ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ol>
+<li><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014317849054170d563b13f0fa4ce6ba1cd86e18103f28000" target="_blank" rel="noopener">高阶函数 - 廖雪峰的官方网站</a></li>
+<li><a href="http://wiki.jikexueyuan.com/project/explore-python/Functional/map_reduce_filter.html" target="_blank" rel="noopener">map/reduce/filter - Python 之旅 - 极客学院Wiki</a></li>
+<li><a href="http://wiki.jikexueyuan.com/project/explore-python/Functional/high_order_func.html" target="_blank" rel="noopener">高阶函数 - Python 之旅 - 极客学院Wiki</a></li>
+<li><a href="https://www.jianshu.com/p/bd595a0006cd" target="_blank" rel="noopener">Python笔记(二)：高级特性之高阶函数 - 简书</a></li>
+</ol>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/27/Python中@classmethod和@staticmethod的区别的副本/" rel="next" title="Python中@classmethod和@staticmethod的区别">
+                <i class="fa fa-chevron-left"></i> Python中@classmethod和@staticmethod的区别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Rilzob</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python中的高阶函数"><span class="nav-number">1.</span> <span class="nav-text">Python中的高阶函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#map"><span class="nav-number">1.1.</span> <span class="nav-text">map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reduce"><span class="nav-number">1.2.</span> <span class="nav-text">reduce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#filter"><span class="nav-number">1.3.</span> <span class="nav-text">filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sorted"><span class="nav-number">1.4.</span> <span class="nav-text">sorted</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">1.5.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">1.6.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rilzob</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
