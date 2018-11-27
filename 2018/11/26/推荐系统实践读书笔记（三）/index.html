@@ -90,7 +90,7 @@
 <meta property="og:description" content="第3章 推荐系统冷启动问题如何在没有大量用户数据的情况下设计个性化推荐系统并且让用户对推荐结果满意从而愿意使用推荐系统，就是冷启动的问题。本章简单介绍一下冷启动问题的分类，以及如何解决不同种类的冷启动问题。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://rilzob.com/2018/11/26/推荐系统实践读书笔记（三）/关键词向量的生成过程.png">
-<meta property="og:updated_time" content="2018-11-26T09:16:51.369Z">
+<meta property="og:updated_time" content="2018-11-27T12:49:48.863Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="推荐系统实践读书笔记（三）">
 <meta name="twitter:description" content="第3章 推荐系统冷启动问题如何在没有大量用户数据的情况下设计个性化推荐系统并且让用户对推荐结果满意从而愿意使用推荐系统，就是冷启动的问题。本章简单介绍一下冷启动问题的分类，以及如何解决不同种类的冷启动问题。">
@@ -433,7 +433,7 @@
 <p>但这种算法的时间复杂度很高。假设有$N$个物品，每个物品平均由$m$个实体表示，那么这个算法的复杂度是$O( N^2m)$。 在实际应用中，可以首先通过建立关键词—物品的<strong>倒排表</strong>加速这一计算过程，关于这一方法已经在前面介绍UserCF和ItemCF算法时详细介绍过了，所以这里直接给出计算的代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">CalculateSimilarity</span><span class="params">(entity-items)</span></span></span><br><span class="line">    w = dict() </span><br><span class="line">    ni = dict() </span><br><span class="line">    <span class="keyword">for</span> e,items <span class="keyword">in</span> entity_items.items():</span><br><span class="line">        <span class="keyword">for</span> i,wie <span class="keyword">in</span> items.items(): </span><br><span class="line">            addToVec(ni, i, wie * wie) </span><br><span class="line">            <span class="keyword">for</span> j,wje <span class="keyword">in</span> items.items(): </span><br><span class="line">                addToMat(w, i, j, wie, wje) </span><br><span class="line">    <span class="keyword">for</span> i, relate_items <span class="keyword">in</span> w.items():</span><br><span class="line">        relate_items = &#123;x:y/math.sqrt(ni[i] * ni[x]) <span class="keyword">for</span> x,y <span class="keyword">in</span> relate_items.items()&#125;</span><br></pre></td></tr></table></figure></p>
 <p>得到物品的相似度之后，可以利用上一章提到的ItemCF算法的思想，给用户推荐和他历史上喜欢的物品内容相似的物品。</p>
 <p>既然内容相似度计算简单，能频繁更新，而且能够解决物品冷启动问题，那么为什么还需要协同过滤的算法?书中这部分在MovieLens和GitHub两个数据集上进行了实验，并加以说明，详情见书。</p>
-<h4 id="话题模型"><a href="#话题模型" class="headerlink" title="话题模型"></a>话题模型</h4><p>向量空间模型在内容数据丰富时可以获得比较好的效果。以文本为例，如果是计算长文本的相似度，用向量空间模型利用关键词计算相似度已经可以获得很高的精确度。但是，如果文本很短，关键词很少，向量空间模型就很难计算出准确的相似度。举个例子，假设有两篇论文，它们的标题分别是“推荐系统的动态特性”和“基于时间的协同过滤算法研究”。如果读者对推荐系统很熟悉，可以知道这两篇文章的研究方向是类似的，但是它们标题中没有一样的关键词。其实，它们的关键词虽然不同，但却是相似的。“动态”和“基于时间”含义相似，“协同过滤”是“推荐系统”的一种算法。换句话说，这两篇文章的关键词虽然不同，但关键词所属的话题是相同的。在这种情况下，首先需要知道文章的<strong>话题分布</strong>，然后才能准确地计算文章的相似度。如何建立文章、话题和关键词的关系是<strong>话题模型（topic model）</strong>研究的重点。</p>
+<h3 id="话题模型"><a href="#话题模型" class="headerlink" title="话题模型"></a>话题模型</h3><p>向量空间模型在内容数据丰富时可以获得比较好的效果。以文本为例，如果是计算长文本的相似度，用向量空间模型利用关键词计算相似度已经可以获得很高的精确度。但是，如果文本很短，关键词很少，向量空间模型就很难计算出准确的相似度。举个例子，假设有两篇论文，它们的标题分别是“推荐系统的动态特性”和“基于时间的协同过滤算法研究”。如果读者对推荐系统很熟悉，可以知道这两篇文章的研究方向是类似的，但是它们标题中没有一样的关键词。其实，它们的关键词虽然不同，但却是相似的。“动态”和“基于时间”含义相似，“协同过滤”是“推荐系统”的一种算法。换句话说，这两篇文章的关键词虽然不同，但关键词所属的话题是相同的。在这种情况下，首先需要知道文章的<strong>话题分布</strong>，然后才能准确地计算文章的相似度。如何建立文章、话题和关键词的关系是<strong>话题模型（topic model）</strong>研究的重点。</p>
 <p>代表性的话题模型有<strong>LDA</strong>。关于LDA的详细理论介绍可以参考DM Blei的论文“Latent Dirichlet Allocation” (参见David M. Blei、 Andrew Y. Ng、 Michael I. Jordan的“ Latent dirichlet allocation”（Journal of Machine Learning Research 3， 2003）)。<br>任何模型都有一个假设，LDA作为一种<strong>生成模型</strong>，对一篇文档产生的过程进行了建模。话题模型的<u>基本思想</u>是，一个人在写一篇文档的时候，会首先想这篇文章要讨论哪些话题，然后思考这些话题应该用什么词描述，从而最终用词写成一篇文章。因此，文章和词之间是通过话题联系的。<br>LDA中有3种元素，即文档、话题和词语。每一篇文档都会表现为词的集合，这称为<strong>词袋模型(bag of words)</strong>。每个词在一篇文章中属于一个话题。令$D$为文档集合，$D[i]$是第$i$篇文档。$w[i][j]$是第$i$篇文档中的第$j$个词。$z[i][j]$是第$i$篇文档中第$j$个词属于的话题。</p>
 <p>LDA的<u>计算过程</u>包括<strong>初始化</strong>和<strong>迭代</strong>两部分。首先要对$z$进行初始化，而初始化的方法很简单，假设一共有$K$个话题， 那么对第$i$篇文章中的第$j$个词， 可以随机给它赋予一个话题。同时，用$NWZ(w,z)$记录词$w$被赋予话题$z$的次数，$NZD(z,d)$记录文档$d$中被赋予话题$z$的词的个数。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">foreach document i <span class="keyword">in</span> range(<span class="number">0</span>,|D|):</span><br><span class="line">    foreach word j <span class="keyword">in</span> range(<span class="number">0</span>, |D(i)|):</span><br><span class="line">        z[i][j] = rand() % K </span><br><span class="line">        NZD[z[i][j], D[i]]++ </span><br><span class="line">        NWZ[w[i][j], z[i][j]]++ </span><br><span class="line">        NZ[z[i][j]]++</span><br></pre></td></tr></table></figure>
@@ -483,6 +483,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/27/推荐系统实践读书笔记（四）/" rel="prev" title="推荐系统实践读书笔记（四）">
+                推荐系统实践读书笔记（四） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -563,7 +567,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -655,7 +659,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第3章-推荐系统冷启动问题"><span class="nav-number">1.</span> <span class="nav-text">第3章 推荐系统冷启动问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-冷启动问题简介"><span class="nav-number">1.1.</span> <span class="nav-text">3.1 冷启动问题简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-利用用户注册信息"><span class="nav-number">1.2.</span> <span class="nav-text">3.2 利用用户注册信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-选择合适的物品启动用户的兴趣"><span class="nav-number">1.3.</span> <span class="nav-text">3.3 选择合适的物品启动用户的兴趣</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-利用物品的内容信息"><span class="nav-number">1.4.</span> <span class="nav-text">3.4 利用物品的内容信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#话题模型"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">话题模型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-发挥专家的作用"><span class="nav-number">1.5.</span> <span class="nav-text">3.5 发挥专家的作用</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第3章-推荐系统冷启动问题"><span class="nav-number">1.</span> <span class="nav-text">第3章 推荐系统冷启动问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-冷启动问题简介"><span class="nav-number">1.1.</span> <span class="nav-text">3.1 冷启动问题简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-利用用户注册信息"><span class="nav-number">1.2.</span> <span class="nav-text">3.2 利用用户注册信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-选择合适的物品启动用户的兴趣"><span class="nav-number">1.3.</span> <span class="nav-text">3.3 选择合适的物品启动用户的兴趣</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-利用物品的内容信息"><span class="nav-number">1.4.</span> <span class="nav-text">3.4 利用物品的内容信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#话题模型"><span class="nav-number">1.4.1.</span> <span class="nav-text">话题模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-发挥专家的作用"><span class="nav-number">1.5.</span> <span class="nav-text">3.5 发挥专家的作用</span></a></li></ol></li></ol></div>
             
 
           </div>

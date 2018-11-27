@@ -92,7 +92,7 @@
 <meta property="og:image" content="https://rilzob.com/2018/11/24/推荐系统实践读书笔记（二）/显示反馈数据和隐性反馈数据的比较.png">
 <meta property="og:image" content="https://rilzob.com/2018/11/24/推荐系统实践读书笔记（二）/用户行为的统一表示.png">
 <meta property="og:image" content="https://rilzob.com/2018/11/24/推荐系统实践读书笔记（二）/UserCF和ItemCF优缺点的对比.png">
-<meta property="og:updated_time" content="2018-11-26T00:43:02.206Z">
+<meta property="og:updated_time" content="2018-11-27T12:48:11.307Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="推荐系统实践读书笔记（二）">
 <meta name="twitter:description" content="第2章 利用用户行为数据用户行为数据中蕴涵着很多不是那么显而易见的规律，而个性化推荐算法的任务就是通过计算机去发现这些规律，从而为产品的设计提供指导，提高用户体验。基于用户行为分析的推荐算法是个性化推荐系统的重要算法，学术界一般将这种类型的算法称为协同过滤算法。顾名思义，协同过滤就是指用户可以齐心协力，通过不断地和网站互动，使自己的推荐列表能够不断过滤掉自己不感兴趣的物品，从而越来越满足自己的需求">
@@ -552,7 +552,7 @@
 </ul>
 <p>基于上面3个主要因素，研究人员设计了很多计算图中顶点之间相关性的方法(参见Fouss Francois、Pirotte Alain、Renders Jean-Michel和Saerens Marco的“Random-Walk Computation of Similarities between Nodes of a Graph with Application to Collaborative Recommendation”(IEEE Transactions on Knowl edge and Data Eng ineering, 2007))。本节将介绍一种基于随机游走的PersonalRank算法(参见Taher H .Haveliwala的“Topic-Sensitive PageRank”（WWW 2002, 2002）)。</p>
 <p>假设要给用户u进行个性化推荐，可以从用户u对应的节点$v_u$开始在用户物品二分图上进行随机游走。游走到任何一个节点时，首先按照概率α决定是继续游走，还是停止这次游走并从$v_u$节点开始重新游走。如果决定继续游走，那么就从当前节点指向的节点中按照均匀分布随机选择一个节点作为游走下次经过的节点。这样，经过很多次随机游走后，每个物品节点被访问到的概率会收敛到一个数。最终的推荐列表中物品的权重就是物品节点的访问概率。</p>
-<p>如果将上面的描述表示成公式，可以得到如下公式：<br>$$<br>PR(v) =<br>\begin{cases}<br>\alpha \sum_{v’ \in in(v)} \frac{PR(v’)}{\vert out(v’) \vert},  &amp;  (v \neq v_u) \\<br>(1- alpha) + \alpha \sum_{v’ \in in(v)} \frac{PR(v’)}{\vert out(v’) \vert}, &amp; (v = v_u)<br>\end{cases}<br>$$</p>
+<p>如果将上面的描述表示成公式，可以得到如下公式：<br>$$<br>PR(v) =<br>\begin{cases}<br>\alpha \sum_{v’ \in in(v)} \frac{PR(v’)}{\vert out(v’) \vert}  &amp;  (v \neq v_u) \\<br>(1- alpha) + \alpha \sum_{v’ \in in(v)} \frac{PR(v’)}{\vert out(v’) \vert} &amp; (v = v_u)<br>\end{cases}<br>$$</p>
 <p>下面的代码简单实现了上面的公式：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">PersonalRank</span><span class="params">(G, alpha, root)</span>:</span></span><br><span class="line">    rank = dict() </span><br><span class="line">    rank = &#123;x:<span class="number">0</span> <span class="keyword">for</span> x <span class="keyword">in</span> G.keys()&#125; </span><br><span class="line">    rank[root] = <span class="number">1</span> </span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">20</span>):</span><br><span class="line">        tmp = &#123;x:<span class="number">0</span> <span class="keyword">for</span> x <span class="keyword">in</span> G.keys()&#125;</span><br><span class="line">        <span class="keyword">for</span> i, ri <span class="keyword">in</span> G.items():</span><br><span class="line">            <span class="keyword">for</span> j, wij <span class="keyword">in</span> ri.items():</span><br><span class="line">                <span class="keyword">if</span> j <span class="keyword">not</span> <span class="keyword">in</span> tmp:</span><br><span class="line">                    tmp[j] = <span class="number">0</span> </span><br><span class="line">                tmp[j] += <span class="number">0.6</span> * rank[i] / (<span class="number">1.0</span> * len(ri)) </span><br><span class="line">                <span class="keyword">if</span> j == root:</span><br><span class="line">                    tmp[j] += <span class="number">1</span> - alpha</span><br><span class="line">        rank = tmp </span><br><span class="line">    <span class="keyword">return</span> rank</span><br></pre></td></tr></table></figure>
 <p>虽然PersonalRank算法可以通过随机游走进行比较好的理论解释，但该算法在时间复杂度上有明显的缺点。因为在为每个用户进行推荐时，都需要在整个用户物品二分图上进行迭代，直到整个图上的每个顶点的PR值收敛。这一过程的时间复杂度非常高，不仅无法在线提供实时推荐，甚至离线生成推荐结果也很耗时。</p>
@@ -684,7 +684,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
