@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,推荐系统," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="极氙世界" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="第5章 利用上下文信息上下文信息对于提高推荐系统的各项评测指标是十分重要的，因此不能忽略上下文信息。准确了解用户的上下文信息(context)，并将该信息应用于推荐算法是设计好的推荐系统的关键步骤。关于上下文推荐的研究， 可以参考Alexander Tuzhilin(个人主页为http://people.stern.nyu.edu/atuzhili/ )教授的一篇综述“Context Aware">
+<meta name="keywords" content="Python,推荐系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="推荐系统实践读书笔记（五）">
+<meta property="og:url" content="https://rilzob.com/2018/11/28/推荐系统实践读书笔记（五）/index.html">
+<meta property="og:site_name" content="极氙世界">
+<meta property="og:description" content="第5章 利用上下文信息上下文信息对于提高推荐系统的各项评测指标是十分重要的，因此不能忽略上下文信息。准确了解用户的上下文信息(context)，并将该信息应用于推荐算法是设计好的推荐系统的关键步骤。关于上下文推荐的研究， 可以参考Alexander Tuzhilin(个人主页为http://people.stern.nyu.edu/atuzhili/ )教授的一篇综述“Context Aware">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-28T08:23:47.445Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="推荐系统实践读书笔记（五）">
+<meta name="twitter:description" content="第5章 利用上下文信息上下文信息对于提高推荐系统的各项评测指标是十分重要的，因此不能忽略上下文信息。准确了解用户的上下文信息(context)，并将该信息应用于推荐算法是设计好的推荐系统的关键步骤。关于上下文推荐的研究， 可以参考Alexander Tuzhilin(个人主页为http://people.stern.nyu.edu/atuzhili/ )教授的一篇综述“Context Aware">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://rilzob.com/2018/11/28/推荐系统实践读书笔记（五）/"/>
+
+
+
+
+
+  <title>推荐系统实践读书笔记（五） | 极氙世界</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">极氙世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">追求梦想，永不止步</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://rilzob.com/2018/11/28/推荐系统实践读书笔记（五）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rilzob">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="极氙世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">推荐系统实践读书笔记（五）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-28T09:23:33+08:00">
+                2018-11-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="第5章-利用上下文信息"><a href="#第5章-利用上下文信息" class="headerlink" title="第5章 利用上下文信息"></a>第5章 利用上下文信息</h1><p>上下文信息对于提高推荐系统的各项评测指标是十分重要的，因此不能忽略上下文信息。准确了解用户的<strong>上下文信息(context)</strong>，并将该信息应用于推荐算法是设计好的推荐系统的<u>关键步骤</u>。<br>关于上下文推荐的研究， 可以参考Alexander Tuzhilin(个人主页为<a href="http://people.stern.nyu.edu/atuzhili/" target="_blank" rel="noopener">http://people.stern.nyu.edu/atuzhili/</a> )教授的一篇综述“Context Aware Recommender Systems”。</p>
+<p>本章主要讨论了<strong>时间上下文</strong>，并简单介绍一下<strong>地点上下文</strong>，讨论如何将时间信息和地点信息建模到推荐算法中，从而让推荐系统能够准确预测用户在某个特定时刻及特定地点的兴趣。本章仍然研究TopN推荐，即如何给用户生成一个长度为$N$的推荐列表，而该列表包含了用户在某一时刻或者某个地方最可能喜欢的物品。<br><a id="more"></a></p>
+<h2 id="5-1-时间上下文信息"><a href="#5-1-时间上下文信息" class="headerlink" title="5.1 时间上下文信息"></a>5.1 时间上下文信息</h2><p>本节重点讨论了上下文信息中最重要的时间上下文信息。本节首先介绍了各种不同的时间效应，然后研究如何将这些时间效应建模到推荐系统的模型中，最后通过实际数据集对比不同模型的效果。</p>
+<h3 id="5-1-1-时间效应简介"><a href="#5-1-1-时间效应简介" class="headerlink" title="5.1.1 时间效应简介"></a>5.1.1 时间效应简介</h3><p>一般认为，时间信息对用户兴趣的影响表现在以下几个方面。</p>
+<ul>
+<li><strong>用户兴趣是变化的</strong>  这里提到的用户兴趣变化是因为用户自身原因发生的变化，并且考虑用户最近的兴趣只能针对渐变的用户兴趣，而对突变的用户兴趣很难起作用。</li>
+<li><strong>物品也是有生命周期的</strong>  不同系统的物品具有不同的生命周期。</li>
+<li><strong>季节效应</strong>  季节效应主要反映了时间本身对用户兴趣的影响。</li>
+</ul>
+<h3 id="5-1-2-时间效应举例"><a href="#5-1-2-时间效应举例" class="headerlink" title="5.1.2 时间效应举例"></a>5.1.2 时间效应举例</h3><p>这节通过Google Insights工具提供的某个搜索词的搜索频率曲线对时间效应进行一些分析，并且罗列了一些用户兴趣变化及节日效应的例子。</p>
+<h3 id="5-1-3-系统时间特性的分析"><a href="#5-1-3-系统时间特性的分析" class="headerlink" title="5.1.3 系统时间特性的分析"></a>5.1.3 系统时间特性的分析</h3><p>在给定时间信息后，推荐系统从一个<strong>静态系统</strong>变成了一个<strong>时变的系统</strong>，而用户行为数据也变成了<strong>时间序列</strong>。研究一个时变系统，需要首先研究这个系统的时间特性。</p>
+<p>本节通过研究时变 用户行为数据集来研究不同类型网站的时间特性。包含时间信息的用户行为数据集由一系列<strong>三元组</strong>构成，其中每个三元组$(u,i,t)$代表了用户$u$在时刻$t$对物品$i$产生过行为。在给定数据集后，本节通过统计如下信息研究系统的时间特性。</p>
+<ul>
+<li><strong>数据集每天独立用户数的增长情况</strong></li>
+<li><strong>系统的物品变化情况</strong></li>
+<li><strong>用户访问情况</strong></li>
+</ul>
+<h4 id="1-数据集的选择"><a href="#1-数据集的选择" class="headerlink" title="1.数据集的选择"></a>1.数据集的选择</h4><p>本节利用Delicious数据集进行离线实验以评测不同算法的预测精度，书中这部分有一些关于Delicious数据集的介绍。</p>
+<h4 id="2-物品的生存周期和系统的时效性"><a href="#2-物品的生存周期和系统的时效性" class="headerlink" title="2.物品的生存周期和系统的时效性"></a>2.物品的生存周期和系统的时效性</h4><p>不同类型网站的物品具有不同的生命周期。可以使用如下指标度量网站中物品的生命周期。</p>
+<ul>
+<li><strong>物品平均在线天数</strong>    如果一个物品在某天被至少一个用户产生过行为，就定义该物品在这一天在线。因此，就可以通过物品的平均在线天数度量一类物品的生存周期。</li>
+<li><strong>相隔T天系统物品流行度向量的平均相似度</strong>    取系统中相邻T天的两天，分别计算这两天的物品流行度，从而得到两个流行度向量。然后，计算这两个向量的余弦相似度，如果相似度大，说明系统的物品在相隔T天的时间内没有发生大的变化，从而说明系统的时效性不强，物品的平均在线时间较长。反之，相似度小则说明时效性很强。</li>
+</ul>
+<h3 id="5-1-4-推荐系统的实时性"><a href="#5-1-4-推荐系统的实时性" class="headerlink" title="5.1.4 推荐系统的实时性"></a>5.1.4 推荐系统的实时性</h3><p>用户兴趣是不断变化的，其变化体现在用户不断增加的新行为中。一个实时的推荐系统需要能够实时响应用户新的行为，让推荐列表不断变化，从而满足用户不断变化的兴趣。</p>
+<p>实现推荐系统的实时性除了对用户行为的存取有实时性要求，还要求推荐算法本身具有实时性，而推荐算法本身的实时性意味着：</p>
+<ul>
+<li>实时推荐系统不能每天都给所有用户离线计算推荐结果，然后在线展示昨天计算出来的结果。所以，要求在每个用户访问推荐系统时，都根据用户这个时间点前的行为实时计算推荐列表。</li>
+<li>推荐算法需要平衡考虑用户的近期行为和长期行为，即要让推荐列表反应出用户近期行为所体现的兴趣变化，又不能让推荐列表完全受用户近期行为的影响，要保证推荐列表对用户兴趣预测的延续性。</li>
+</ul>
+<h3 id="5-1-5-推荐算法的时间多样性"><a href="#5-1-5-推荐算法的时间多样性" class="headerlink" title="5.1.5 推荐算法的时间多样性"></a>5.1.5 推荐算法的时间多样性</h3><p>为了避免每天给用户的推荐结果相近，将推荐系统每天推荐结果的变化程度被定义为推荐系统的时间多样性。时间多样性高的推荐系统中用户会经常看到不同的推荐结果。</p>
+<p>那么推荐系统的时间多样性和用户满意度之间是否存在关系呢？时间多样性高是否就能提高用户的满意度？为了解答这些问题，英国研究人员进行了一次实验(参见Neal Lathia、Stephen Hailes、Licia Capra和Xavier Amatriain的“Temporal Diversity in Recommender Systems”（SIGIR 2010）)，他们设计了3种推荐系统，证明了时间多样性对推荐系统的正面意义，书上有关于这个实验的简略介绍。</p>
+<p>之后的问题就是如何在不损失精度的情况下提高推荐结果的时间多样性。<br>提高推荐结果的时间多样性需要分两步解决：首先，<em>需要保证推荐系统能够在用户有了新的行为后及时调整推荐结果，使推荐结果满足用户最近的兴趣</em>；其次，<em>需要保证推荐系统在用户没有新的行为时也能够经常变化一下结果，具有一定的时间多样性</em>。<br>对于第一步，又可以分成两种情况进行分析。第一是<em>从推荐系统的实时性角度分析</em>。有些推荐系统会每天离线生成针对所有用户的推荐结果，然后在线直接将这些结果展示给用户。这种类型的系统显然无法做到在用户有了新行为后及时调整推荐结果。第二，<em>即使是实时推荐系统，由于使用的算法不同，也具有不同的时间多样性</em>。对于不同算法的时间多样性，Neal Lathia博士在博士论文中进行了深入探讨(参见Neal Lathia的“Evaluating Collaborative Filtering Over Time”， 论文链接为<a href="http://www.cs.ucl.ac.uk/staff/n.lathia/thesis.html" target="_blank" rel="noopener">http://www.cs.ucl.ac.uk/staff/n.lathia/thesis.html</a> )。</p>
+<p>紧接着需要思考的问题就是如果用户没有行为，如何保证给用户的推荐结果具有一定的时间多样性呢？一般的思路有以下几种。</p>
+<ul>
+<li>在生成推荐结果时加入一定的随机性。比如从推荐列表前20个结果中随机挑选10个结果 展示给用户，或者按照推荐物品的权重采样10个结果展示给用户。</li>
+<li>记录用户每天看到的推荐结果，然后在每天给用户进行推荐时，对他前几天看到过很多次的推荐结果进行适当地降权。</li>
+<li>每天给用户使用不同的推荐算法。</li>
+</ul>
+<p>当然，时间多样性也不是绝对的。推荐系统需要首先保证推荐的精度，在此基础上适当地考虑时间多样性。在实际应用中需要通过多次的实验才能知道什么程度的时间多样性对系统是最好的。</p>
+<h3 id="5-1-6-时间上下文推荐算法"><a href="#5-1-6-时间上下文推荐算法" class="headerlink" title="5.1.6 时间上下文推荐算法"></a>5.1.6 时间上下文推荐算法</h3><p>上一节介绍了很多时间效应，本节主要讨论如何将这些时间效应应用到系统中。建模时间信息有很多方法，本节分别介绍了不同的方法，并通过实验对比这些方法。</p>
+<h4 id="1-最近热门"><a href="#1-最近热门" class="headerlink" title="1.最近热门"></a>1.最近热门</h4><p>在没有时间信息的数据集中，可以给用户推荐历史上最热门的物品。在获得用户行为的时间信息后，就可以给用户推荐<strong>最近</strong>最热门的物品了。给定时间$T$，物品$i$最近的流行度$n_i(T)$可以定义为：<br>$$<br>n_i(T) = \sum_{(u,i,t) \in \text{Train}, t&lt;T} \frac{1}{1 + \alpha(T-t)}<br>$$<br>$\alpha$是时间衰减参数。<br>下面的Python代码实现了上面的计算公式。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">RecentPopularity</span><span class="params">(records, alpha, T)</span>:</span></span><br><span class="line">    ret = dict() </span><br><span class="line">    <span class="keyword">for</span> user,item,tm <span class="keyword">in</span> records:</span><br><span class="line">        <span class="keyword">if</span> tm &gt;= T:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        addToDict(ret, item, <span class="number">1</span> / (<span class="number">1.0</span> + alpha * (T - tm))) 	</span><br><span class="line">    <span class="keyword">return</span> ret</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-时间上下文相关的ItemCF算法"><a href="#2-时间上下文相关的ItemCF算法" class="headerlink" title="2.时间上下文相关的ItemCF算法"></a>2.时间上下文相关的ItemCF算法</h4><p>基于物品（item-based）的个性化推荐算法是商用推荐系统中应用最广泛的，从前面几章的讨论可以看到，该算法由两个核心部分构成：</p>
+<ul>
+<li>利用用户行为离线计算物品之间的相似度；</li>
+<li>根据用户的历史行为和物品相似度矩阵，给用户做在线个性化推荐。</li>
+</ul>
+<p>时间信息在上面两个核心部分中都有重要的应用，这体现在两种时间效应上。</p>
+<ul>
+<li><strong>物品相似度</strong>   用户在相隔很短的时间内喜欢的物品具有更高相似度。</li>
+<li><strong>在线推荐</strong>    用户近期行为相比用户很久之前的行为，更能体现用户现在的兴趣。因此在预测用户现在的兴趣时，应该加重用户近期行为的权重，优先给用户推荐那些和他近期喜欢的物品相似的物品。</li>
+</ul>
+<p>首先回顾一下前面提到的基于物品的协同过滤算法，它通过如下公式计算物品的相似度：<br>$$<br>sim(i,j) = \frac{\sum_{u \in N(i) \cap N(j)}1}{\sqrt{\vert N(i) \vert \vert N(j)\vert}}<br>$$<br>而在给用户$u$做推荐时，用户$u$对物品$i$的兴趣$p(u,i)$通过如下公式计算：<br>$$<br>p(u,i) = \sum_{j \in N(u)} sim(i,j)<br>$$<br>在得到时间信息（用户对物品产生行为的时间）后，可以通过如下公式改进相似度计算：<br>$$<br>sim(i,j) = \frac{\sum_{u \in N(i)\cap N(j)} f(\vert t_{ui} - t_{uj} \vert)}{\sqrt{\vert N(i) \vert \vert N(j) \vert}}<br>$$<br>注意，上面的公式在分子中引入了和时间有关的<strong>衰减项</strong>$f(\vert t_{ui} - t_{uj} \vert)$，其中$t_{ui}$是用户$u$对物品$i$产生行为的时间。$f$函数的含义是，用户对物品$i$和物品$j$产生行为的时间越远，则$f(\vert t_{ui} - t_{uj} \vert)$越小。实际上有很多数学衰减函数，本节使用如下衰减函数：<br>$$<br>f(\vert t_{ui} - t_{uj} \vert)=\frac{1}{1 + \alpha \vert t_{ui} - t_{uj} \vert}<br>$$<br>$\alpha$是时间衰减参数，它的取指在不同系统中不同。如果一个系统用户兴趣变化很快，就应该 取比较大的$\alpha$，反之需要取比较小的$\alpha$。</p>
+<p>改进后ItemCF的相似度可以通过如下代码实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ItemSimilarity</span><span class="params">(train, alpha)</span>:</span></span><br><span class="line">    <span class="comment">#calculate co-rated users between items </span></span><br><span class="line">    C = dict() </span><br><span class="line">    N = dict() </span><br><span class="line">    <span class="keyword">for</span> u, items <span class="keyword">in</span> train.items():</span><br><span class="line">        <span class="keyword">for</span> i,tui <span class="keyword">in</span> items.items():</span><br><span class="line">            N[i] += <span class="number">1</span> </span><br><span class="line">            <span class="keyword">for</span> j,tuj <span class="keyword">in</span> items.items():</span><br><span class="line">                <span class="keyword">if</span> i == j:</span><br><span class="line">                   <span class="keyword">continue</span> </span><br><span class="line">                C[i][j] += <span class="number">1</span> / (<span class="number">1</span> + alpha * abs(tui - tuj))</span><br><span class="line"></span><br><span class="line">    <span class="comment">#calculate finial similarity matrix W </span></span><br><span class="line">    W = dict() </span><br><span class="line">    <span class="keyword">for</span> i,related_items <span class="keyword">in</span> C.items():</span><br><span class="line">        <span class="keyword">for</span> j, cij <span class="keyword">in</span> related_items.items(): </span><br><span class="line">            W[u][v] = cij / math.sqrt(N[i] * N[j]) </span><br><span class="line">    <span class="keyword">return</span> W</span><br></pre></td></tr></table></figure>
+<p>除了考虑时间信息对<strong>相关表</strong>的影响，也应该考虑时间信息对<strong>预测公式</strong>的影响。一般来说， 用户现在的行为应该和用户最近的行为关系更大。因此，可以通过如下方式<u>修正</u>预测公式：<br>$$<br>p(u,i) = \sum_{j \in N(u) \cap S(i,k)} sim(i,j) \frac{1}{1+ \beta \vert t_0 - t_{uj} \vert}<br>$$<br>其中，$t_0$是当前时间。上面的公式表明，$t_{uj}$越靠近$t_0$，和物品$j$相似的物品就会在用户$u$的推荐列表中获得越高的排名。$\beta$是时间衰减参数，需要根据不同的数据集选择合适的值。上面的推荐算法可以通过如下代码实现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Recommendation</span><span class="params">(train, user_id, W, K, t0)</span>:</span></span><br><span class="line">    rank = dict() ru = train[user_id] </span><br><span class="line">    <span class="keyword">for</span> i,pi <span class="keyword">in</span> ru.items():</span><br><span class="line">        <span class="keyword">for</span> j, wj <span class="keyword">in</span> sorted(W[i].items(), \ key=itemgetter(<span class="number">1</span>), reverse=<span class="keyword">True</span>)[<span class="number">0</span>:K]: </span><br><span class="line">            <span class="keyword">if</span> j,tuj <span class="keyword">in</span> ru.items():</span><br><span class="line">                <span class="keyword">continue</span> </span><br><span class="line">            rank[j] += pi * wj / (<span class="number">1</span> + alpha * (t0 - tuj)) 		</span><br><span class="line">    <span class="keyword">return</span> rank</span><br></pre></td></tr></table></figure>
+<h4 id="3-时间上下文相关的UserCF算法"><a href="#3-时间上下文相关的UserCF算法" class="headerlink" title="3.时间上下文相关的UserCF算法"></a>3.时间上下文相关的UserCF算法</h4><p>和ItemCF算法一样，UserCF算法同样可以利用时间信息提高预测的准确率。首先，回顾一下前面关于UserCF算法的<u>基本思想</u>：给用户推荐和他兴趣相似的其他用户喜欢的物品。从这个基本思想出发，可以在以下两个方面利用时间信息改进UserCF算法。</p>
+<ul>
+<li><strong>用户兴趣相似度</strong>    如果两个用户同时喜欢相同的物品，那么 这两个用户应该有更大的兴趣相似度。</li>
+<li><strong>相似兴趣用户的最近行为</strong>   应该给用户推荐和他兴趣相似的用户最近喜欢的物品。</li>
+</ul>
+<p>回顾一下UserCF的推荐公式。UserCF通过如下公式计算用户$u$和用户$v$的兴趣相似度：<br>$$<br>w_{uv} = \frac{\vert N(u) \cap N(v) \vert}{\sqrt{\vert N(u) \vert \cup \vert N(u) \vert}}<br>$$<br>其中$N(u)$是用户$u$喜欢的物品集合，$N(v)$是用户$v$喜欢的物品集合。可以利用如下方式考虑时间信息：<br>$$<br>w_{uv} = \frac{\sum_{i \in N(u) \cap N(v)} \frac{1}{1 +\alpha \vert t_{ui} - t_{vi} \vert}}{\sqrt{\vert N(u) \vert \cup \vert N(u) \vert}}<br>$$<br>上面公式的分子对于用户$u$和用户$v$共同喜欢的物品$i$增加了一个<strong>时间衰减因子</strong>。用户$u$和用户$v$对物品$i$产生行为的时间越远，那么这两个用户的兴趣相似度就会越小。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">UserSimilarity</span><span class="params">(train)</span>:</span></span><br><span class="line">    <span class="comment"># build inverse table for item_users </span></span><br><span class="line">    item_users = dict() </span><br><span class="line">    <span class="keyword">for</span> u, items <span class="keyword">in</span> train.items():</span><br><span class="line">        <span class="keyword">for</span> i,tui <span class="keyword">in</span> items.items():</span><br><span class="line">            <span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> item_users: </span><br><span class="line">                item_users[i] = dict() </span><br><span class="line">            item_users[i][u] = tui</span><br><span class="line">            </span><br><span class="line">    <span class="comment">#calculate co-rated items between users </span></span><br><span class="line">    C = dict() </span><br><span class="line">    N = dict() </span><br><span class="line">    <span class="keyword">for</span> i, users <span class="keyword">in</span> item_users.items():</span><br><span class="line">        <span class="keyword">for</span> u,tui <span class="keyword">in</span> users.items():</span><br><span class="line">            N[u] += <span class="number">1</span> </span><br><span class="line">            <span class="keyword">for</span> v,tvi <span class="keyword">in</span> users.items():</span><br><span class="line">                <span class="keyword">if</span> u == v:</span><br><span class="line">                    <span class="keyword">continue</span> </span><br><span class="line">                C[u][v] += <span class="number">1</span> / (<span class="number">1</span> + alpha * abs(tui - tvi))</span><br><span class="line"></span><br><span class="line">    <span class="comment">#calculate finial similarity matrix W </span></span><br><span class="line">    W = dict() </span><br><span class="line">    <span class="keyword">for</span> u, related_users <span class="keyword">in</span> C.items():</span><br><span class="line">        <span class="keyword">for</span> v, cuv <span class="keyword">in</span> related_users.items(): </span><br><span class="line">            W[u][v] = cuv / math.sqrt(N[u] * N[v]) </span><br><span class="line">    <span class="keyword">return</span> W</span><br></pre></td></tr></table></figure>
+<p>在得到用户相似度后，UserCF通过如下公式预测用户对物品的兴趣：<br>$$<br>p(u,i) = \sum_{v \in S(u,K)} w_{uv} r_{vi}<br>$$<br>其中，$S(u,K)$包含了和用户$u$兴趣最接近的$K$个用户。如果用户$v$对物品$i$产生过行为，那么$r_{vi}=1$，否则$r_{vi} = 0$。</p>
+<p>如果考虑和用户$u$兴趣相似用户的最近兴趣，可以设计如下公式：<br>$$<br>p(u,i) = \sum_{v \in S(u,K)} w_{uv} r_{vi} \frac{1}{1 + \alpha(t_0 + t_{vi})}<br>$$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Recommend</span><span class="params">(user, T, train, W)</span>:</span></span><br><span class="line">    rank = dict() </span><br><span class="line">    interacted_items = train[user] </span><br><span class="line">    <span class="keyword">for</span> v, wuv <span class="keyword">in</span> sorted(W[u].items, key=itemgetter(<span class="number">1</span>), reverse=<span class="keyword">True</span>)[<span class="number">0</span>:K]:</span><br><span class="line">        <span class="keyword">for</span> i, tvi <span class="keyword">in</span> train[v].items:</span><br><span class="line">            <span class="keyword">if</span> i <span class="keyword">in</span> interacted_items:</span><br><span class="line">                <span class="comment">#we should filter items user interacted before </span></span><br><span class="line">                <span class="keyword">continue</span> </span><br><span class="line">            rank[i] += wuv / (<span class="number">1</span> + alpha * (T - tvi)) </span><br><span class="line">    <span class="keyword">return</span> rank</span><br></pre></td></tr></table></figure>
+<h3 id="5-1-7-时间段图模型"><a href="#5-1-7-时间段图模型" class="headerlink" title="5.1.7 时间段图模型"></a>5.1.7 时间段图模型</h3><p>本书的作者在KDD会议上曾经提出过一个时间段图模型(参见Liang Xiang、Quan Yuan、Shiwan Zhao、Li Chen、Xiatian Zhang、Qing Yang和Jimeng Sun的“Temporal recommendation on graphs via long- and short-term preference fusion”（ACM 2010 Article，2010）)，试图解决如何将时间信息建模到图模型中的方法，最终取得了不错的效果。<br>时间段图模型$G (U , S_U , I , S_I , E , w,\sigma )$也是一个二分图。$U$是用户节点集合，$S_U$是用户时间段节点集合。一个用户时间段节点$v_{ut} \in S_U$会和用户$u$在时刻$t$喜欢的物品通过边相连。$I$是物品节点集合，$S_I$是物品时间段节点集合。一个物品时间段节点 $v_{it} \in S_I$会和所有在时刻$t$喜欢物品$i$的用户通过边相连。$E$是边集合，它包含了3种边：(1)如果用户$u$对物品$i$有行为，那么存在边$e(v_u,v_i) \in E$；(2)如果用户$u$在$t$时刻对物品$i$有行为，那么就存在两条边$e(v_{ut},v_i )$, $e(v_u, v_{it} ) \in E$。$w(e)$定义了边的权重，$\sigma (e)$定义了顶点的权重。</p>
+<p>定义完图的结构后，最简单的想法是可以利用前面提到的<strong>PersonalRank算法</strong>给用户进行个性化推荐。但是因为这个算法需要在全图上进行迭代计算，所以时间复杂度比较高。因此作者提出了一种称为<strong>路径融合算法</strong>的方法，通过该算法来度量图上两个顶点的相关性。<br>一般来说，图上两个相关性比较高的顶点一般具有如下特征：</p>
+<ul>
+<li>两个顶点之间有很多路径相连；</li>
+<li>两个顶点之间的路径比较短；</li>
+<li>两个顶点之间的路径不经过出度比较大的顶点。</li>
+</ul>
+<p>从这3条原则出发，路径融合算法首先提取出两个顶点之间长度小于一个阈值的所有路径，然后根据每条路径经过的顶点给每条路径赋予一定的权重，最后将两个顶点之间所有路径的权重之和作为两个顶点的相关度。</p>
+<p>假设$P={v_1,v_2,···,v_N}$是连接顶点$v_1$和$v_n$的一条路径，这条路径的权重$\Gamma(P)$取决于这条路径经过的所有顶点和边：<br>$$<br>\Gamma(p) = \sigma(v_n) \prod_{i=1}^{n-1} \frac{\sigma (v_i) \cdot w(v_I,v_{i+1})}{\vert out(v_i) \vert^\rho}<br>$$<br>这里$out(v)$是顶点$v$指向的顶点集合，$|out(v)|$是顶点$v$的出度，$\sigma(v_i) \in (0,1]$定义了顶点的权重，$w(v_i,v_{i+1})$定义了边$e(v_i,v_{i+1})$的权重。上面的定义符合上面3条原则的后两条。首先，因为$\frac{\sigma(v_i) \cdot w(v_i,v_{i+1})}{\vert out(v_i)\vert^\rho}$，所以路径越长$n$越大，$\Gamma(P)$就越小。同时，如果路径经过了出度大的顶点v’，那么因为$|out(v’)|$比较大，所以$\Gamma(p)$也会比较小。</p>
+<p>在定义了一条路径的权重后，就可以定义顶点之间的相关度。对于顶点$v$和$v’$，令$p(v, v’, K )$为这两个顶点间距离小于K的所有路径，那么这两个顶点之间的相关度可以定义为：<br>$$<br>d(v,v’) = \sum_{P \in P(v,v’,K)} \Gamma(P)<br>$$<br>对于时间段图模型，所有边的权重都定义为1，而顶点的权重$\sigma(v)$定义如下：<br>$$<br>\sigma(v) =<br>\begin{cases}<br>1- \alpha &amp;(v \in U) \\<br>\alpha &amp;(v \in S_U) \\<br>1 - \beta &amp; (v \in I) \\<br>\beta &amp; (v \in S_I)<br>\end{cases}<br>$$<br>$\alpha,\beta \in [0,1]$是两个参数，控制了不同顶点的权重。</p>
+<p>路径融合算法可以基于图上的<strong>广度优先搜索算法</strong>实现，下面的Python代码简单实现了路径融合算法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">PathFusion</span><span class="params">(user, time,G,alpha)</span></span></span><br><span class="line">    Q = [] </span><br><span class="line">    V = set() </span><br><span class="line">    depth = dict() </span><br><span class="line">    rank = dict() </span><br><span class="line">    depth[<span class="string">'u:'</span> + user] = <span class="number">0</span> </span><br><span class="line">    depth[<span class="string">'ut:'</span> + user + <span class="string">'_'</span> + time] = <span class="number">0</span> </span><br><span class="line">    rank [<span class="string">'u:'</span> + user] = alpha </span><br><span class="line">    rank [<span class="string">'ut:'</span> + user + <span class="string">'_'</span> + time] = <span class="number">1</span> - alpha</span><br><span class="line">    Q.append(<span class="string">'u:'</span> + user)</span><br><span class="line">    Q.append(<span class="string">'ut:'</span> + user + <span class="string">'_'</span> + time) </span><br><span class="line">    <span class="keyword">while</span> len(Q) &gt; <span class="number">0</span>:</span><br><span class="line">        v = Q.pop() </span><br><span class="line">        <span class="keyword">if</span> v <span class="keyword">in</span> V:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> depth[v] &gt; <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">for</span> v2,w <span class="keyword">in</span> G[v].items():</span><br><span class="line">            <span class="keyword">if</span> v2 <span class="keyword">not</span> <span class="keyword">in</span> V:</span><br><span class="line">                depth[v2] = depth[v] + <span class="number">1</span> </span><br><span class="line">                Q.append(v2) </span><br><span class="line">            rank[v2] = rank[v] * w </span><br><span class="line">    <span class="keyword">return</span> rank</span><br></pre></td></tr></table></figure>
+<h3 id="5-1-8-离线实验"><a href="#5-1-8-离线实验" class="headerlink" title="5.1.8 离线实验"></a>5.1.8 离线实验</h3><p>为了证明时间上下文信息对推荐系统至关重要，本节利用了离线实验对比使用时间信息后不同推荐算法的离线性能，感兴趣的看一下书。</p>
+<h2 id="5-2-地点上下文信息"><a href="#5-2-地点上下文信息" class="headerlink" title="5.2 地点上下文信息"></a>5.2 地点上下文信息</h2><p>除了时间，地点作为一种重要的空间特征，也是一种重要的上下文信息。不同地区的用户兴趣有所不同，用户到了不同的地方，兴趣也会有所不同。</p>
+<p>西班牙电信的研究人员曾经设计过一个基于位置的电影推荐系统，并且提供了详细的技术报告(参见“Geolocated Recommendations”，地址为<a href="http://xavier.amatriain.net/pubs/GeolocatedRecommendations.pdf" target="_blank" rel="noopener">http://xavier.amatriain.net/pubs/GeolocatedRecommendations.pdf</a> )。该报告详细地介绍了如何在iPhone上开发一个推荐系统，如何在电影推荐中融入用户的位置信息，感兴趣的读者可以仔细阅读他们的报告。</p>
+<h3 id="基于位置的推荐算法"><a href="#基于位置的推荐算法" class="headerlink" title="基于位置的推荐算法"></a>基于位置的推荐算法</h3><p>明尼苏达大学的研究人员提出过一个称为<strong>LARS（Location Aware Recommender System,位置感知推荐系统）</strong>的和用户地点相关的推荐系统。该系统首先将物品分成两类，一类是<em>有空间属性的</em>，比如餐馆、商店、旅游景点等，另一类是<em>无空间属性的物品</em>，比如图书和电影等。同时，它将用户也分成两类，一类是<em>有空间属性的</em>，比如给出了用户现在的地址（国家、城市、邮编等）， 另一类用户<em>并没有相关的空间属性信息</em>。它使用的数据集有3种不同的形式。</p>
+<ul>
+<li>（用户，用户位置，物品，评分），每一条记录代表了某一个地点的用户对物品的评分。它们使用的是MovieLens数据集。该数据集给出了用户的邮编，从而可以知道用户的大致地址。</li>
+<li>（用户，物品，物品位置，评分），每一条记录代表了用户对某个地方的物品的评分。LARS使用了FourSquare的数据集，该数据集包含用户对不同地方的餐馆、景点、商店的评分</li>
+<li>（用户，用户位置，物品，物品位置，评分），每一条记录代表了某个位置的用户对某个位置的物品的评分。</li>
+</ul>
+<p>LARS通过研究前两种数据集，发现了用户兴趣和地点相关的两种特征。</p>
+<ul>
+<li><strong>兴趣本地化</strong>    不同地方的用户兴趣存在着很大的差别。不同国家和地区用户的兴趣存在着一定的差异性。</li>
+<li><strong>活动本地化</strong>    一个用户往往在附近的地区活动。通过分析Foursqure的数据，研究人员发现45%的用户其活动范围半径不超过10英里，而75%的用户活动半径不超过50英里。</li>
+</ul>
+<p>对于第一种数据集，LARS的<u>基本思想</u>是将数据集根据用户的位置划分成很多子集。因为位置信息是一个树状结构，比如国家、省、市、县的结构。因此，数据集也会划分成一个<strong>树状结构</strong>。然后，给定每一个用户的位置，可以将他分配到某一个<strong>叶子节点</strong>中，而该叶子节点包含了所有和他同一个位置的用户的行为数据集。然后，LARS就利用这个叶子节点上的用户行为数据，通过ItemCF给用户进行推荐。</p>
+<p>不过这样做的<u>缺点</u>是，每个叶子节点上的用户数量可能很少，因此他们的行为数据可能过于稀疏，从而无法训练出一个好的推荐算法。为此，我们可以从根节点出发，在到叶子节点的过程中，利用每个中间节点上的数据训练出一个推荐模型，然后给用户生成推荐列表。而最终的推荐结果是这一系列推荐列表的加权。文章的作者将这种算法成为<strong>金字塔模型</strong>，而金字塔的<strong>深度</strong>影响了推荐系统的性能，因而深度是这个算法的一个重要指标。下文用<strong>LARS-U</strong>代表该算法，书中有关于该算法的简单例子。</p>
+<p>对于第二种数据集，每条用户行为表示为四元组（用户、物品、物品位置、评分），表示了用户对某个位置的物品给了某种评分。对于这种数据集，LARS会首先忽略物品的位置信息，利用ItemCF算法计算用户$u$对物品$i$的兴趣$P(u,i)$，但最终物品$i$在用户$u$的推荐列表中的权重定义为：<br>$$<br>RecScore(u,i) = P(u,i) - TravelPenalty(u,i)<br>$$<br>在该公式中，$TravelPenalty(u,i)$表示了物品$i$的位置对用户$u$的代价。 计算 $TravelPenalty(u,i)$的<u>基本思想</u>是对于物品$i$与用户$u$之前评分的所有物品的位置计算距离的平均值 （或者最小值）。关于如何度量地图上两点的距离，最简单的是基于<strong>欧式距离</strong>(参见Gísli R. Hjaltason和Hanan Samet的“Distance browsing in spatial databases”（ACM 1999 Article，1999）)。当然，欧式距离有明显的<u>缺点</u>，因为人们是不可能沿着地图上的直线距离从一点走到另一点的。比较好的度量方式是利用交通网络数据，将人们实际需要走的最短距离作为距离度量(参见Jie Bao、Chi-Yin Chow、Mohamed F. Mokbel和Wei-Shinn Ku的“Efficient Evaluation of k-Range Nearest Neighbor Queries in Road Networks”（MDM，2012）)。</p>
+<p>为了避免计算用户对所有物品的$TravelPenalty$，LARS在计算用户$u$对物品$i$的兴趣度$RecScore(u,i)$时，首先对用户每一个曾经评过分的物品（一般是餐馆、商店、景点），找到和他距离小于一个阈值$d$的所有其他物品，然后将这些物品的集合作为候选集，然后再利用上面的公式计算最终的$RecScore$。</p>
+<p>对于第三种数据集，LARS一文没有做深入讨论。不过，从第三种数据集的定义可以看到， 它相对于第二种数据集增加了用户当前位置这一信息。而在给定了这一信息后，应该保证推荐的物品应该距离用户当前位置比较近，在此基础上再通过用户的历史行为给用户推荐离他近且他会感兴趣的物品。</p>
+<p>为了证明兴趣本地化和活动本地化两种效应，论文作者在FourSquare和MovieLens两个数据集上进行了离线实验。论文作者使用TopN推荐的Precision作为评测指标。</p>
+<p>作者首先在FourSquare数据集上对比了ItemCF算法和考虑了TravelPenalty之后的算法（简称为<strong>LARS-T</strong>）。结果证明考虑TravelPenality确实能够提高TopN推荐的离线准确率，LARS-T算法明显优于ItemCF算法。</p>
+<p>然后，作者在FourSquare数据集和MovieLens数据集上对比了普通的ItemCF算法和考虑用户位置的金字塔模型后的LARS-U算法。同时，作者对比了不同深度对LARS-U算法的影响。实验表明，选择合适的深度对LARS-U算法很重要，不过在绝大多数深度的选择下，LARS-U算法在两个数据集上都优于普通的ItemCF算法。</p>
+<h2 id="5-3-扩展阅读"><a href="#5-3-扩展阅读" class="headerlink" title="5.3 扩展阅读"></a>5.3 扩展阅读</h2><p>时间上下文信息在Netflix Prize中得到了广泛关注，很多参赛者都研究了如何利用这一信息。这方面最著名的文章无疑是Koren的“collaborative filtering with temporal dynamics”，该文系统地总结了各种使用时间信息的方式，包括考虑用户近期行为的影响，考虑时间的周期性等。</p>
+<p>英国剑桥大学的Neal Lathia在读博士期间对时间上下文信息以及推荐系统的时间效应进行了深入研究。他在“Temporal Diversity in Recommender Systems”一文中深入分析了时间多样性对推荐系统的影响。他的博士论文“Evaluating Collaborative Filtering Over Time”论述了各种不同推荐算法是如何随时间演化的。</p>
+<p>如果要系统地研究与上下文推荐相关的工作， 可以参考Alexander Tuzhili 教授的工作（<a href="http://pages.stern.nyu.edu/~atuzhili/" target="_blank" rel="noopener">http://pages.stern.nyu.edu/~atuzhili/</a> ），他在最近几年和学生对上下文推荐问题进行了深入研究。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/推荐系统/" rel="tag"># 推荐系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/27/推荐系统实践读书笔记（四）/" rel="next" title="推荐系统实践读书笔记（四）">
+                <i class="fa fa-chevron-left"></i> 推荐系统实践读书笔记（四）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avator.jpeg"
+                alt="Rilzob" />
+            
+              <p class="site-author-name" itemprop="name">Rilzob</p>
+              <p class="site-description motion-element" itemprop="description">一蓑烟雨任平生</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/rilzob" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:watermirrorsir@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.zzndb.com.cn/" title="zz-db" target="_blank">zz-db</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第5章-利用上下文信息"><span class="nav-number">1.</span> <span class="nav-text">第5章 利用上下文信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-时间上下文信息"><span class="nav-number">1.1.</span> <span class="nav-text">5.1 时间上下文信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-时间效应简介"><span class="nav-number">1.1.1.</span> <span class="nav-text">5.1.1 时间效应简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-2-时间效应举例"><span class="nav-number">1.1.2.</span> <span class="nav-text">5.1.2 时间效应举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-3-系统时间特性的分析"><span class="nav-number">1.1.3.</span> <span class="nav-text">5.1.3 系统时间特性的分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-数据集的选择"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">1.数据集的选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-物品的生存周期和系统的时效性"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">2.物品的生存周期和系统的时效性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-4-推荐系统的实时性"><span class="nav-number">1.1.4.</span> <span class="nav-text">5.1.4 推荐系统的实时性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-5-推荐算法的时间多样性"><span class="nav-number">1.1.5.</span> <span class="nav-text">5.1.5 推荐算法的时间多样性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-6-时间上下文推荐算法"><span class="nav-number">1.1.6.</span> <span class="nav-text">5.1.6 时间上下文推荐算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-最近热门"><span class="nav-number">1.1.6.1.</span> <span class="nav-text">1.最近热门</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-时间上下文相关的ItemCF算法"><span class="nav-number">1.1.6.2.</span> <span class="nav-text">2.时间上下文相关的ItemCF算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-时间上下文相关的UserCF算法"><span class="nav-number">1.1.6.3.</span> <span class="nav-text">3.时间上下文相关的UserCF算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-7-时间段图模型"><span class="nav-number">1.1.7.</span> <span class="nav-text">5.1.7 时间段图模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-8-离线实验"><span class="nav-number">1.1.8.</span> <span class="nav-text">5.1.8 离线实验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-地点上下文信息"><span class="nav-number">1.2.</span> <span class="nav-text">5.2 地点上下文信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于位置的推荐算法"><span class="nav-number">1.2.1.</span> <span class="nav-text">基于位置的推荐算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-扩展阅读"><span class="nav-number">1.3.</span> <span class="nav-text">5.3 扩展阅读</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rilzob</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
