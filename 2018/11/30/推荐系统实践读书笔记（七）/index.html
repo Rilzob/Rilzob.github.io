@@ -81,20 +81,21 @@
 
 
 
-<meta name="description" content="第3章 推荐系统冷启动问题如何在没有大量用户数据的情况下设计个性化推荐系统并且让用户对推荐结果满意从而愿意使用推荐系统，就是冷启动的问题。本章简单介绍一下冷启动问题的分类，以及如何解决不同种类的冷启动问题。">
+<meta name="description" content="第7章 推荐系统实例前面几章介绍了各种各样的数据和基于这些数据的推荐算法。在实际系统中，前面几章提到的数据大都存在，因此如何设计一个真实的推荐系统处理不同的数据，根据不同的数据设计算法，并将这些算法融合到一个系统当中是本章讨论的主要问题。 本章首先介绍推荐系统的外围架构，然后介绍推荐系统的架构，并对架构中每个模块的设计进行深入讨论。">
 <meta name="keywords" content="Python,推荐系统">
 <meta property="og:type" content="article">
-<meta property="og:title" content="推荐系统实践读书笔记（三）">
-<meta property="og:url" content="https://rilzob.com/2018/11/26/推荐系统实践读书笔记（三）/index.html">
+<meta property="og:title" content="推荐系统实践读书笔记（七）">
+<meta property="og:url" content="https://rilzob.com/2018/11/30/推荐系统实践读书笔记（七）/index.html">
 <meta property="og:site_name" content="极氙世界">
-<meta property="og:description" content="第3章 推荐系统冷启动问题如何在没有大量用户数据的情况下设计个性化推荐系统并且让用户对推荐结果满意从而愿意使用推荐系统，就是冷启动的问题。本章简单介绍一下冷启动问题的分类，以及如何解决不同种类的冷启动问题。">
+<meta property="og:description" content="第7章 推荐系统实例前面几章介绍了各种各样的数据和基于这些数据的推荐算法。在实际系统中，前面几章提到的数据大都存在，因此如何设计一个真实的推荐系统处理不同的数据，根据不同的数据设计算法，并将这些算法融合到一个系统当中是本章讨论的主要问题。 本章首先介绍推荐系统的外围架构，然后介绍推荐系统的架构，并对架构中每个模块的设计进行深入讨论。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://rilzob.com/2018/11/26/推荐系统实践读书笔记（三）/关键词向量的生成过程.png">
-<meta property="og:updated_time" content="2018-11-27T12:49:48.863Z">
+<meta property="og:image" content="https://rilzob.com/2018/11/30/推荐系统实践读书笔记（七）/推荐系统和其他系统之间的关系.png">
+<meta property="og:image" content="https://rilzob.com/2018/11/30/推荐系统实践读书笔记（七）/推荐引擎的架构图.png">
+<meta property="og:updated_time" content="2018-11-30T13:13:20.289Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="推荐系统实践读书笔记（三）">
-<meta name="twitter:description" content="第3章 推荐系统冷启动问题如何在没有大量用户数据的情况下设计个性化推荐系统并且让用户对推荐结果满意从而愿意使用推荐系统，就是冷启动的问题。本章简单介绍一下冷启动问题的分类，以及如何解决不同种类的冷启动问题。">
-<meta name="twitter:image" content="https://rilzob.com/2018/11/26/推荐系统实践读书笔记（三）/关键词向量的生成过程.png">
+<meta name="twitter:title" content="推荐系统实践读书笔记（七）">
+<meta name="twitter:description" content="第7章 推荐系统实例前面几章介绍了各种各样的数据和基于这些数据的推荐算法。在实际系统中，前面几章提到的数据大都存在，因此如何设计一个真实的推荐系统处理不同的数据，根据不同的数据设计算法，并将这些算法融合到一个系统当中是本章讨论的主要问题。 本章首先介绍推荐系统的外围架构，然后介绍推荐系统的架构，并对架构中每个模块的设计进行深入讨论。">
+<meta name="twitter:image" content="https://rilzob.com/2018/11/30/推荐系统实践读书笔记（七）/推荐系统和其他系统之间的关系.png">
 
 
 
@@ -124,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://rilzob.com/2018/11/26/推荐系统实践读书笔记（三）/"/>
+  <link rel="canonical" href="https://rilzob.com/2018/11/30/推荐系统实践读书笔记（七）/"/>
 
 
 
 
 
-  <title>推荐系统实践读书笔记（三） | 极氙世界</title>
+  <title>推荐系统实践读书笔记（七） | 极氙世界</title>
   
 
 
@@ -291,7 +292,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://rilzob.com/2018/11/26/推荐系统实践读书笔记（三）/">
+    <link itemprop="mainEntityOfPage" href="https://rilzob.com/2018/11/30/推荐系统实践读书笔记（七）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Rilzob">
@@ -308,7 +309,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">推荐系统实践读书笔记（三）</h1>
+          <h1 class="post-title" itemprop="name headline">推荐系统实践读书笔记（七）</h1>
         
 
         <div class="post-meta">
@@ -320,8 +321,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-26T14:35:08+08:00">
-                2018-11-26
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-30T18:38:04+08:00">
+                2018-11-30
               </time>
             
 
@@ -380,68 +381,97 @@
       
 
       
-        <h1 id="第3章-推荐系统冷启动问题"><a href="#第3章-推荐系统冷启动问题" class="headerlink" title="第3章 推荐系统冷启动问题"></a>第3章 推荐系统冷启动问题</h1><p>如何在没有大量用户数据的情况下设计个性化推荐系统并且让用户对推荐结果满意从而愿意使用推荐系统，就是<strong>冷启动</strong>的问题。<br>本章简单介绍一下冷启动问题的分类，以及如何解决不同种类的冷启动问题。<br><a id="more"></a></p>
-<h2 id="3-1-冷启动问题简介"><a href="#3-1-冷启动问题简介" class="headerlink" title="3.1 冷启动问题简介"></a>3.1 冷启动问题简介</h2><p>冷启动问题(cold start)主要分3类。</p>
+        <h1 id="第7章-推荐系统实例"><a href="#第7章-推荐系统实例" class="headerlink" title="第7章 推荐系统实例"></a>第7章 推荐系统实例</h1><p>前面几章介绍了各种各样的数据和基于这些数据的推荐算法。在实际系统中，前面几章提到的数据大都存在，因此如何设计一个真实的推荐系统处理不同的数据，根据不同的数据设计算法，并将这些算法融合到一个系统当中是本章讨论的主要问题。</p>
+<p>本章首先介绍推荐系统的外围架构，然后介绍推荐系统的架构，并对架构中每个模块的设计进行深入讨论。<br><a id="more"></a></p>
+<h2 id="7-1-外围架构"><a href="#7-1-外围架构" class="headerlink" title="7.1 外围架构"></a>7.1 外围架构</h2><p>这一节主要讨论推荐系统是如何和网站的其他系统接口的。</p>
+<p><img src="/2018/11/30/推荐系统实践读书笔记（七）/推荐系统和其他系统之间的关系.png" alt="推荐系统和其他系统之间的关系"></p>
+<p><strong>UI系统</strong>负责给用户展示网页并和用户交互。网站会通过日志系统将用户在UI上的各种各样的行为记录到<strong>用户行为日志</strong>中。日志可能存储在内存缓存里，也可能存储在数据库中，也可能存储在文件系统中。而推荐系统通过分析用户的行为日志，给用户生成推荐列表，最终展示到网站的界面上。因此可以发现，推荐系统要发挥强大的作用，除了推荐系统本身，主要还依赖于两个条件——<em>界面展示</em>和<em>用户行为数据</em>。</p>
+<p>目前流行的推荐系统界面存在一些共性：</p>
 <ul>
-<li><strong>用户冷启动</strong> 用户冷启动主要解决如何给新用户做个性化推荐的问题。</li>
-<li><strong>物品冷启动</strong> 物品冷启动主要解决如何将新的物品推荐给可能对它感兴趣的用户这一问题。</li>
-<li><strong>系统冷启动</strong> 系统冷启动主要解决如何在一个新开发的网站上（还没有用户，也没有用户行为，只有一些物品的信息）设计个性化推荐系统，从而在网站刚发布时就让用户体验到个性化推荐服务这一问题。</li>
+<li>通过一定方式展示物品，主要包括物品的标题、缩略图和介绍等。</li>
+<li>很多推荐界面都提供了推荐理由，理由可以增加用户对推荐结果的信任度。</li>
+<li>推荐界面还需要提供一些按钮让用户对推荐结果进行反馈，这样才能让推荐算法不断改 善用户的个性化推荐体验。</li>
 </ul>
-<p>对于这3种不同的冷启动问题，有不同的解决方案。一般来说，可以参考如下解决方案。</p>
+<p>在设计推荐界面时，可以综合考虑其他网站的设计并结合自己网站的特点。</p>
+<h3 id="数据收集和存储"><a href="#数据收集和存储" class="headerlink" title="数据收集和存储"></a>数据收集和存储</h3><p>从产生行为的用户角度看，有些行为是只有注册用户才能产生的，而有些行为是所有用户都可以产生的。从规模上看，浏览网页、搜索记录的规模都很大，因为这种行为所有用户都能产生，而且平均每个用户都会产生很多这些行为。购买、收藏行为规模中等，因为只有注册用户才能产生这种行为，但购买行为又是电商网站的主要行为，所以它们相对于评论来说规模更大，但相对于网页浏览行为来说规模要小得多，最后剩下的行为是注册用户里的一小部分人才有的，所以规模不会很大。同样有些行为需要实时存取，而有些并不需要。</p>
+<p>按照前面数据的规模和是否需要实时存取，不同的行为数据将被存储在不同的媒介中。一般来说，需要实时存取的数据存储在数据库和缓存中，而大规模的非实时地存取数据存储在分布式文件系统（如HDFS）中。</p>
+<p>数据能否实时存取在推荐系统中非常重要，因为推荐系统的实时性主要依赖于能否实时拿到用户的新行为。只有快速拿到大量用户的新行为，推荐系统才能够实时地适应用户当前的需求，给用户进行实时推荐。</p>
+<h2 id="7-2-推荐系统架构"><a href="#7-2-推荐系统架构" class="headerlink" title="7.2 推荐系统架构"></a>7.2 推荐系统架构</h2><p>推荐系统联系用户和物品的方式主要有3种，在第4章开头部分介绍过，分别是：</p>
 <ul>
-<li><em>提供非个性化的推荐。</em> 非个性化推荐的最简单例子就是热门排行榜。</li>
-<li><em>利用用户注册时提供的年龄、性别等数据做粗粒度的个性化。</em></li>
-<li><em>利用用户的社交网络账号登录（需要用户授权），导入用户在社交网站上的好友信息，然后给用户推荐其好友喜欢的物品。</em></li>
-<li><em>要求用户在登录时对一些物品进行反馈，收集用户对这些物品的兴趣信息，然后给用户推荐那些和这些物品相似的物品。</em></li>
-<li><em>对于新加入的物品，可以利用内容信息，将它们推荐给喜欢过和它们相似的物品的用户。</em></li>
-<li><em>在系统冷启动时，可以引入专家的知识，通过一定的高效方式迅速建立起物品的相关度表。</em></li>
+<li>基于用户的推荐算法</li>
+<li>基于物品的推荐算法</li>
+<li>基于特征的推荐算法</li>
 </ul>
-<h2 id="3-2-利用用户注册信息"><a href="#3-2-利用用户注册信息" class="headerlink" title="3.2 利用用户注册信息"></a>3.2 利用用户注册信息</h2><p>用户的注册信息分3种。</p>
+<p>其中上述三种都可以将其抽象为基于特征的推荐算法，因为用户喜欢的物品可以算是用户特征，同样与用户兴趣相似的其他用户也是一种用户特征。然后根据抽象设计一种基于特征的推荐系统架构。当用户到来之后，推荐系统需要为用户生成特征，然后对每个特征找到和特征相关的物品，从而最终生成用户的推荐列表。因而，推荐系统的<u>核心任务</u>就被拆解成两部分，一个是<em>如何为给定用户生成特征</em>，另一个是<em>如何根据特征找到物品</em>。</p>
+<p>用户特征种类很多，主要包括如下几类：</p>
 <ul>
-<li><strong>人口统计学信息</strong> 包括用户的年龄、性别、职业、民族、学历和居住地。</li>
-<li><strong>用户兴趣的描述</strong> 有一些网站会让用户用文字描述他们的兴趣。</li>
-<li><strong>从其他网站导入的用户站外行为数据</strong> 比如用户通过豆瓣、新浪微博的账号登录，就可以在得到用户同意的情况下获取用户在豆瓣或者新浪微博的一些行为数据和社交网络数据。</li>
+<li><strong>人口统计学特征</strong></li>
+<li><strong>用户行为特征</strong></li>
+<li><strong>用户的话题特征</strong>   可以根据用户的历史行为利用<strong>话题模型(topic model)</strong>将电视剧和电影聚合成不同的话题，并且计算出每个用户对什么话题感兴趣。 </li>
 </ul>
-<p><strong>基于人口统计学特征的推荐系统</strong>其典型代表是Bruce Krulwich开发的Lifestyle Finder(参见论文Bruce Krulwich的“Lifestyle finder : intelligent user profiling using large scale demographic data”（1997）) 。书上这部分有关于该算法的简略介绍和评测，但并没有涉及该算法是具体如何根据人口统计学属性进行分类的，详情见书。</p>
-<p>基于注册信息的<u>个性化推荐流程</u>基本如下：</p>
-<ol>
-<li>获取用户的注册信息；</li>
-<li>根据用户的注册信息对用户分类；</li>
-<li>给用户推荐他所属分类中用户喜欢的物品。</li>
-</ol>
-<p><strong>基于用户注册信息的推荐算法</strong>其<u>核心问题</u>是计算每种特征的用户喜欢的物品。也就是说，对于每种特征$f$，计算具有这种特征的用户对各个物品的喜好程度$p(f, i)$。<br>$p(f,i)$可以简单地定义为物品$i$在具有$f$的特征的用户中的热门程度：$$p(f,i)=\vert N(i) \cap U(f) \vert$$其中$N(i)$是喜欢物品$i$的用户集合，$U(f)$是具有特征$f$的用户集合。</p>
-<p>上面这种定义可以比较准确地预测具有某种特征的用户是否喜欢某个物品。但是，在这种定义下，往往热门的物品会在各种特征的用户中都具有比较高的权重。也就是说具有比较高的$\vert N (i) \vert$的物品会在每一类用户中都有比较高的$p(f ,i)$。给用户推荐热门物品并不是推荐系统的主要任务，推荐系统应该帮助用户发现他们不容易发现的物品。因此，可以将$p( f , i )$定义为喜欢物品$i$的用户中具有特征$f$的比例：$$p(f,i) =  \frac {\vert N(i) \cap U(f) \vert}{\vert N(i) \vert + \alpha}$$这里分母中使用参数$\alpha$的目的是解决<strong>数据稀疏问题</strong>。比如有一个物品只被1个用户喜欢过， 而这个用户刚好就有特征$f$，那么就有$p(f,i)$。但是，这种情况并没有统计意义，因此为分母加上一个比较大的数，可以避免这样的物品产生比较大的权重。</p>
-<p>有两个推荐系统数据集包含了人口统计学信息， 一个是 BookCrossing 数据集。另一个是Lastfm数据集。</p>
-<blockquote>
-<p>BookCrossing数据集:<br>参见<a href="http://www.informatik.uni-freiburg.de/~cziegler/BX/" target="_blank" rel="noopener">http://www.informatik.uni-freiburg.de/~cziegler/BX/</a><br>Lastfm数据集：<br>参见<a href="http://www.dtic.upf.edu/~ocelma/MusicRecommendationDataset/lastfm-360K.html" target="_blank" rel="noopener">http://www.dtic.upf.edu/~ocelma/MusicRecommendationDataset/lastfm-360K.html</a></p>
-</blockquote>
-<p>作者在这两个数据集上做实验验证，证明基于人口统计学特征的推荐系统准确率、召回率和覆盖率确实更高，而且利用的用户人口统计学特征越多，越能准确地预测用户兴趣，详情见书。</p>
-<h2 id="3-3-选择合适的物品启动用户的兴趣"><a href="#3-3-选择合适的物品启动用户的兴趣" class="headerlink" title="3.3 选择合适的物品启动用户的兴趣"></a>3.3 选择合适的物品启动用户的兴趣</h2><p>对于通过让用户对物品进行评分来收集用户兴趣，从而对用户进行冷启动的系统，它们需要解决的<u>首要问题</u>就是如何选择物品让用户进行反馈。</p>
-<p>一般来说，能够用来启动用户兴趣的物品需要具有以下特点。</p>
+<p>同时推荐系统的推荐任务也有很多种，如果要在一个系统中把上面提到的各种特征和任务都统筹考虑，那么系统将会非常复杂，而且很难通过配置文件方便地配置不同特征和任务的权重。因此，推荐系统需要由多个<strong>推荐引擎</strong>组成，每个推荐引擎负责一类特征和一种任务，而推荐系统的任务只是将推荐引擎的结果按照一定权重或者优先级合并、排序然后返回。</p>
+<p>这样做有两个<u>好处</u>：</p>
 <ul>
-<li><strong>比较热门</strong> 因为用户需要知道这个物品是什么，才能对它们作出准确反馈。</li>
-<li><strong>具有代表性和区分性</strong> 启动用户兴趣的物品不能是大众化或老少咸宜的，因为这样的物品对用户的兴趣没有区分性。</li>
-<li><strong>启动物品集合需要有多样性</strong> 冷启动时，由于不清楚用户的兴趣，并且用户用户兴趣的可能性非常多，为了匹配多样的兴趣，为此需要提供具有很高覆盖率的启动物品集合，这些物品能覆盖几乎所有主流的用户兴趣。</li>
+<li>可以方便地增加/删除引擎，控制不同引擎对推荐结果的影响。对于绝大多数需求，只需要通过不同的引擎组合实现。</li>
+<li>可以实现推荐引擎级别的用户反馈。每一个推荐引擎其实代表了一种推荐策略，而不同的用户可能喜欢不同的推荐策略。可以将每一种策略都设计成一个推荐引擎，然后通过分析用户对推荐结果的反馈了解用户比较喜欢哪些引擎推荐出来的结果，从而对不同的用户给出不同的引擎组合权重。</li>
 </ul>
-<p>上面这些因素都是选择启动物品时需要考虑的，但还需要考虑的是如何设计一个选择启动物品集合的系统？Nadav Golbandi在论文中(“Adaptive Bootstrapping of Recommender Systems Using Decision Trees”，下载地址为 <a href="http://research.yahoo.com/pub/3502" target="_blank" rel="noopener">http://research.yahoo.com/pub/3502</a>) 探讨了这个问题，提出可以用一个<strong>决策树</strong>解决这个问题。<br>首先，给定一群用户，Nadav Golbandi用这群用户对物品评分的<strong>方差</strong>度量这群用户兴趣的一致程度。如果方差很大，说明这一群用户的兴趣不太一致，反之则说明这群用户的兴趣比较一致。 令$\sigma_u \in U’$为用户集合$U’$中所有评分的方差，Nadav Golbandi的<u>基本思想</u>是通过如下方式度量一个物品的<strong>区分度</strong>$D(i)$:$$D(i) = \sigma_{u \in N^+(i)} + \sigma_{u \in N^-(i)} + \sigma_{u \in  \bar N(i)}$$其中，$N^+(i)$是喜欢物品i的用户集合，$N^-(i)$是不喜欢物品i的用户集合，$\bar N(i)$是没有对物品$i$评分的用户集合。$ \sigma_{u \in N^+(i)}$是喜欢物品i的用户对其他物品评分的方差，$\sigma_{u \in N^-(i)}$是不喜欢物品$i$的用户对其他物品评分的方差，$\sigma_{u \in  \bar N(i)}$是没有对物品$i$评分的用户对其他物品评分的方差。也就是说，对于物品$i$，Nadav Golbandi将用户分成3类——喜欢物品i的用户、不喜欢物品i的用户和不知道物品i的用户（即没有给i评分的用户）。如果这3类用户集合内的用户对其他的物品兴趣很不一致，说明物品i具有较高的区分度。<br>Nadav Golbandi的<u>算法</u>首先会从所有用户中找到具有最高区分度的物品i，然后将用户分成3类。然后在每类用户中再找到最具区分度的物品，然后将每一类用户又各自分为3类，也就是将总用户分成9类，然后这样继续下去，最终可以通过对一系列物品的看法将用户进行分类。而在冷启动时，我们从根节点开始询问用户对该节点物品的看法，然后根据用户的选择将用户放到不同的分枝，直到进入最后的叶子节点，此时我们就已经对用户的兴趣有了比较清楚的了解，从而可以开始对用户进行比较准确地个性化推荐。</p>
-<h2 id="3-4-利用物品的内容信息"><a href="#3-4-利用物品的内容信息" class="headerlink" title="3.4 利用物品的内容信息"></a>3.4 利用物品的内容信息</h2><p>物品冷启动需要解决的问题是如何将新加入的物品推荐给对它感兴趣的用户。</p>
-<p>第2章介绍了两种主要的推荐算法——<strong>UserCF</strong>和<strong>ItemCF算法</strong>。首先需要指出的是，UserCF算法对物品冷启动问题并不非常敏感。因为，UserCF在给用户进行推荐时，会首先找到和用户兴趣相似的一群用户，然后给用户推荐这一群用户喜欢的物品。在很多网站中，推荐列表并不是给用户展示内容的唯一列表，那么当一个新物品加入时，总会有用户从某些途径看到这些物品，对这些物品产生反馈。那么，当一个用户对某个物品产生反馈后，和他历史兴趣相似的其他用户的推荐列表中就有可能出现这一物品，从而更多的人就会对这个物品产生反馈，导致更多的人的推荐列表中会出现这一物品，因此该物品就能不断地扩散开来，从而逐步展示到对它感兴趣用户的推荐列表中。<br>但是，有些网站中推荐列表可能是用户获取信息的主要途径，比如豆瓣网络电台。那么对于UserCF算法就需要解决第一推动力的问题，即第一个用户从哪儿发现新的物品。只要有一小部分人能够发现并喜欢新的物品，UserCF算法就能将这些物品扩散到更多的用户中。解决第一推动力最简单的方法是将新的物品<strong>随机</strong>展示给用户，但这样显然不太个性化，因此可以考虑利用物品的内容信息，将新物品先投放给曾经喜欢过和它内容相似的其他物品的用户。<br>对于ItemCF算法来说，物品冷启动就是一个严重的问题了。因为ItemCF算法的原理是给用户推荐和他之前喜欢的物品相似的物品。ItemCF算法会每隔一段时间利用用户行为计算<strong>物品相似度表</strong>（一般一天计算一次），在线服务时ItemCF算法会将之前计算好的<strong>物品相关度矩阵</strong>放在内存中。因此，当新物品加入时，内存中的物品相关表中不会存在这个物品，从而ItemCF算法无法推荐新的物品。解决这一问题的办法是频繁更新物品相似度表，但基于用户行为计算物品相似度是非常耗时的事情，主要原因是用户行为日志非常庞大。而且，新物品如果不展示给用户，用户就无法对它产生行为，通过行为日志计算是计算不出包含新物品的相关矩阵的。为此，我们只能利用物品的内容信息计算物品相关表，并且频繁地更新相关表（比如半小时计算一次）。</p>
-<p>一般来说，物品的内容可以通过<strong>向量空间模型</strong>(参见维基百科Vector Space Model词条)表示，该模型会将物品表示成一个<strong>关键词向量</strong>。如果物品的内容是一些诸如导演、演员等实体的话，可以直接将这些实体作为关键词。但如果内容是文本的形式，则需要引入一些理解自然语言的技术抽取关键词。图3-11展示了从文本生成关键词向量的主要步骤。对于中文，首先要对文本进行<strong>分词</strong>，将字流变成词流，然后从词流中检测出<strong>命名实体</strong>（如人名、地名、组织名等），这些实体和一些其他重要的词将组成关键词集合， 最后对关键词进行排名，计算每个关键词的<strong>权重</strong>，从而生成关键词向量。<br><img src="/2018/11/26/推荐系统实践读书笔记（三）/关键词向量的生成过程.png" alt="关键词向量的生成过程"><br>对于物品$d$，它的内容表示成一个关键词向量如下：$$d_i = \{ (e_1,w_1),(e_2,w_2), ···\}$$其中$e_i$是关键词，$w_i$是关键词对应的权重。如果物品是文本，我们可以用信息检索领域著名的<strong>TF-IDF公式</strong>计算词的权重：$$w_i = \frac {TF(e_i)}{\log DF(e_i)}​$$</p>
-<p>向量空间模型的<u>优点</u>是简单，<u>缺点</u>是丢失了一些信息，比如关键词之间的关系信息。不过在绝大多数应用中，向量空间模型对于文本的分类、聚类、相似度计算已经可以给出令人满意的结果。</p>
-<p>在给定物品内容的关键词向量后，物品的内容相似度可以通过向量之间的余弦相似度计算：$$w_{ij} = \frac {d_i \cdot d_j}{\sqrt {\Vert d_i \Vert \Vert d_j \Vert}}$$<br>在具体计算物品之间的内容相似度时，最简单的方法当然是对两两物品都利用上面的余弦相似度公式计算相似度，如下代码简单实现了这种方法：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">CalculateSimilarity</span><span class="params">(D)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> di <span class="keyword">in</span> D:</span><br><span class="line">        <span class="keyword">for</span> dj <span class="keyword">in</span> D:</span><br><span class="line">            w[i][j] = CosineSimilarity(di, dj) </span><br><span class="line">    <span class="keyword">return</span> w</span><br></pre></td></tr></table></figure></p>
-<p><code>D</code>是文档集合。</p>
-<p>但这种算法的时间复杂度很高。假设有$N$个物品，每个物品平均由$m$个实体表示，那么这个算法的复杂度是$O( N^2m)$。 在实际应用中，可以首先通过建立关键词—物品的<strong>倒排表</strong>加速这一计算过程，关于这一方法已经在前面介绍UserCF和ItemCF算法时详细介绍过了，所以这里直接给出计算的代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">CalculateSimilarity</span><span class="params">(entity-items)</span></span></span><br><span class="line">    w = dict() </span><br><span class="line">    ni = dict() </span><br><span class="line">    <span class="keyword">for</span> e,items <span class="keyword">in</span> entity_items.items():</span><br><span class="line">        <span class="keyword">for</span> i,wie <span class="keyword">in</span> items.items(): </span><br><span class="line">            addToVec(ni, i, wie * wie) </span><br><span class="line">            <span class="keyword">for</span> j,wje <span class="keyword">in</span> items.items(): </span><br><span class="line">                addToMat(w, i, j, wie, wje) </span><br><span class="line">    <span class="keyword">for</span> i, relate_items <span class="keyword">in</span> w.items():</span><br><span class="line">        relate_items = &#123;x:y/math.sqrt(ni[i] * ni[x]) <span class="keyword">for</span> x,y <span class="keyword">in</span> relate_items.items()&#125;</span><br></pre></td></tr></table></figure></p>
-<p>得到物品的相似度之后，可以利用上一章提到的ItemCF算法的思想，给用户推荐和他历史上喜欢的物品内容相似的物品。</p>
-<p>既然内容相似度计算简单，能频繁更新，而且能够解决物品冷启动问题，那么为什么还需要协同过滤的算法?书中这部分在MovieLens和GitHub两个数据集上进行了实验，并加以说明，详情见书。</p>
-<h3 id="话题模型"><a href="#话题模型" class="headerlink" title="话题模型"></a>话题模型</h3><p>向量空间模型在内容数据丰富时可以获得比较好的效果。以文本为例，如果是计算长文本的相似度，用向量空间模型利用关键词计算相似度已经可以获得很高的精确度。但是，如果文本很短，关键词很少，向量空间模型就很难计算出准确的相似度。举个例子，假设有两篇论文，它们的标题分别是“推荐系统的动态特性”和“基于时间的协同过滤算法研究”。如果读者对推荐系统很熟悉，可以知道这两篇文章的研究方向是类似的，但是它们标题中没有一样的关键词。其实，它们的关键词虽然不同，但却是相似的。“动态”和“基于时间”含义相似，“协同过滤”是“推荐系统”的一种算法。换句话说，这两篇文章的关键词虽然不同，但关键词所属的话题是相同的。在这种情况下，首先需要知道文章的<strong>话题分布</strong>，然后才能准确地计算文章的相似度。如何建立文章、话题和关键词的关系是<strong>话题模型（topic model）</strong>研究的重点。</p>
-<p>代表性的话题模型有<strong>LDA</strong>。关于LDA的详细理论介绍可以参考DM Blei的论文“Latent Dirichlet Allocation” (参见David M. Blei、 Andrew Y. Ng、 Michael I. Jordan的“ Latent dirichlet allocation”（Journal of Machine Learning Research 3， 2003）)。<br>任何模型都有一个假设，LDA作为一种<strong>生成模型</strong>，对一篇文档产生的过程进行了建模。话题模型的<u>基本思想</u>是，一个人在写一篇文档的时候，会首先想这篇文章要讨论哪些话题，然后思考这些话题应该用什么词描述，从而最终用词写成一篇文章。因此，文章和词之间是通过话题联系的。<br>LDA中有3种元素，即文档、话题和词语。每一篇文档都会表现为词的集合，这称为<strong>词袋模型(bag of words)</strong>。每个词在一篇文章中属于一个话题。令$D$为文档集合，$D[i]$是第$i$篇文档。$w[i][j]$是第$i$篇文档中的第$j$个词。$z[i][j]$是第$i$篇文档中第$j$个词属于的话题。</p>
-<p>LDA的<u>计算过程</u>包括<strong>初始化</strong>和<strong>迭代</strong>两部分。首先要对$z$进行初始化，而初始化的方法很简单，假设一共有$K$个话题， 那么对第$i$篇文章中的第$j$个词， 可以随机给它赋予一个话题。同时，用$NWZ(w,z)$记录词$w$被赋予话题$z$的次数，$NZD(z,d)$记录文档$d$中被赋予话题$z$的词的个数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">foreach document i <span class="keyword">in</span> range(<span class="number">0</span>,|D|):</span><br><span class="line">    foreach word j <span class="keyword">in</span> range(<span class="number">0</span>, |D(i)|):</span><br><span class="line">        z[i][j] = rand() % K </span><br><span class="line">        NZD[z[i][j], D[i]]++ </span><br><span class="line">        NWZ[w[i][j], z[i][j]]++ </span><br><span class="line">        NZ[z[i][j]]++</span><br></pre></td></tr></table></figure>
-<p>在初始化之后，要通过迭代使话题的分布收敛到一个合理的分布上去。伪代码如下所示：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="keyword">not</span> converged:</span><br><span class="line">    foreach document i <span class="keyword">in</span> range(<span class="number">0</span>, |D|):</span><br><span class="line">        foreach word j <span class="keyword">in</span> range(<span class="number">0</span>, |D(i)|): </span><br><span class="line">            NWZ[w[i][j], z[i][j]]--</span><br><span class="line">            NZ[z[i][j]]--</span><br><span class="line">            NZD[z[i][j], D[i]]--</span><br><span class="line">            z[i][j] = SampleTopic() </span><br><span class="line">            NWZ[w[i][j], z[i][j]]++ </span><br><span class="line">            NZ[z[i][j]]++ </span><br><span class="line">            NZD[z[i][j], D[i]]++</span><br></pre></td></tr></table></figure>
-<p>LDA可以很好地将词组合成不同的话题。</p>
-<p>在使用LDA计算物品的内容相似度时，可以先计算出物品在话题上的分布，然后利用两个物品的话题分布计算物品的相似度。比如，如果两个物品的话题分布相似，则认为两个物品具有较高的相似度，反之则认为两个物品的相似度较低。计算分布的相似度可以利用<strong>KL散度</strong>(参见<a href="http://en.wikipedia.org/wiki/Kullback-Leibler_divergence" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Kullback-Leibler_divergence</a>) ：$$D_{KL}(p||q) = \sum_i p(i)ln \frac{p(i)}{q(i)}$$其中$p$和$q$是两个分布，KL散度越大说明分布的相似度越低。</p>
-<h2 id="3-5-发挥专家的作用"><a href="#3-5-发挥专家的作用" class="headerlink" title="3.5 发挥专家的作用"></a>3.5 发挥专家的作用</h2><p>书中这部分对个性化网络电台Pandora和电影推荐网站Jinni如何利用专家对物品进行标注，进而建立推荐系统作了介绍。</p>
+<p>将推荐系统拆分成不同推荐引擎后，如何设计一个推荐引擎变成了推荐系统设计的<u>核心部分</u>。下一节讨论推荐引擎的设计方法。</p>
+<h2 id="7-3-推荐引擎的架构"><a href="#7-3-推荐引擎的架构" class="headerlink" title="7.3 推荐引擎的架构"></a>7.3 推荐引擎的架构</h2><p>推荐系统架构主要包括3部分：</p>
+<ul>
+<li>该部分负责(1)从数据库或者缓存中拿到用户行为数据，通过(2)分析不同行为，(3)生成当前用户的特征向量。不过如果是使用非行为特征，就不需要使用行为提取和分析模块了。该模块的输出是用户特征向量。</li>
+<li>该部分负责将用户的特征向量通过特征-物品相关矩阵转化为初始推荐物品列表。</li>
+<li>该部分负责对初始的推荐列表进行过滤、排名等处理，从而生成最终的推荐结果。</li>
+</ul>
+<p><img src="/2018/11/30/推荐系统实践读书笔记（七）/推荐引擎的架构图.png" alt="推荐引擎的架构图"></p>
+<p>下节对各个不同的部分分别详细解释。</p>
+<h3 id="7-3-1-生成用户特征向量"><a href="#7-3-1-生成用户特征向量" class="headerlink" title="7.3.1 生成用户特征向量"></a>7.3.1 生成用户特征向量</h3><p>一般来说，用户的特征包括两种，一种是<em>用户的注册信息中可以提取出来的</em>，另一种特征主要是<em>从用户的行为中计算出来的</em>，本节着重讨论如何生成特征。</p>
+<p>一个特征向量由特征以及特征的权重组成，在利用用户行为计算特征向量时需要考虑以下因素。</p>
+<ul>
+<li><strong>用户行为的种类</strong>   不同行为的影响不同，大多时候很难确定什么行为更加重要，一般的标准就是用户付出代价越大的行为权重越高。</li>
+<li><strong>用户行为产生的时间</strong>   距离现在越近的行为权重越高。</li>
+<li><strong>用户行为的次数</strong>    用户对同一个物品的同一种行为发生的次数也反映了用户对物品的兴趣，行为次数多的物品对应的特征权重越高。</li>
+<li><strong>物品的热门程度</strong>    用户对热门物品的行为不能够反映用户的兴趣，而冷门物品则可以能够反映。推荐引擎在生成用户特征时会加重不热门物品对应的特征的权重。</li>
+</ul>
+<h3 id="7-3-2-特征—物品相关推荐"><a href="#7-3-2-特征—物品相关推荐" class="headerlink" title="7.3.2 特征—物品相关推荐"></a>7.3.2 特征—物品相关推荐</h3><p>在得到用户的特征向量后，可以根据<strong>离线相关表</strong>得到初始的物品推荐列表。离线相关表可以存储在MySQL中。<br>对于每个特征，我们可以在相关表中存储和它最相关的N个物品的ID。</p>
+<p>在线使用的特征—物品相关表一般都不止一张。因为可能使用了不同的推荐算法。总之，对于一个推荐引擎可以在配置文件中配置很多相关表以及它们的权重，而在线服务在启动时会将这些相关表按照配置的权重相加，然后将最终的相关表保存在内存中，而在给用户进行推荐时，用的已经是加权后的相关表了。</p>
+<p>特征—物品相关推荐模块还可以接受一个候选物品集合。候选物品集合的<u>目的</u>是保证推荐结果只包含候选物品集合中的物品。对推荐物品的范围进行限定。</p>
+<p>书中对为什么不在过滤模块中将候选集合外的电视剧过滤掉，而要在相关推荐模块中处理候选物品列表作出了解释，不过我没有看明白，有机会再看一次这部分。</p>
+<p>特征—物品相关推荐模块除了给用户返回物品推荐列表，还需要给推荐列表中的每个推荐结果产生一个解释列表，表明这个物品是因为哪些特征推荐出来的。下面的代码给出了相关推荐模块的大体工作流程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">RecommendationCore</span><span class="params">(features, related_table)</span>:</span></span><br><span class="line">    ret = dict() </span><br><span class="line">    <span class="keyword">for</span> fid, fweight <span class="keyword">in</span> features.items() </span><br><span class="line">        <span class="keyword">for</span> item, sim <span class="keyword">in</span> related_table[fid].items():</span><br><span class="line">            ret[item].weight += sim * fweight</span><br><span class="line">            ret[item].reason[fid] = sim * fweight </span><br><span class="line">    <span class="keyword">return</span> ret</span><br></pre></td></tr></table></figure>
+<h3 id="7-3-3-过滤模块"><a href="#7-3-3-过滤模块" class="headerlink" title="7.3.3 过滤模块"></a>7.3.3 过滤模块</h3><p>在得到初步的推荐列表后，需要先按照产品需求对结果进行过滤，过滤掉不符合要求的物品，然后再把推荐列表展现给用户。</p>
+<p>一般来说，过滤模块会过滤掉以下物品：</p>
+<ul>
+<li><strong>用户已经产生过行为物品</strong>   为了保证结果的新颖性</li>
+<li><strong>候选物品以外的物品</strong>    候选物品集合一般有两个来源，一个是<em>产品需求</em>。另一个来源是<em>用户自己的选择</em>，过滤掉不满足用户所选条件的物品。</li>
+</ul>
+<h3 id="7-3-4-排名模块"><a href="#7-3-4-排名模块" class="headerlink" title="7.3.4 排名模块"></a>7.3.4 排名模块</h3><p>对推荐列表进行排名可以更好地提升用户满意度，一般排名模块需要包括很多不同的子模块，下面对不同的模块分别加以介绍。</p>
+<h4 id="1-新颖性排名"><a href="#1-新颖性排名" class="headerlink" title="1.新颖性排名"></a>1.新颖性排名</h4><p>新颖性排名模块的<u>目的</u>是给用户尽量推荐他们不知道的、长尾中的物品。虽然前面的过滤模块已经过滤掉了用户曾经有过行为的物品，保证了一定程度的新颖性，但是用户在当前网站对某个物品没有行为并不代表用户不知道这个物品。</p>
+<p>要准确了解用户是否已经知道某个物品是非常困难的，因此只能通过某种近似的方式知道，比如使用如下公式对推荐结果中热门的物品进行降权。<br>$$<br>p_{ui} = \frac{p_{ui}}{\log{(1 + \alpha \cdot popularity(i))}}<br>$$<br>不过，要实现推荐结果的新颖性，仅仅在最后对热门物品进行降权是不够的，而应在推荐引擎的各个部分考虑新颖性问题。</p>
+<p>本章提到推荐系统架构主要是<strong>基于物品的推荐算法</strong>的，因此回顾一下基于物品的推荐算法的基本公式：<br>$$<br>p_{ui} = \sum_{j \in N(u) \cap S(i,K)} w_{ji} r_{uj}<br>$$<br>在上述公式中$j$是联系用户和推荐物品的特征。最终$p_{ui}$的大小主要取决于两个参数——$w_{ji}$和$r_{uj}$。其中，$r_{uj}$在通过用户行为生成用户特征向量时计算，而$w_{ji}$是离线计算的物品相似度。如果要提高推荐结果的新颖性，在计算这两个数时都要考虑新颖性。与上面同理对$r_{uj}$和$w_{ji}$进行降权。<br>$$<br>r_{uj} = \frac{r_{uj}}{\log(1+\alpha \cdot popularity(j))}<br>$$</p>
+<p>$$<br>w_{ji} = \frac{w_{ji}}{\log(1+\alpha \cdot popularity(i))} (popularity(i) &gt; popularity(j))<br>$$</p>
+<p>此外，也可以引入<strong>内容相似度矩阵</strong>，因为内容相似度矩阵中和每个物品相似的物品都不是很热门，所以引入内容相似度矩阵也能够提高最终推荐结果的新颖度。</p>
+<h4 id="2-多样性"><a href="#2-多样性" class="headerlink" title="2.多样性"></a>2.多样性</h4><p>增加多样性可以让推荐结果覆盖尽可能多的用户兴趣。这里需要指出的是提高多样性并不是时时刻刻都很好。</p>
+<p>第一种提高多样性的方法是将推荐结果按照某种物品的内容属性分成几类，然后在每个类中都选择该类中排名最高的物品组合成最终的推荐列表。这种方法的<u>好处</u>是比较简单直观，但这种方法也有严重的<u>缺点</u>。首先，选择什么样的内容属性进行分类对结果的影响很大。其次，就算选择了某种类别，但物品是否属于某个类别是编辑确定的，并不一定能够得到用户的公认。</p>
+<p>第二种提高推荐结果多样性的方法是控制不同推荐结果的推荐理由出现的次数。本章提出的推荐系统对于每个推荐出来的物品都有一个推荐理由，这个推荐理由一般是产生推荐结果的重要特征。那么，要提高推荐结果的多样性，就需要让推荐结果尽量来自不同的特征，具有不同的推荐理由，而不是所有的推荐结果都对应一个理由。</p>
+<p>下面的代码根据推荐理由增加推荐结果的多样性，这里输入的<code>recommendations</code>是按照权重从大到小排序的，程序中每次拿出一个推荐结果，如果这个结果已经被用过了，就会对推荐结果的权重除以2降权（这里具体除以几可以在实际应用中自己调整），最终将推荐结果重新按照权重从大到小排序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ReasonDiversity</span><span class="params">(recommendations)</span>:</span></span><br><span class="line">    reasons = set() </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> recommendations:</span><br><span class="line">        <span class="keyword">if</span> i.reason <span class="keyword">in</span> reasons:</span><br><span class="line">            i.weight /= <span class="number">2</span></span><br><span class="line">        reasons.add(i.reason) </span><br><span class="line">    recommendations = sortByWeight(recommendations)</span><br></pre></td></tr></table></figure>
+<h4 id="3-时间多样性"><a href="#3-时间多样性" class="headerlink" title="3.时间多样性"></a>3.时间多样性</h4><p>时间多样性主要是为了保证用户不要每天来推荐系统都看到同样的推荐结果。在第5章已经提到，提高推荐系统的时间多样性要从两个地方着手。首先要<em>保证推荐系统的实时性</em>，在用户有新行为时实时调整推荐结果以满足用户最近的需求。这一点，在本章的推荐系统设计中已经考虑到了。如果用户有实时行为发生，那么行为提取和分析模块就能实时拿到行为数据并转化为新的特征，然后经过特征-物品相关模块转换成和新特征最相关的物品，因而推荐列表中就立即反应了用户最新行为的影响。提高推荐结果多样性的第二个方面是<em>要在用户没有新的行为时，也要保证推荐结果每天都有变化</em>。要实现这一点，只能通过如下方式。</p>
+<ul>
+<li>记录用户每次登陆推荐系统看到的推荐结果。</li>
+<li>将这些结果发回日志系统。这种数据不需要实时存储，只要能保证小于一天的延时就足够了。</li>
+<li>在用户登录时拿到用户昨天及之前看过的推荐结果列表，从当前推荐结果中将用户已经看到的推荐结果降权。</li>
+</ul>
+<h4 id="4-用户反馈"><a href="#4-用户反馈" class="headerlink" title="4.用户反馈"></a>4.用户反馈</h4><p>排名模块最重要的部分就是用户反馈模块。用户反馈模块主要通过分析用户之前和推荐结果的交互日志，预测用户会对什么样的推荐结果比较感兴趣。</p>
+<p>如果推荐系统的目标是提高用户对推荐结果的点击率，那么可以利用<strong>点击模型(click model)</strong>预测用户是否会点击推荐结果。点击模型在很多领域得到了广泛应用，比如搜索结果的点击预测(参见论文“A dynamic bayesian network click model for web search ranking”，作者为Olivier Chapelle和Ya Zhang)、 搜索广告的点击预测(参见论文“Online learning from click data for sponsored search”，作者为Massimiliano Ciaramita、Vanessa Murdock和Vassilis Plachouras )、上下文广告的点击预测(参见论文“Contextual advertising by combining relevance with click feedback”，作者为Deepayan chakrabarti、Deepak Agarwal和Vanja Josifovski。)。点击预测的<u>主要问题</u>是预测用户看到某个推荐结果时是否会点击。那么要进行点击率预测，首先需要提取特征。在推荐系统的点击率预测中可以用如下特征预测用户$u$会不会点击物品$i$：</p>
+<ul>
+<li>用户$u$相关的特征，比如年龄、性别、活跃程度、之前有没有点击行为；</li>
+<li>物品$i$相关的特征，比如流行度，平均分，内容属性；</li>
+<li>物品$i$在推荐列表中的位置。用户的点击和用户界面的设计有很高的相关性，因此物品$i$在推荐列表中的位置对预测用户是否点击很重要；</li>
+<li>用户之前是否点击过和推荐物品$i$具有同样<strong>推荐解释</strong>的其他推荐结果；</li>
+<li>用户之前是否点击过和推荐物品$i$来自同样<strong>推荐引擎</strong>的其他推荐结果。</li>
+</ul>
+<p>点击模型需要离线计算好，在线将模型加载到内存中。为了提高在线预测的效率，一般只可以使用线性模型。</p>
+<h2 id="7-4-扩展阅读"><a href="#7-4-扩展阅读" class="headerlink" title="7.4 扩展阅读"></a>7.4 扩展阅读</h2><p>关于推荐系统架构方面的文章很多，不过详细介绍架构的技术报告不多。知名公司亚马逊和Netflix等都只给出了一些简单的线索。本章提到的推荐系统架构主要是基于本书作者在Hulu工作时使用的架构抽象发挥出来的，对于Hulu架构感兴趣的读者可以参考Hulu的技术博客(参见<a href="http://tech.hulu.com/blog/2011/09/19/recommendation-system/" target="_blank" rel="noopener">http://tech.hulu.com/blog/2011/09/19/recommendation-system/</a> )。<br><strong>MyMedia</strong>(参见<a href="http://mymediaproject.codeplex.com/" target="_blank" rel="noopener">http://mymediaproject.codeplex.com/</a> )是一个比较著名的开源推荐系统架构。它是由欧洲研究人员开发的一个推荐系统开源框架。该框架同时支持评分预测和TopN推荐，全面支持各种数据和各种算法，对该项目感兴趣的用户可以访问该项目的网站<a href="http://www.mymediaproject.org/default.aspx" target="_blank" rel="noopener">http://www.mymediaproject.org/default.aspx</a> 。<br>本章提出的推荐系统架构基本上是从基于物品的推荐算法衍生出来的，因此本章的架构并<u>不适合</u>用来解决社会化推荐问题。如果要了解社会化推荐方面的架构，可以参考Twitter公开的一些文档。</p>
 
       
     </div>
@@ -474,8 +504,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/24/推荐系统实践读书笔记（二）/" rel="next" title="推荐系统实践读书笔记（二）">
-                <i class="fa fa-chevron-left"></i> 推荐系统实践读书笔记（二）
+              <a href="/2018/11/29/推荐系统实践读书笔记（六）/" rel="next" title="推荐系统实践读书笔记（六）">
+                <i class="fa fa-chevron-left"></i> 推荐系统实践读书笔记（六）
               </a>
             
           </div>
@@ -483,10 +513,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/27/推荐系统实践读书笔记（四）/" rel="prev" title="推荐系统实践读书笔记（四）">
-                推荐系统实践读书笔记（四） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -659,7 +685,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第3章-推荐系统冷启动问题"><span class="nav-number">1.</span> <span class="nav-text">第3章 推荐系统冷启动问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-冷启动问题简介"><span class="nav-number">1.1.</span> <span class="nav-text">3.1 冷启动问题简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-利用用户注册信息"><span class="nav-number">1.2.</span> <span class="nav-text">3.2 利用用户注册信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-选择合适的物品启动用户的兴趣"><span class="nav-number">1.3.</span> <span class="nav-text">3.3 选择合适的物品启动用户的兴趣</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-利用物品的内容信息"><span class="nav-number">1.4.</span> <span class="nav-text">3.4 利用物品的内容信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#话题模型"><span class="nav-number">1.4.1.</span> <span class="nav-text">话题模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-发挥专家的作用"><span class="nav-number">1.5.</span> <span class="nav-text">3.5 发挥专家的作用</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第7章-推荐系统实例"><span class="nav-number">1.</span> <span class="nav-text">第7章 推荐系统实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-外围架构"><span class="nav-number">1.1.</span> <span class="nav-text">7.1 外围架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据收集和存储"><span class="nav-number">1.1.1.</span> <span class="nav-text">数据收集和存储</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-推荐系统架构"><span class="nav-number">1.2.</span> <span class="nav-text">7.2 推荐系统架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-推荐引擎的架构"><span class="nav-number">1.3.</span> <span class="nav-text">7.3 推荐引擎的架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-1-生成用户特征向量"><span class="nav-number">1.3.1.</span> <span class="nav-text">7.3.1 生成用户特征向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-2-特征—物品相关推荐"><span class="nav-number">1.3.2.</span> <span class="nav-text">7.3.2 特征—物品相关推荐</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-3-过滤模块"><span class="nav-number">1.3.3.</span> <span class="nav-text">7.3.3 过滤模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-4-排名模块"><span class="nav-number">1.3.4.</span> <span class="nav-text">7.3.4 排名模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-新颖性排名"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">1.新颖性排名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-多样性"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">2.多样性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-时间多样性"><span class="nav-number">1.3.4.3.</span> <span class="nav-text">3.时间多样性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-用户反馈"><span class="nav-number">1.3.4.4.</span> <span class="nav-text">4.用户反馈</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-4-扩展阅读"><span class="nav-number">1.4.</span> <span class="nav-text">7.4 扩展阅读</span></a></li></ol></li></ol></div>
             
 
           </div>
