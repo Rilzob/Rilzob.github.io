@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="技术，IT" />
+  <meta name="keywords" content="Python,推荐系统," />
 
 
 
@@ -81,17 +81,18 @@
 
 
 
-<meta name="description" content="Python中@staticmethod和@classmethod的用法一般来说，调用某个类的方法，需要预先生成一个实例，再通过实例调用方法。Java中有静态方法，可以使用类直接进行调用。Python中提供了两个修饰符@staticmethod和@classmethod以达到类似效果，使用它们就可以不需要实例化，直接类名.方法名()来调用。这有利于组织代码，把某些应该属于某个类的函数给放到那个类中">
+<meta name="description" content="后记本书着重介绍了推荐系统的各种算法设计和系统设计的方法，并且利用一些公开的数据集离线评测了各种算法。对于无法通过离线评测知道算法性能的情况，本书引用了很多著名的用户调查实验来比较不同的算法。 但需要申明的一点是，本书的很多离线实验都是在一两个数据集上完成的，所以本书得到的所有结论都不是定论，可能换一个数据集就会得到完全相反的结论。这主要是因为不同网站中的用户行为有很大的差异，所以推荐系统很难有放">
+<meta name="keywords" content="Python,推荐系统">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python中@staticmethod和@classmethod的用法">
-<meta property="og:url" content="https://rilzob.com/2018/10/27/Python中@staticmethod和@classmethod的用法的副本/index.html">
+<meta property="og:title" content="《推荐系统实践》读书笔记总结">
+<meta property="og:url" content="https://rilzob.com/2018/12/04/《推荐系统实践》读书笔记总结/index.html">
 <meta property="og:site_name" content="极氙世界">
-<meta property="og:description" content="Python中@staticmethod和@classmethod的用法一般来说，调用某个类的方法，需要预先生成一个实例，再通过实例调用方法。Java中有静态方法，可以使用类直接进行调用。Python中提供了两个修饰符@staticmethod和@classmethod以达到类似效果，使用它们就可以不需要实例化，直接类名.方法名()来调用。这有利于组织代码，把某些应该属于某个类的函数给放到那个类中">
+<meta property="og:description" content="后记本书着重介绍了推荐系统的各种算法设计和系统设计的方法，并且利用一些公开的数据集离线评测了各种算法。对于无法通过离线评测知道算法性能的情况，本书引用了很多著名的用户调查实验来比较不同的算法。 但需要申明的一点是，本书的很多离线实验都是在一两个数据集上完成的，所以本书得到的所有结论都不是定论，可能换一个数据集就会得到完全相反的结论。这主要是因为不同网站中的用户行为有很大的差异，所以推荐系统很难有放">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-27T02:01:47.879Z">
+<meta property="og:updated_time" content="2018-12-04T10:57:12.208Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python中@staticmethod和@classmethod的用法">
-<meta name="twitter:description" content="Python中@staticmethod和@classmethod的用法一般来说，调用某个类的方法，需要预先生成一个实例，再通过实例调用方法。Java中有静态方法，可以使用类直接进行调用。Python中提供了两个修饰符@staticmethod和@classmethod以达到类似效果，使用它们就可以不需要实例化，直接类名.方法名()来调用。这有利于组织代码，把某些应该属于某个类的函数给放到那个类中">
+<meta name="twitter:title" content="《推荐系统实践》读书笔记总结">
+<meta name="twitter:description" content="后记本书着重介绍了推荐系统的各种算法设计和系统设计的方法，并且利用一些公开的数据集离线评测了各种算法。对于无法通过离线评测知道算法性能的情况，本书引用了很多著名的用户调查实验来比较不同的算法。 但需要申明的一点是，本书的很多离线实验都是在一两个数据集上完成的，所以本书得到的所有结论都不是定论，可能换一个数据集就会得到完全相反的结论。这主要是因为不同网站中的用户行为有很大的差异，所以推荐系统很难有放">
 
 
 
@@ -121,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://rilzob.com/2018/10/27/Python中@staticmethod和@classmethod的用法的副本/"/>
+  <link rel="canonical" href="https://rilzob.com/2018/12/04/《推荐系统实践》读书笔记总结/"/>
 
 
 
 
 
-  <title>Python中@staticmethod和@classmethod的用法 | 极氙世界</title>
+  <title>《推荐系统实践》读书笔记总结 | 极氙世界</title>
   
 
 
@@ -288,7 +289,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://rilzob.com/2018/10/27/Python中@staticmethod和@classmethod的用法的副本/">
+    <link itemprop="mainEntityOfPage" href="https://rilzob.com/2018/12/04/《推荐系统实践》读书笔记总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Rilzob">
@@ -305,7 +306,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Python中@staticmethod和@classmethod的用法</h1>
+          <h1 class="post-title" itemprop="name headline">《推荐系统实践》读书笔记总结</h1>
         
 
         <div class="post-meta">
@@ -317,8 +318,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-27T09:50:32+08:00">
-                2018-10-27
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-04T17:01:44+08:00">
+                2018-12-04
               </time>
             
 
@@ -340,8 +341,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
                   </a>
                 </span>
 
@@ -377,27 +378,30 @@
       
 
       
-        <h1 id="Python中-staticmethod和-classmethod的用法"><a href="#Python中-staticmethod和-classmethod的用法" class="headerlink" title="Python中@staticmethod和@classmethod的用法"></a>Python中@staticmethod和@classmethod的用法</h1><p>一般来说，调用某个类的方法，需要预先生成一个实例，再通过实例调用方法。Java中有静态方法，可以使用类直接进行调用。Python中提供了两个修饰符<code>@staticmethod</code>和<code>@classmethod</code>以达到类似效果，使用它们就可以不需要实例化，直接<strong>类名.方法名()</strong>来调用。这有利于组织代码，把某些应该属于某个类的函数给放到那个类中，同时有利于命名空间的整洁。<a id="more"></a></p>
-<h2 id="staticmethod"><a href="#staticmethod" class="headerlink" title="@staticmethod"></a>@staticmethod</h2><p><code>@staticmethod</code>声明方法为静态方法，直接通过<strong>类名.方法名()</strong>调用。经过<code>@staticmethod</code>修饰的方法，<strong>不需要self参数</strong>，其使用方法和直接调用函数一样。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#直接定义一个test()函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"i am a normal method!"</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">#定义一个类，其中包括一个类方法，采用@staticmethod修饰    </span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">T</span>:</span></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">static_test</span><span class="params">()</span>:</span> <span class="comment"># 没有self参数</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"i am a static method!"</span></span><br><span class="line"></span><br><span class="line">        </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    test()</span><br><span class="line">    T.static_test()</span><br><span class="line">    T().static_test()</span><br><span class="line"></span><br><span class="line">output:</span><br><span class="line">i am a normal method!</span><br><span class="line">i am a static method!</span><br><span class="line">i am a static method!</span><br></pre></td></tr></table></figure>
-<h2 id="classmethod"><a href="#classmethod" class="headerlink" title="@classmethod"></a>@classmethod</h2><p><code>@classmethod</code>声明方法为类方法，直接通过<strong>类名.方法名()</strong>调用。经过<code>@classmethod</code>修饰的方法，<strong>不需要self参数</strong>，但是<strong>需要一个标识类本身的cls参数</strong>。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">T</span>:</span></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">class_test</span><span class="params">(cls)</span>:</span> <span class="comment"># 必须有cls参数</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"i am a class method"</span></span><br><span class="line"></span><br><span class="line">        </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    T.class_test()</span><br><span class="line">    T().class_test()</span><br><span class="line"></span><br><span class="line">output:</span><br><span class="line">i am a <span class="class"><span class="keyword">class</span> <span class="title">method</span></span></span><br><span class="line"><span class="class"><span class="title">i</span> <span class="title">am</span> <span class="title">a</span> <span class="title">class</span> <span class="title">method</span></span></span><br></pre></td></tr></table></figure>
-<p><em><code>@classmethod</code>另一个实用的用法：在不改变已经写好的类里面的方法的情况下，对输入的数据进行处理。</em></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出年月日，正常的情况下</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">demo1</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, year=<span class="number">0</span>, month=<span class="number">0</span>, day=<span class="number">0</span>)</span>:</span></span><br><span class="line">        self.year = year</span><br><span class="line">        self.month = month</span><br><span class="line">        self.day = day</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">out_date</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"year: %d, month: %d, day: %d"</span> % (self.year, self.month, self.day)</span><br><span class="line">    </span><br><span class="line">year = <span class="number">2018</span></span><br><span class="line">month = <span class="number">10</span></span><br><span class="line">day = <span class="number">27</span></span><br><span class="line"></span><br><span class="line">demo1 = demo1(year, month, day)</span><br><span class="line">print(demo1.out_date())  <span class="comment"># year: 2018, month: 10, day: 27</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果用户输入的是2018-10-27格式，需要在输出前处理一下，就可以使用classmethod达到想要的效果</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">demo2</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, year=<span class="number">0</span>, month=<span class="number">0</span>, day=<span class="number">0</span>)</span>:</span></span><br><span class="line">        self.year = year</span><br><span class="line">        self.month = month</span><br><span class="line">        self.day = day</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">out_date</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"year: %d, month: %d, day: %d"</span> % (self.year, self.month, self.day)</span><br><span class="line">    </span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pre_out</span><span class="params">(cls, date_string)</span>:</span></span><br><span class="line">        year, month, day = map(int, date_string.split(<span class="string">"-"</span>))</span><br><span class="line">        <span class="keyword">return</span> cls(year, month, day)</span><br><span class="line">    </span><br><span class="line">date = <span class="string">"2018-10-27"</span></span><br><span class="line">year = <span class="number">2017</span></span><br><span class="line">month = <span class="number">7</span></span><br><span class="line">day = <span class="number">7</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    demo2 = demo2.pre_out(date)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    demo2 = demo2(year, month, day)</span><br><span class="line">    </span><br><span class="line">print(demo2.out_date())  <span class="comment"># year: 2018, month: 10, day: 6</span></span><br></pre></td></tr></table></figure>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
-<li><code>@staticmethod</code>不需要表示自身对象的self参数和自身类的cls参数，就跟使用函数一样。</li>
-<li><code>@classmethod</code>也不需要self参数，但第一个参数需要是表示自身类的cls参数。</li>
-<li>在Python中类和实例都是对象，都占用了内存空间，合理使用<code>@staticmethod</code>和<code>@classmethod</code>修饰符，就可以不经过实例化直接使用类的方法了。</li>
-</ul>
-<blockquote>
-<p>引用文章：</p>
+        <h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>本书着重介绍了推荐系统的各种算法设计和系统设计的方法，并且利用一些公开的数据集离线评测了各种算法。对于无法通过离线评测知道算法性能的情况，本书引用了很多著名的用户调查实验来比较不同的算法。</p>
+<p>但需要申明的一点是，本书的很多离线实验都是在一两个数据集上完成的，所以本书得到的所有结论都不是定论，可能换一个数据集就会得到完全相反的结论。这主要是因为不同网站中的用户行为有很大的差异，所以推荐系统很难有放之四海而皆准的结论。因此，需要在自己的数据集上重复本书介绍的实验和算法，再得到审核自己具体情况的结论。</p>
+<a id="more"></a>
+<p>2009年ACM推荐系统大会上Strand研究人员做的一个报告“推荐系统十堂课”，在这个报告中Strand的研究人员总结了他们设计推荐系统的经验，提出了10条在设计推荐系统中学习到的经验和教训。</p>
 <ol>
-<li><a href="https://blog.csdn.net/sinat_34079973/article/details/53502348" target="_blank" rel="noopener">Python @staticmethod@classmethod用法 - sinat_34079973的博客 - CSDN博客</a></li>
-<li><a href="https://blog.csdn.net/handsomekang/article/details/9615239" target="_blank" rel="noopener">飘逸的python - @staticmethod和@classmethod的作用与区别 - mattkang - CSDN博客</a></li>
-<li><a href="https://www.jianshu.com/p/eea864224e2d" target="_blank" rel="noopener">classmethod的两个实用用法 - 简书</a></li>
+<li><strong>确定你真的需要推荐系统。</strong>推荐系统只有在用户遇到信息过载时才必要。如果你的网站物品不太多，或者用户兴趣都比较单一，那么也许并不需要推荐系统。所以不要纠结于推荐系统这个词，不要为了做推荐系统而做推荐系统，而是应该从用户的角度出发，设计出能够真正帮助用户发现内容的系统，无论这个系统算法是否复杂，只要能够真正帮助用户，就是一个好的系统。</li>
+<li><strong>确定商业目标和用户满意度之间的关系。</strong>对用户好的推荐系统不代表商业上有用的推荐系统，因此要首先确定用户满意的推荐系统和商业上需求的差距。一般来说，有些时候用户满意和商业需求并不吻合。但是一般情况下，用户满意度总是符合企业的长期利益，因此这一条的主要观点是要平衡企业的长期利益和短期利益之间的关系。</li>
+<li><strong>选择合适的开发人员。</strong>一般来说，如果是一家大公司，应该雇用自己的开发人员来专门进行推荐系统的开发。</li>
+<li><strong>忘记冷启动的问题。</strong>不断地创新，互联网上有任何你想要的数据。只要用户喜欢你的产品，他们就会不断贡献新的数据。</li>
+<li><strong>平衡数据和算法之间的关系。</strong>使用正确的用户数据对推荐系统至关重要。对用户行为数据的深刻理解是设计好推荐系统的必要条件，因此分析数据是设计系统中最重要的部分。数据分析决定了如何设计模型，而算法只是决定了最终如何优化模型。</li>
+<li><strong>找到相关的物品很容易，但是何时以何种方式将它们展现给用户是很困难的。</strong>不要为了推荐而推荐。</li>
+<li><strong>不要浪费时间计算相似兴趣的用户，可以直接利用社会网络数据。</strong></li>
+<li><strong>需要不断地提升算法的扩展性。</strong></li>
+<li><strong>选择合适的用户反馈方式。</strong></li>
+<li><strong>设计合理的评测系统，时刻关注推荐系统各方面的性能。</strong></li>
 </ol>
-</blockquote>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这本书很早之前就想看了而且很早之前就买了，然后可能由于当时看到这里面复杂的数学公式和算法望而生畏就没有读下去，只读了一点。最近不是很忙，加上心血来潮花了一周时间粗略地看了一遍并且整理了读书笔记。同时，这也是我第一次写读书笔记，笔记的很大部分都是摘抄书上内容，而另一部分则是将书上内容用我自己的语言加以概括。这么做的原因有两点：<em>(1)第一次整理读书笔记不清楚该如何整理；(2)关于推荐系统方面的内容是我第一次了解，所以很多知识都是第一次听说，因此觉得书上的所有内容我都需要学习、整理。</em>尽管这次我整理了书中几乎所有的公式，但是没有一个公式是我真正推导验证过的，只知皮毛。当然这么做也是有我的理由的，我觉得即使我这次推导了一遍公式，记忆很牢固但是如果长期不去使用、复习，那么忘记是迟早的事。</p>
+<p>为了让自己心里不那么惭愧，我总结了通过这次整理读书笔记学到的阅读整理技巧，聊以自慰：</p>
+<ol>
+<li><strong>读技术性书籍不要奢求读一次便要全部掌握记牢，欲速则不达。</strong>读技术性书籍有好几种阅读方法，你可以尝试带有目的性的去读，当前你需要去了解哪部分知识便去读那部分知识，这样可以做当通过实际生活中的应用加深你对相应知识的理解，两全其美。当然，你也可以去读两三遍，第一遍读的时候知识粗略了解，能够做到如果遇到问题知道在书中哪部分寻找解答方法即可，这就可以算作第二遍去阅读。第三遍阅读则是你遇到的问题多得已经几乎让你将书中提到的算法全部实现过了，这时候你再去阅读一遍目的是将整个知识体系梳理一遍，因为这时候估计你已经能够做到遇到1马上知道1后面跟的是2了。这两种阅读方法无法比较好坏，只能说面对的情况不同，选择的阅读方法就不同。</li>
+<li><strong>读书笔记的整理也很相似，当你第一遍阅读的时候可以只在书上画出你觉得重要的部分</strong>。不要急于去整理，<u>原因</u>是当你第一次阅读某一领域的书籍时会遇见很多你不了解的知识，如果直接去整理摘抄的话，不说你会收获多少，时间成本就很大（我在整理这本书的读书笔记的时候就深刻意识到了这点，因为我可能只花一两个小时去阅读一章，但是会花掉我四五个小时去整理摘抄并且这个过程是十分枯燥无趣的，令人很难坚持完成），而且长时间不复习很容易会忘记，更令人难过的是你会认为自己将阅读这本书的时间算作是浪费掉的，这种挫败感至少对我来说是难以化解的，从而丧失了积极反馈，成就感荡然无存。真正该去整理的时间是在第二次复习的时候，因为当你结合你实际问题去阅读的时候，实际问题会给你提供一个角度，你会从这个角度看待这部分知识。同样你也会从这个角度去理解这部分知识，进而解决实际问题，这可能就是大佬说的每次阅读会学到不同的东西。</li>
+</ol>
+<p>最后评价一下这本书。看到扉页上写到2012年6月第一版，距离现在已经六年多了。不难想象这本书所涉及到的机器学习的知识在当时可以算作是十分前沿的技术，因为当时还没有深度学习的提出，AI领域的爆发式发展，梯度下降等机器学习算法还没像现在这般耳熟能详。如果我能在那个年代读到这样一本书，那么我一定是最”前卫”的程序员。因此，我觉得这本书可以算作是推荐系统领域的经典入门必读书籍，这个称号当之无愧，国人能写出这种水平的书籍我感到无比自豪。书中引用很多论文并且介绍了这些论文中的算法，严谨细致，为对推荐领域更为感兴趣的读者提供了丰富的扩展阅读材料，并且介绍的众多算法无一不是当时最为流行的推荐系统算法，这一点从作者所引用论文的发表时间就可以看出。由浅入深，先介绍简单算法再一步步加以改进，使读者更加容易消化理解。同时书中也加入了作者自己的观点以及经验，干货十足。然而令人可惜地是本书没有第二版，书中介绍的Amazon和Twitter的一些例子在如今看来早已过时，国内也出现了以推荐系统为核心技术的独角兽公司例如今日头条等。</p>
+<p>但瑕不掩瑜，我仍然以读到此书为我的一大幸事。</p>
 
       
     </div>
@@ -413,6 +417,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/推荐系统/" rel="tag"># 推荐系统</a>
+          
+        </div>
+      
 
       
       
@@ -422,8 +434,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/26/Python中super()函数的用法的副本/" rel="next" title="Python中super()函数的用法及其说明">
-                <i class="fa fa-chevron-left"></i> Python中super()函数的用法及其说明
+              <a href="/2018/12/01/推荐系统实践读书笔记（八）/" rel="next" title="推荐系统实践读书笔记（八）">
+                <i class="fa fa-chevron-left"></i> 推荐系统实践读书笔记（八）
               </a>
             
           </div>
@@ -431,10 +443,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/27/Python中@classmethod和@staticmethod的区别的副本/" rel="prev" title="Python中@classmethod和@staticmethod的区别">
-                Python中@classmethod和@staticmethod的区别 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -607,7 +615,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python中-staticmethod和-classmethod的用法"><span class="nav-number">1.</span> <span class="nav-text">Python中@staticmethod和@classmethod的用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#staticmethod"><span class="nav-number">1.1.</span> <span class="nav-text">@staticmethod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#classmethod"><span class="nav-number">1.2.</span> <span class="nav-text">@classmethod</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">1.3.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">1.</span> <span class="nav-text">后记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
