@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="技术，IT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="极氙世界" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="内容摘要 启动 计算机结构概述 计算机内存和硬盘布局 系统启动流程   中断、异常和系统调用 背景(3.3) 中断、异常和系统调用相比较(3.3) 中断和异常处理机制(3.3) 系统调用的概念和实现(3.4) 程序调用与系统调用的不同之处(3.4) 开销(3.4) 系统调用示例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="启动、中断、异常和系统调用">
+<meta property="og:url" content="https://rilzob.com/2019/03/17/启动、中断、异常和系统调用/index.html">
+<meta property="og:site_name" content="极氙世界">
+<meta property="og:description" content="内容摘要 启动 计算机结构概述 计算机内存和硬盘布局 系统启动流程   中断、异常和系统调用 背景(3.3) 中断、异常和系统调用相比较(3.3) 中断和异常处理机制(3.3) 系统调用的概念和实现(3.4) 程序调用与系统调用的不同之处(3.4) 开销(3.4) 系统调用示例">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://rilzob.com/2019/03/17/启动、中断、异常和系统调用/646b720b.png">
+<meta property="og:image" content="https://rilzob.com/2019/03/17/启动、中断、异常和系统调用/7ca54080.png">
+<meta property="og:image" content="https://rilzob.com/2019/03/17/启动、中断、异常和系统调用/fef5918d.png">
+<meta property="og:image" content="https://rilzob.com/2019/03/17/启动、中断、异常和系统调用/1f91e41e.png">
+<meta property="og:image" content="https://rilzob.com/2019/03/17/启动、中断、异常和系统调用/a874dc69.png">
+<meta property="og:image" content="https://rilzob.com/2019/03/17/启动、中断、异常和系统调用/5caace75.png">
+<meta property="og:image" content="https://rilzob.com/2019/03/17/启动、中断、异常和系统调用/efa2604d.png">
+<meta property="og:image" content="https://rilzob.com/2019/03/17/启动、中断、异常和系统调用/692c3df7.png">
+<meta property="og:updated_time" content="2019-03-17T13:45:36.317Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="启动、中断、异常和系统调用">
+<meta name="twitter:description" content="内容摘要 启动 计算机结构概述 计算机内存和硬盘布局 系统启动流程   中断、异常和系统调用 背景(3.3) 中断、异常和系统调用相比较(3.3) 中断和异常处理机制(3.3) 系统调用的概念和实现(3.4) 程序调用与系统调用的不同之处(3.4) 开销(3.4) 系统调用示例">
+<meta name="twitter:image" content="https://rilzob.com/2019/03/17/启动、中断、异常和系统调用/646b720b.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://rilzob.com/2019/03/17/启动、中断、异常和系统调用/"/>
+
+
+
+
+
+  <title>启动、中断、异常和系统调用 | 极氙世界</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">极氙世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">追求梦想，永不止步</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://rilzob.com/2019/03/17/启动、中断、异常和系统调用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rilzob">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="极氙世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">启动、中断、异常和系统调用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-17T21:25:37+08:00">
+                2019-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机科学与技术/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机科学与技术</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机科学与技术/操作系统/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="内容摘要"><a href="#内容摘要" class="headerlink" title="内容摘要"></a>内容摘要</h1><ul>
+<li>启动<ul>
+<li>计算机结构概述</li>
+<li>计算机内存和硬盘布局</li>
+<li>系统启动流程</li>
+</ul>
+</li>
+<li>中断、异常和系统调用<ul>
+<li>背景(3.3)</li>
+<li>中断、异常和系统调用相比较(3.3)</li>
+<li>中断和异常处理机制(3.3)</li>
+<li>系统调用的概念和实现(3.4)</li>
+<li>程序调用与系统调用的不同之处(3.4)</li>
+<li>开销(3.4)</li>
+<li>系统调用示例<a id="more"></a>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="3-1-BIOS"><a href="#3-1-BIOS" class="headerlink" title="3.1 BIOS"></a>3.1 BIOS</h1><h2 id="计算机体系结构概述"><a href="#计算机体系结构概述" class="headerlink" title="计算机体系结构概述"></a>计算机体系结构概述</h2><p><img src="/2019/03/17/启动、中断、异常和系统调用/646b720b.png" alt="计算机体系结构概述"></p>
+<h2 id="启动时计算机内存和磁盘布局"><a href="#启动时计算机内存和磁盘布局" class="headerlink" title="启动时计算机内存和磁盘布局"></a>启动时计算机内存和磁盘布局</h2><p><img src="/2019/03/17/启动、中断、异常和系统调用/7ca54080.png" alt="启动时计算机内存和磁盘布局"><br>CPU加电后会对里面寄存器做一个初始化到一个指定的状态，然后去执行第一条指令，第一条指令存储在内存中。内存会分为RAM随机访问存储和ROM只读存储两部分，系统的初始化代码存储在ROM中。<br>系统CPU完成初始化后，它处于实模式下，在实模式下它的地址计算把段寄存器左移4位，然后加上它的当前指令指针，这两个加在一起作为当前访问第一条指令的位置，还有一条限制是说在加电的时候，它处于实模式，这个时候地址总线并不是像我们现在用到的通常系统是32位，它只有20位的地址可用即用的区域是2的20次方就是1M，所以放的区域就只能放在最底下1M里头的一小块。<br>这块代码为了从硬盘上读数据，它必须提供相应的服务，如果没有这些服务，是没有办法访问到磁盘设备的，为了做到这件事情，在BIOS里头它需要提供这样的一些功能：<br><strong>(1)基本的输入输出</strong>：完成能够从磁盘上读数据，从键盘上读用户的输入并且可以在显示器上显示相应的输出。<br><strong>(2)系统的配置信息</strong>：由BIOS的设置来决定加电时是从硬盘启动、从网络启动还是说从光盘启动。依据这些设置执行它的启动程序，并且能从硬盘把加载程序和操作系统内容加载到系统当中来。<br><img src="/2019/03/17/启动、中断、异常和系统调用/fef5918d.png" alt="加载程序的内存地址空间"><br>具体过程：</p>
+<p><strong>BIOS</strong></p>
+<ol>
+<li>初始化完成后，将加载程序从磁盘的引导扇区(这个引导扇区长度只有512字节，更长的它没有这个能力在BIOS程序，它不允许能读更多内容)加载到指定的位置(Ox7c00)；</li>
+<li>跳转到其中的固定位置(CS:IP=0000:7c00)；</li>
+<li>把控制权转到从磁盘上读进来的程序，这里是加载程序；</li>
+</ol>
+<p><strong>加载程序</strong></p>
+<ol>
+<li>将操作系统的代码和数据从硬盘加载到内存中；</li>
+<li>跳转到操作系统的起始位置，把控制权交给操作系统，来继续执行操作系统功能；</li>
+</ol>
+<p><em>BIOS可以从磁盘读取加载程序，那么为什么不直接从BIOS里将操作系统的内核映像读取进来而通过加载程序再去读取呢？<br>说明：由于磁盘是由文件系统的并且文件系统多种多样，不能限制磁盘只使用一种文件系统，而且又不能在BIOS上加上认识所有文件系统的代码。为了增加这种灵活性，在这里就有一个基本约定就是我不需要认识格式也能从里头读到读到第一块，读到这块后会用这块里的加载程序来识别磁盘上的文件系统，认识磁盘上的文件系统后就可以读到操作系统内核的镜像并把它加载到内存当中来。这整个过程就是用加载程序读到操作系统来，这个过程后再把相应的控制权转到读进来的操作系统内核上，之后操作系统就可以运行了。</em></p>
+<p><em>总结一下BIOS最初存放在内存中的ROM部分，加载程序和操作系统则存放在磁盘中，BIOS首先从磁盘中读取加载程序放入内存中，然后通过内存中的加载程序将磁盘中存储的操作系统也读取到内存中，最终跳转到操作系统在内存中的起始地址，把控制权交给操作系统。</em></p>
+<p><strong>(3)开机自检和系统启动程序</strong></p>
+<h2 id="BIOS系统调用"><a href="#BIOS系统调用" class="headerlink" title="BIOS系统调用"></a>BIOS系统调用</h2><ul>
+<li>BIOS以中断调用的方式提供了基本的I/O功能<ul>
+<li>INT 10h:字符显示</li>
+<li>INT 13h:磁盘扇区读写</li>
+<li>INT 15h:检测内存大小</li>
+<li>INT 16h:键盘输入</li>
+</ul>
+</li>
+<li>只能在x86实模式下访问，如果是在保护模式下上述功能无法使用</li>
+</ul>
+<h1 id="3-2-系统启动流程"><a href="#3-2-系统启动流程" class="headerlink" title="3.2 系统启动流程"></a>3.2 系统启动流程</h1><h2 id="计算机启动流程"><a href="#计算机启动流程" class="headerlink" title="计算机启动流程"></a>计算机启动流程</h2><p>之前所说的加电后去读BIOS，BIOS再去读你的加载程序，加载程序去读内核映像，这个实际上又可以细化下去，因为我们在加载程序的时候，在BIOS里头并不能直接去读<strong>加载程序(bootloader)</strong>。</p>
+<p>最早系统里只有一个分区的时候可以直接在分区里找文件系统，然而现在大多数的计算机里头并非只有一个分区，可能会有几个分区，并且每个分区可能会装不同的系统，这时就需要在前边加上一个<strong>主引导记录</strong>，这个主引导记录的目的就是说明要从哪个文件系统内去读加载程序。有了主引导记录后就进到当前某个分区里面，分区里面又有一个分区的<strong>引导扇区</strong>，这个<strong>活动分区</strong>的引导扇区再来加载文件系统的加载程序。这个过程当中实际上我们就需要知道中间这几个部分的格式是什么样子的，如果不知道，那么写出来的程序最终存到磁盘上机器是不能够从里头认识的。</p>
+<p>总结一下首先系统加电，BIOS初始化硬件，之后BIOS读取磁盘上最前边的<strong>主引导扇区代码(主引导记录)</strong>，由主引导记录得知我们知道接下来要进入哪个分区，进入分区后主引导记录读取<strong>活动分区</strong>的<strong>引导扇区代码</strong>，引导扇区再来读取文件系统内的加载程序，层层递进，类似栈的结构。<br><img src="/2019/03/17/启动、中断、异常和系统调用/1f91e41e.png" alt="计算机启动流程"></p>
+<h2 id="CPU初始化"><a href="#CPU初始化" class="headerlink" title="CPU初始化"></a>CPU初始化</h2><p>具体说来有这样的几个过程，首先CPU加电完成它的初始化到一个确定的状态去读第一条指令，我们需要知道CPU初始化之后它的代码段段寄存器和当前指令指针寄存器这两个寄存器的内容，算出它的第一条指令在内存当中的什么地方，这是它计算的依据。<br>因为它是实模式，所以CS和IP都是16位的，CS左移4位后与IP相加算出当前访问的第一条指令的位置。并且BIOS存放在内存中最底下的1M位置，原因是实模式下地址总线是只有20位。<br>CPU加电稳定后从0XFFFF0(CS:IP=0xf000:fff0)读第一条指令，第一条指令是跳转指令。<br><img src="/2019/03/17/启动、中断、异常和系统调用/a874dc69.png" alt="CPU初始化"></p>
+<h2 id="BIOS初始化过程"><a href="#BIOS初始化过程" class="headerlink" title="BIOS初始化过程"></a>BIOS初始化过程</h2><p>BIOS除了从磁盘上读取加载程序，实际上还有很多事情要做。<br>(1) <u>硬件自检POST</u>：顾名思义硬件自检是为了检测出硬件的好坏。<br>(2) <u>检查系统中内存和显卡等关键部件的是否存在和工作状态。</u><br>(3) <u>查找并执行显卡等接口卡BIOS，进行<strong>设备初始化</strong>。</u>因为这些关键性的接口卡里也有它自己的初始化程序。<br>(4) <u>执行系统BIOS，进行系统检测，检测和配置系统中安装的即插即用设备(<strong>系统初始化</strong>)。</u>比如我想从一个USB接口的光驱里启动系统，如何启动？在这个BIOS里的自检是能够做到系统的自检，检测并配置这些即插即用的设备。<br>(5) <u>更新CMOS中的扩展系统配置数据ESCD。</u>上述都做完了后就已经知道系统里连接了哪些硬件，在BIOS里有一个<strong>系统配置表(ESCD)</strong>，就是<strong>扩展系统配置数据</strong>。通过这个数据就可以知道当前系统里有些什么设备，并且这个数据会随着设备的改变而改变。<br>(6) <u>按指定启动顺序从软盘、硬盘或光驱启动。</u>第5步也做完后就将控制权转移到从外部读进来的数据里或读进来的代码里，而这就是按照我们在BIOS里指定的顺序，从软盘、硬盘或者光盘或者指定的其他设备上读进第一块扇区。</p>
+<h2 id="主引导记录MBR格式"><a href="#主引导记录MBR格式" class="headerlink" title="主引导记录MBR格式"></a>主引导记录MBR格式</h2><p>读进扇区后面临多个分区，这时候就需要主引导记录。主引导记录总共512字节，分为三部分：启动代码、硬盘分区表和结束标志字。</p>
+<h3 id="启动代码"><a href="#启动代码" class="headerlink" title="启动代码"></a>启动代码</h3><p>启动代码占主引导记录中的446字节，它的主要作用有两点：</p>
+<ol>
+<li>检查分区表正确性。如果分区表是错误的，那么程序时无法正常加载的；</li>
+<li>加载并跳转到磁盘上的引导程序；</li>
+</ol>
+<h3 id="硬盘分区表"><a href="#硬盘分区表" class="headerlink" title="硬盘分区表"></a>硬盘分区表</h3><p>硬盘分区表则占64字节，硬盘分区表负责描述分区状态和位置，每个分区描述信息占16字节。</p>
+<h3 id="结束标志字"><a href="#结束标志字" class="headerlink" title="结束标志字"></a>结束标志字</h3><p>结束标志字占剩余的2字节。所有的引导扇区都有一个结束标志，这个结束标是55AA。有了结束标后，它才认为这是一个合法的主引导记录。</p>
+<h2 id="分区引导扇区格式"><a href="#分区引导扇区格式" class="headerlink" title="分区引导扇区格式"></a>分区引导扇区格式</h2><p>由主引导记录进入分区后同样需要面对分区引导扇区，分区引导扇区由4个部分组成：</p>
+<ol>
+<li>跳转指令：跳转到启动代码。这条跳转指令与平台相关，CPU不同跳转指令不同(我猜是因为汇编语言分为Intel格式和AT&amp;T格式两种)</li>
+<li>文件卷头：文件系统描述信息。</li>
+<li>启动代码：跳转到加载程序。启动代码说明加载程序的位置，加载程序可以放在任意的地方只需启动代码标识出来即可。</li>
+<li>结束标志：55AA，和主引导记录的结束标志字相同。</li>
+</ol>
+<h2 id="加载程序-bootloader"><a href="#加载程序-bootloader" class="headerlink" title="加载程序(bootloader)"></a>加载程序(bootloader)</h2><p>加载程序同样可以细化，主要分成三步：</p>
+<ol>
+<li>从文件系统中读取启动配置信息。加载程序并非直接去加载内核，而是从文件系统中读一个启动配置文件(这时候加载程序是能够认识文件系统的格式的)，这个启动配置文件在不同的操作系统里是不一样的，比如Windows和Linux都有自己的格式，这样Windows和Linux都有自己的加载程序的格式。</li>
+<li>可选的操作系统内核列表和加载参数。依据配置信息选择启动的参数，比如是正常启动，还是在安全模式下启动，更或者是在调试状态下启动系统，这些区别都可以读出来。</li>
+<li>依据配置加载指定内核并跳转到内核执行。参数已经选择好后，配置信息导致加载程序在加载内核的时候内核会不一样，依据配置加载内核。</li>
+</ol>
+<p><img src="/2019/03/17/启动、中断、异常和系统调用/5caace75.png" alt="加载程序"></p>
+<p>虽然整个过程的描述已经细化，但是介绍的仍然是很粗的。如果要想写出实际的程序，那么还需要知道CPU的手册、CPU加电时的状态，BIOS里的规范，第一条指令在磁盘中的位置和它的格式，内核编译时的一些相应信息。有很多需要考虑的因素，这种考虑的因素又有很多细节和实际的硬件环境或者说周围的情况密切相关，这时就需要制定一组相应的标准作为系统启动的规范。</p>
+<h2 id="系统启动规范"><a href="#系统启动规范" class="headerlink" title="系统启动规范"></a>系统启动规范</h2><p>系统启动规范主要分为BIOS和UEFI两种。</p>
+<h3 id="BIOS"><a href="#BIOS" class="headerlink" title="BIOS"></a>BIOS</h3><p>BIOS是现在广泛使用的在PC机上的启动流程标准。BIOS是主板上的一段程序，包括系统设置，自检程序和系统自启动程序，它可以完成系统的启动。<br>BIOS从70年代后期最早出现，至今已有几十年的发展并发生很多变化，主要有BIOS-MBR、BIOS-GPT和PXE三种。之前提到的主引导记录BIOS-MBR实际上相当于最早的BIOS，它是从主板加电自检后进到磁盘上的唯一的一个分区上去加载它的引导记录，然而有了多分区磁盘后就需要选择从哪个分区启动，这时就在前面加上一个主引导记录来说明是选择了哪个分区进行启动。由前文介绍主引导扇区的格式可知，主引导记录里只能描述最多4个分区，每个占16个字节，因为启动代码和结束标志字已经将剩余的448字节全部占满，然而现在的计算机很多都会超过4个分区。为了解决这一问题出现了GPT(全局唯一标识分区表)，GPT可以在分区表里描述更多的分区结构，这样就不会有4个分区的限制了。BIOS-MBR和BIOS-GPT是BIOS的两个发展，PXE实际上是网络启动的一个标准，举个例子就是机器启动后想听过局域网或者其他的网络连接服务器，从服务器上下载内核镜像来执行，PXE就是这种启动的标准。<br>总的来说BIOS可以有一些局部的修改来完善对后续的支持，但这种支持总是会受到前边的制约，比如说在主引导记录里为了支持多分区就在中间加成了磁盘的主引导巨鹿，然后再加上活动分区里的引导记录，多了两层但实际多的这两层意义并不是特别的必要。所以可以设计一种全新的规范来解决这一问题，这就是UEFI。</p>
+<h3 id="UEFI"><a href="#UEFI" class="headerlink" title="UEFI"></a>UEFI</h3><p>UEFI(统一可扩展固件接口)想达到的目的是在所有平台上提供一致的操作系统启动服务，为了做到这一点它从90年代开始推出它的第一个版本，直到现在都在不断的演变的过程中。<br><img src="/2019/03/17/启动、中断、异常和系统调用/efa2604d.png" alt="系统启动规范"></p>
+<h1 id="3-3-中断、异常和系统调用比较"><a href="#3-3-中断、异常和系统调用比较" class="headerlink" title="3.3 中断、异常和系统调用比较"></a>3.3 中断、异常和系统调用比较</h1><p>这节介绍了中断、异常和系统调用的作用，是为了解决什么问题，主要的应用场景。以及他们之间的区别和共同点，还介绍了中断、异常和系统调用的实现机制。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>之前介绍过计算机启动后会加载操作系统的内核，然后将控制权交给操作系统内核，这一阶段是可以信任的。但在操作系统内核之上，实际还有很多的应用程序，没有办法做到对这些应用程序的完全的信任，然而这些应用程序要使用操作系统内核提供的服务，并且只有操作系统执行特短指令(具有特殊权限的指令，这类指令只用于操作系统或其他系统软件，一般不直接提供给用户使用)，这时就需要解决一个操作系统内核与外界打交道的问题，也就是说可以信任的内核必须对外界提供某种访问的接口。</p>
+<p>同样在使用计算机的过程中我们除了跟应用程序打交道外，程序或计算机系统在运行过程中会有各种各样的问题，为了能够让计算机系统对外界作出适当的反映比如及时反映键盘的输入，需要提出<strong>中断</strong>机制，也就是当外设与系统有交互的时候需要如何处理。<br>还有一种情况是使用应用程序的过程中出现了一些问题，这些问题是程序编写者事先没有预料到的，对于这种异常情况把它的控制权转交给操作系统，由操作系统来处理它，这就是应用程序执行中遇到意外交由<strong>异常</strong>来做处理。</p>
+<p><strong>系统调用</strong>则是为了解决用户程序如何来使用系统服务的问题。操作系统需要通过系统调用来提供一个接口，让应用程序既方便的使用内核提供的服务，又不至于用户的行为对内核的安全产生影响。提供服务的方式有多种可以通过内核提供服务，还可以使用函数库，这里需要作出判断。</p>
+<ul>
+<li>为什么需要中断、异常和系统调用<ul>
+<li>在计算机运行中，内核是被信任的第三方</li>
+<li>只有内核可以执行特权指令</li>
+<li>方便应用程序</li>
+</ul>
+</li>
+<li>中断和异常希望解决的问题<ul>
+<li>当外设连接计算机时，会出现什么现象？</li>
+<li>当应用程序处理意想不到的行为时，会出现什么现象？</li>
+</ul>
+</li>
+<li>系统调用希望解决的问题<ul>
+<li>用户应用程序时如何得到系统服务？</li>
+<li>系统调用和功能调用的不同之处是什么？</li>
+</ul>
+</li>
+</ul>
+<h2 id="内核的进入与退出"><a href="#内核的进入与退出" class="headerlink" title="内核的进入与退出"></a>内核的进入与退出</h2><p><img src="/2019/03/17/启动、中断、异常和系统调用/692c3df7.png" alt="内核的进入与退出"><br>从这个图中可以看到操作系统内核和外界打交道基本上就是中断、异常和系统调用这三个接口。</p>
+<h2 id="中断、异常和系统调用"><a href="#中断、异常和系统调用" class="headerlink" title="中断、异常和系统调用"></a>中断、异常和系统调用</h2><p>系统调用(System call)是应用程序主动向操作系统发出的服务请求。<br>异常(Exception)则是非法指令或者其他原因导致的指令执行失败(如：内存出错)之后的处理请求。<br>中断(hardware interrupt)是硬件设备对操作系统提出的处理请求。</p>
+<h2 id="中断、异常和系统调用的比较"><a href="#中断、异常和系统调用的比较" class="headerlink" title="中断、异常和系统调用的比较"></a>中断、异常和系统调用的比较</h2><ul>
+<li>源头<ul>
+<li>中断：外设</li>
+<li>异常：应用程序意想不到的行为</li>
+<li>系统调用：应用程序请求操作提供服务</li>
+</ul>
+</li>
+<li>响应方式<ul>
+<li>中断：异步</li>
+<li>异常：同步。因为异常是与当前指令有关的，必须处理完当前纸条异常所产生指令所导致的问题才可以继续下去。</li>
+<li>系统调用：异步或同步</li>
+</ul>
+</li>
+<li>处理机制<ul>
+<li>中断：持续，对用户应用程序是透明的</li>
+<li>异常：杀死或者重新执行意想不到的应用程序指令。异常会处理当前所出现的问题。</li>
+<li>系统调用：等待和持续。等待用户提出之后处理，等待然后再继续。</li>
+</ul>
+</li>
+</ul>
+<h2 id="中断处理机制"><a href="#中断处理机制" class="headerlink" title="中断处理机制"></a>中断处理机制</h2><p>这节标题中的中断实际上可以理解为系统调用、中断和异常这三种情况的总称。</p>
+<h3 id="硬件处理"><a href="#硬件处理" class="headerlink" title="硬件处理"></a>硬件处理</h3><ul>
+<li>在CPU初始化时设置中断使能标志。也就是说在许可外界打扰CPU的执行之前CPU是不会对外界的任何中断请求发出响应<ul>
+<li>依据内部或外部事件设置中断标志</li>
+<li>依据中断向量调用相应中断服务例程。</li>
+</ul>
+</li>
+</ul>
+<p>中断产生了后通常是一个电平的上升沿或者说是一个高电平，那CPU会记录下这间事情，也就是说会有一个中断标志表示出现了一个中断，然后这时候需要知道中断是由什么设备产生的，需要知道中断源的编号，这一部分是由硬件来做的。</p>
+<h3 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h3><ul>
+<li>现场保护(编译器)</li>
+<li>中断服务程序(服务例程)</li>
+<li>清除中断标记(服务例程)</li>
+<li>现场恢复(编译器)</li>
+</ul>
+<h2 id="中断嵌套"><a href="#中断嵌套" class="headerlink" title="中断嵌套"></a>中断嵌套</h2><ul>
+<li>硬件中断服务例程可被打断<ul>
+<li>不同硬件中断源可能硬件中断处理时出现</li>
+<li>硬件中断服务例程中需要临时禁止中断请求</li>
+<li>中断请求会保持到CPU做出响应</li>
+</ul>
+</li>
+<li>异常服务例程可能被打断<ul>
+<li>异常服务例程执行时可能出现硬件中断</li>
+</ul>
+</li>
+<li>异常服务例程可嵌套<ul>
+<li>异常服务例程可能出现缺页</li>
+</ul>
+</li>
+</ul>
+<h1 id="3-4-系统调用"><a href="#3-4-系统调用" class="headerlink" title="3.4 系统调用"></a>3.4 系统调用</h1><h2 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h2><ul>
+<li>操作系统服务的编程接口</li>
+<li>通常由高级语言编写(C或者C++)</li>
+<li>程序访问通常是通过高层次的API接口而不是直接进行系统调用。写程序的时候通常并不直接去使用系统调用而把系统调用封装到一个库里面，应用程序是访问这些库里的库函数来实现的。</li>
+<li>不同的系统里用户使用的接口是不一样的，三种最常用的应用程序编程接口(API)<ul>
+<li>Win32 API 用于 Windows</li>
+<li>POSIX API 用于POSIX-based systems(包括UNIX,LINUX,MAC OS X的所有版本)</li>
+<li>Java API用于JAVA虚拟机(JVM)</li>
+</ul>
+</li>
+</ul>
+<h2 id="系统调用的实现"><a href="#系统调用的实现" class="headerlink" title="系统调用的实现"></a>系统调用的实现</h2><ul>
+<li>每个系统调用对应一个系统调用号<ul>
+<li>系统调用接口根据系统调用号来维护表的索引</li>
+</ul>
+</li>
+<li>系统调用接口调用内核态中的系统调用功能实现，并返回系统调用的状态和结果</li>
+<li>用户不需要知道系统调用的实现<ul>
+<li>需要设置调用参数和获取返回结果</li>
+<li>操作系统接口的细节大部分都隐藏在应用编程接口后<blockquote>
+<p>通过运行程序支持的库来管理</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="函数调用和系统调用的不同处"><a href="#函数调用和系统调用的不同处" class="headerlink" title="函数调用和系统调用的不同处"></a>函数调用和系统调用的不同处</h2><p>调用一个函数需要把参数压到堆栈里面去，然后转到相应函数去执行，执行时候从堆栈里获取参数信息执行，返回的结果放在那里再返回回来，这样在上面的函数调用就知道相关的返回结果，然后利用这个结果继续往下执行。而对于系统调用来说，它由于内核是受保护的，而应用程序是它自己的区域，为了保护内核的实现，这里内核和用户态的应用程序之间使用不同的堆栈，所以在这里会有一个堆栈的切换，切换之后由于处于内核态，就可以使用特权指令，这些特权指令所导致的结果就是这时可以直接对设备进行控制，而这种操作在用户态是不可能进行的。</p>
+<p>系统调用使用的是INT和IRET指令用于系统调用，函数调用使用的是CALL和RET指令，这四条指令在指令集是完全不同的。</p>
+<ul>
+<li>系统调用<ul>
+<li>INT和IRET指令用于系统调用<blockquote>
+<p>系统调用时，堆栈切换和特权级的转换</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>函数调用<ul>
+<li>CALL和RET用于常规调用<blockquote>
+<p>常规调用时没有堆栈切换</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="中断、异常和系统调用的开销"><a href="#中断、异常和系统调用的开销" class="headerlink" title="中断、异常和系统调用的开销"></a>中断、异常和系统调用的开销</h2><ul>
+<li>超过函数调用。原因是有一个用户态到内核态的切换</li>
+<li>开销：<ul>
+<li>引导机制</li>
+<li>建立内核堆栈</li>
+<li>验证参数</li>
+<li>内核态映射到用户态的地址空间<blockquote>
+<p>更新页面映射权限</p>
+</blockquote>
+</li>
+<li>内核态独立地址空间<blockquote>
+<p>TLB</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/24/Python中将字符串所表示的值进行int或float转换/" rel="next" title="Python中将字符串所表示的值进行int或float转换">
+                <i class="fa fa-chevron-left"></i> Python中将字符串所表示的值进行int或float转换
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avator.jpeg"
+                alt="Rilzob" />
+            
+              <p class="site-author-name" itemprop="name">Rilzob</p>
+              <p class="site-description motion-element" itemprop="description">一蓑烟雨任平生</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/rilzob" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:watermirrorsir@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.zzndb.com.cn/" title="zz-db" target="_blank">zz-db</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内容摘要"><span class="nav-number">1.</span> <span class="nav-text">内容摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-1-BIOS"><span class="nav-number">2.</span> <span class="nav-text">3.1 BIOS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机体系结构概述"><span class="nav-number">2.1.</span> <span class="nav-text">计算机体系结构概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动时计算机内存和磁盘布局"><span class="nav-number">2.2.</span> <span class="nav-text">启动时计算机内存和磁盘布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BIOS系统调用"><span class="nav-number">2.3.</span> <span class="nav-text">BIOS系统调用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-2-系统启动流程"><span class="nav-number">3.</span> <span class="nav-text">3.2 系统启动流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机启动流程"><span class="nav-number">3.1.</span> <span class="nav-text">计算机启动流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU初始化"><span class="nav-number">3.2.</span> <span class="nav-text">CPU初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BIOS初始化过程"><span class="nav-number">3.3.</span> <span class="nav-text">BIOS初始化过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主引导记录MBR格式"><span class="nav-number">3.4.</span> <span class="nav-text">主引导记录MBR格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动代码"><span class="nav-number">3.4.1.</span> <span class="nav-text">启动代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#硬盘分区表"><span class="nav-number">3.4.2.</span> <span class="nav-text">硬盘分区表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结束标志字"><span class="nav-number">3.4.3.</span> <span class="nav-text">结束标志字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分区引导扇区格式"><span class="nav-number">3.5.</span> <span class="nav-text">分区引导扇区格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加载程序-bootloader"><span class="nav-number">3.6.</span> <span class="nav-text">加载程序(bootloader)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统启动规范"><span class="nav-number">3.7.</span> <span class="nav-text">系统启动规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BIOS"><span class="nav-number">3.7.1.</span> <span class="nav-text">BIOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UEFI"><span class="nav-number">3.7.2.</span> <span class="nav-text">UEFI</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-3-中断、异常和系统调用比较"><span class="nav-number">4.</span> <span class="nav-text">3.3 中断、异常和系统调用比较</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">4.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内核的进入与退出"><span class="nav-number">4.2.</span> <span class="nav-text">内核的进入与退出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断、异常和系统调用"><span class="nav-number">4.3.</span> <span class="nav-text">中断、异常和系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断、异常和系统调用的比较"><span class="nav-number">4.4.</span> <span class="nav-text">中断、异常和系统调用的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断处理机制"><span class="nav-number">4.5.</span> <span class="nav-text">中断处理机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#硬件处理"><span class="nav-number">4.5.1.</span> <span class="nav-text">硬件处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件"><span class="nav-number">4.5.2.</span> <span class="nav-text">软件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断嵌套"><span class="nav-number">4.6.</span> <span class="nav-text">中断嵌套</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-4-系统调用"><span class="nav-number">5.</span> <span class="nav-text">3.4 系统调用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统调用"><span class="nav-number">5.1.</span> <span class="nav-text">系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统调用的实现"><span class="nav-number">5.2.</span> <span class="nav-text">系统调用的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数调用和系统调用的不同处"><span class="nav-number">5.3.</span> <span class="nav-text">函数调用和系统调用的不同处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断、异常和系统调用的开销"><span class="nav-number">5.4.</span> <span class="nav-text">中断、异常和系统调用的开销</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rilzob</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
