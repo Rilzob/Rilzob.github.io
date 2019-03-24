@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Python,推荐系统," />
+  <meta name="keywords" content="Python,读书笔记," />
 
 
 
@@ -82,7 +82,7 @@
 
 
 <meta name="description" content="第2章 利用用户行为数据用户行为数据中蕴涵着很多不是那么显而易见的规律，而个性化推荐算法的任务就是通过计算机去发现这些规律，从而为产品的设计提供指导，提高用户体验。基于用户行为分析的推荐算法是个性化推荐系统的重要算法，学术界一般将这种类型的算法称为协同过滤算法。顾名思义，协同过滤就是指用户可以齐心协力，通过不断地和网站互动，使自己的推荐列表能够不断过滤掉自己不感兴趣的物品，从而越来越满足自己的需求">
-<meta name="keywords" content="Python,推荐系统">
+<meta name="keywords" content="Python,读书笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="推荐系统实践读书笔记（二）">
 <meta property="og:url" content="https://rilzob.com/2018/11/24/推荐系统实践读书笔记（二）/index.html">
@@ -92,7 +92,7 @@
 <meta property="og:image" content="https://rilzob.com/2018/11/24/推荐系统实践读书笔记（二）/显示反馈数据和隐性反馈数据的比较.png">
 <meta property="og:image" content="https://rilzob.com/2018/11/24/推荐系统实践读书笔记（二）/用户行为的统一表示.png">
 <meta property="og:image" content="https://rilzob.com/2018/11/24/推荐系统实践读书笔记（二）/UserCF和ItemCF优缺点的对比.png">
-<meta property="og:updated_time" content="2018-12-04T14:12:06.567Z">
+<meta property="og:updated_time" content="2019-03-24T03:25:45.453Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="推荐系统实践读书笔记（二）">
 <meta name="twitter:description" content="第2章 利用用户行为数据用户行为数据中蕴涵着很多不是那么显而易见的规律，而个性化推荐算法的任务就是通过计算机去发现这些规律，从而为产品的设计提供指导，提高用户体验。基于用户行为分析的推荐算法是个性化推荐系统的重要算法，学术界一般将这种类型的算法称为协同过滤算法。顾名思义，协同过滤就是指用户可以齐心协力，通过不断地和网站互动，使自己的推荐列表能够不断过滤掉自己不感兴趣的物品，从而越来越满足自己的需求">
@@ -345,8 +345,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
+                  <a href="/categories/计算机科学与技术/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机科学与技术</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机科学与技术/推荐系统/" itemprop="url" rel="index">
+                    <span itemprop="name">推荐系统</span>
                   </a>
                 </span>
 
@@ -557,7 +568,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">PersonalRank</span><span class="params">(G, alpha, root)</span>:</span></span><br><span class="line">    rank = dict() </span><br><span class="line">    rank = &#123;x:<span class="number">0</span> <span class="keyword">for</span> x <span class="keyword">in</span> G.keys()&#125; </span><br><span class="line">    rank[root] = <span class="number">1</span> </span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">20</span>):</span><br><span class="line">        tmp = &#123;x:<span class="number">0</span> <span class="keyword">for</span> x <span class="keyword">in</span> G.keys()&#125;</span><br><span class="line">        <span class="keyword">for</span> i, ri <span class="keyword">in</span> G.items():</span><br><span class="line">            <span class="keyword">for</span> j, wij <span class="keyword">in</span> ri.items():</span><br><span class="line">                <span class="keyword">if</span> j <span class="keyword">not</span> <span class="keyword">in</span> tmp:</span><br><span class="line">                    tmp[j] = <span class="number">0</span> </span><br><span class="line">                tmp[j] += <span class="number">0.6</span> * rank[i] / (<span class="number">1.0</span> * len(ri)) </span><br><span class="line">                <span class="keyword">if</span> j == root:</span><br><span class="line">                    tmp[j] += <span class="number">1</span> - alpha</span><br><span class="line">        rank = tmp </span><br><span class="line">    <span class="keyword">return</span> rank</span><br></pre></td></tr></table></figure>
 <p>虽然PersonalRank算法可以通过随机游走进行比较好的理论解释，但该算法在时间复杂度上有明显的缺点。因为在为每个用户进行推荐时，都需要在整个用户物品二分图上进行迭代，直到整个图上的每个顶点的PR值收敛。这一过程的时间复杂度非常高，不仅无法在线提供实时推荐，甚至离线生成推荐结果也很耗时。</p>
 <p>为了解决PersonalRank每次都需要在全图迭代并因此造成时间复杂度很高的问题，给出两种解决方案。第一种就是减少迭代次数，在收敛之前就停止。这样会影响最终的精度，但一般来说影响不会特别大。另一种方法就是从矩阵论出发，重新设计算法。</p>
-<p>对矩阵运算比较熟悉的读者可以轻松将PersonalRank转化为矩阵的形式。令M为用户物品二分图的转移概率矩阵，即：$$M(v, v’) = \frac {1}{\vert out(v) \vert}$$<br>进而迭代公式可以转化为：<br>$$<br>\begin{align}<br>r&amp; = (1-\alpha)r_0 + \alpha M^Tr \\<br>&amp; = (1-\alpha)(1-\alpha M^T)^{-1}r_0<br>\end{align}<br>$$</p>
+<p>对矩阵运算比较熟悉的读者可以轻松将PersonalRank转化为矩阵的形式。令M为用户物品二分图的转移概率矩阵，即：$$M(v, v’) = \frac {1}{\vert out(v) \vert}​$$<br>进而迭代公式可以转化为：<br>$$<br>\begin{align}<br>r&amp; = (1-\alpha)r_0 + \alpha M^Tr \\<br>&amp; = (1-\alpha)(1-\alpha M^T)^{-1}r_0<br>\end{align}<br>$$</p>
 <p>因此，只需要一次$(1-\alpha M^T)^{-1}​$，这里$1-\alpha M^T​$是稀疏矩阵。关于如何对稀疏矩阵快速求逆，可以参考矩阵计算方面的书籍和论文(比如Song Li的“Fast Algorithms For Sparse Matrix Inverse Compuataions”（2009）)。</p>
 
       
@@ -578,7 +589,7 @@
           
             <a href="/tags/Python/" rel="tag"># Python</a>
           
-            <a href="/tags/推荐系统/" rel="tag"># 推荐系统</a>
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
           
         </div>
       
@@ -695,7 +706,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -706,7 +717,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
