@@ -92,7 +92,7 @@
 <meta property="og:image" content="https://rilzob.com/2018/11/24/推荐系统实践读书笔记（二）/显示反馈数据和隐性反馈数据的比较.png">
 <meta property="og:image" content="https://rilzob.com/2018/11/24/推荐系统实践读书笔记（二）/用户行为的统一表示.png">
 <meta property="og:image" content="https://rilzob.com/2018/11/24/推荐系统实践读书笔记（二）/UserCF和ItemCF优缺点的对比.png">
-<meta property="og:updated_time" content="2019-03-24T03:25:45.453Z">
+<meta property="og:updated_time" content="2019-03-24T04:10:58.754Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="推荐系统实践读书笔记（二）">
 <meta name="twitter:description" content="第2章 利用用户行为数据用户行为数据中蕴涵着很多不是那么显而易见的规律，而个性化推荐算法的任务就是通过计算机去发现这些规律，从而为产品的设计提供指导，提高用户体验。基于用户行为分析的推荐算法是个性化推荐系统的重要算法，学术界一般将这种类型的算法称为协同过滤算法。顾名思义，协同过滤就是指用户可以齐心协力，通过不断地和网站互动，使自己的推荐列表能够不断过滤掉自己不感兴趣的物品，从而越来越满足自己的需求">
@@ -569,7 +569,7 @@
 <p>虽然PersonalRank算法可以通过随机游走进行比较好的理论解释，但该算法在时间复杂度上有明显的缺点。因为在为每个用户进行推荐时，都需要在整个用户物品二分图上进行迭代，直到整个图上的每个顶点的PR值收敛。这一过程的时间复杂度非常高，不仅无法在线提供实时推荐，甚至离线生成推荐结果也很耗时。</p>
 <p>为了解决PersonalRank每次都需要在全图迭代并因此造成时间复杂度很高的问题，给出两种解决方案。第一种就是减少迭代次数，在收敛之前就停止。这样会影响最终的精度，但一般来说影响不会特别大。另一种方法就是从矩阵论出发，重新设计算法。</p>
 <p>对矩阵运算比较熟悉的读者可以轻松将PersonalRank转化为矩阵的形式。令M为用户物品二分图的转移概率矩阵，即：$$M(v, v’) = \frac {1}{\vert out(v) \vert}​$$<br>进而迭代公式可以转化为：<br>$$<br>\begin{align}<br>r&amp; = (1-\alpha)r_0 + \alpha M^Tr \\<br>&amp; = (1-\alpha)(1-\alpha M^T)^{-1}r_0<br>\end{align}<br>$$</p>
-<p>因此，只需要一次$(1-\alpha M^T)^{-1}​$，这里$1-\alpha M^T​$是稀疏矩阵。关于如何对稀疏矩阵快速求逆，可以参考矩阵计算方面的书籍和论文(比如Song Li的“Fast Algorithms For Sparse Matrix Inverse Compuataions”（2009）)。</p>
+<p>因此，只需要一次$(1-\alpha M^T)^{-1}$，这里$1-\alpha M^T$是稀疏矩阵。关于如何对稀疏矩阵快速求逆，可以参考矩阵计算方面的书籍和论文(比如Song Li的“Fast Algorithms For Sparse Matrix Inverse Compuataions”（2009）)。</p>
 
       
     </div>
@@ -695,7 +695,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -706,7 +706,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
