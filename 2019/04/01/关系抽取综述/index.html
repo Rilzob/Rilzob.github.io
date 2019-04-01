@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="读书笔记," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="极氙世界" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="关系抽取是知识图谱构建和信息抽取中的一个关键环节，具有重要的理论意义和广阔的应用前景，为多种应用提供重要的支持。">
+<meta name="keywords" content="读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关系抽取(关系学习)综述">
+<meta property="og:url" content="https://rilzob.com/2019/04/01/关系抽取综述/index.html">
+<meta property="og:site_name" content="极氙世界">
+<meta property="og:description" content="关系抽取是知识图谱构建和信息抽取中的一个关键环节，具有重要的理论意义和广阔的应用前景，为多种应用提供重要的支持。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-01T04:43:34.938Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关系抽取(关系学习)综述">
+<meta name="twitter:description" content="关系抽取是知识图谱构建和信息抽取中的一个关键环节，具有重要的理论意义和广阔的应用前景，为多种应用提供重要的支持。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://rilzob.com/2019/04/01/关系抽取综述/"/>
+
+
+
+
+
+  <title>关系抽取(关系学习)综述 | 极氙世界</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/Rilzob" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">极氙世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">追求梦想，永不止步</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://rilzob.com/2019/04/01/关系抽取综述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rilzob">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="极氙世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">关系抽取(关系学习)综述</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-01T12:35:43+08:00">
+                2019-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机科学与技术/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机科学与技术</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机科学与技术/自然语言处理/" itemprop="url" rel="index">
+                    <span itemprop="name">自然语言处理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>关系抽取是知识图谱构建和信息抽取中的一个关键环节，具有重要的理论意义和广阔的应用前景，为多种应用提供重要的支持。<br><a id="more"></a></p>
+<h1 id="任务定义"><a href="#任务定义" class="headerlink" title="任务定义"></a>任务定义</h1><p>关系定义为两个或多个实体之间的某种联系，实体关系学习就是自动从文本那种检测和识别出实体之间具有的某种语义关系，也成为关系抽取。关系抽取的输出通常是一个三元组(实体 1，关系，实体 2)。例如，句子“北京是中国的首都、 政治中心和文化中心”中表述的关系可以表示为（中国，首都，北京），（中国， 政治中心，北京）和（中国，文化中心，北京）。</p>
+<h1 id="研究内容"><a href="#研究内容" class="headerlink" title="研究内容"></a>研究内容</h1><p>关系抽取系统处理各种非结构化/半结构化的文本输入（如新闻网页、商品页面、微博、论坛页面等），使用多种技术（如规则方法、统计方法、知识挖掘方法），识别和发现各种预定义类别的开放类别的关系。根据关系类别是否预定义，目前关系抽取的核心研究内容可以划分为<strong>限定域关系抽取</strong>和<strong>开放域关系抽取</strong>。以下分别介绍具体的研究内容。</p>
+<h2 id="限定域关系抽取"><a href="#限定域关系抽取" class="headerlink" title="限定域关系抽取"></a>限定域关系抽取</h2><p>限定域关系抽取是指系统所抽取的关系类别是预先定义好的，比如知识图谱中定义好的关系类别。在限定域关系抽取中关系的类别一般是人工定义或者从现有知识图谱中自动获取。由于关系类别已经预先定义，所以一般可以人工或者基于启发式地规则自动构建标注语料。因此限定域关系抽取中的主要研究内容是如何利用有监督或若监督的方法抽取预定义的实体关系知识。在有监督的方法中主要的研究内容集中在如何挖掘更多能表征相应语义关系的特征上。在弱监督的方法中主要的研究内容集中在如何降低自动生成语料中的噪声。</p>
+<h2 id="开放域关系抽取"><a href="#开放域关系抽取" class="headerlink" title="开放域关系抽取"></a>开放域关系抽取</h2><p>开放域关系抽取不预先定义抽取的关系类别，由系统自动从文本中发现并抽取关系。因此开发域关系抽取也成为开放史关系发现。由于没有实现定义关系的类别，因此开放域关系发现中利用关系指示词代表关系的类型。主要的研究内容是如何利用无监督的方法自动地抽取关系三元组。</p>
+<h1 id="挑战"><a href="#挑战" class="headerlink" title="挑战"></a>挑战</h1><p>关系抽取目前主要面临三个挑战：自然语言表达的多样性、关系表达的隐含性和实体关系的复杂性。</p>
+<h2 id="自然语言表达的多样性"><a href="#自然语言表达的多样性" class="headerlink" title="自然语言表达的多样性"></a>自然语言表达的多样性</h2><p>关系抽取的核心是将自然语言表达的关系映射到关系三元组上。然而，自然语言表达具有多样性和隐含性，导致关系抽取任务极具挑战性。自然语言表达的多样性指的是同一种关系可以有多种表达方式，例如“总部位置”这个语义关系可以用“X的总部位于Y”，“X总部坐落于Y”，“作为X的总部所在地，Y…”等等不同的文本表达方式。自然语言表达的多样性是关系抽取的一大挑战。</p>
+<h2 id="关系表达的隐含性"><a href="#关系表达的隐含性" class="headerlink" title="关系表达的隐含性"></a>关系表达的隐含性</h2><p>关系表达的隐含性是指关系有时候在文本中找不到任何明确的标识，关系隐含在文本中。例如：蒂姆·库克与中国移动董事长奚国华会面商谈“合作事宜”，透露出了他将带领苹果公司进一步开拓中国市场的讯号。在这段文本中，并没有给出蒂姆·库克和苹果公司的关系，但是从“带领苹果公司”的表达，我们可以推断出蒂姆·库克是苹果公司的首席执行官(CEO)。关系表达的隐含性是关系抽取的一大挑战。</p>
+<h2 id="实体关系的复杂性"><a href="#实体关系的复杂性" class="headerlink" title="实体关系的复杂性"></a>实体关系的复杂性</h2><p>关系抽取的目标是抽取实体之间的语义关系，然而，真实世界中同一个实体之间可能有多个关系，而且有的关系可以同时存在，而有的关系是具有时间特性的。比如：中国和北京的关系有多个，北京坐落于中国，北京是中国的首都，北 京是中国的政治中心，北京是中国的文化中心。这些关系是可以同时存在的。但 是如果两个人本来是夫妻关系，后来离婚了，他们就不是夫妻关系了，是前妻或者前夫的关系，这个类关系具有时空性，不能单独存在，实体关系的复杂性是关系抽取的又一挑战。</p>
+<h1 id="技术方法和研究现状"><a href="#技术方法和研究现状" class="headerlink" title="技术方法和研究现状"></a>技术方法和研究现状</h1><p>现有关系抽取方法可以从不同的维度进行划分。例如，根据关系的类型，关系抽取可以分为限定域关系抽取和开放域关系抽取；根据关系抽取的方法可以分为<strong>基于规则的方法</strong>和<strong>基于机器学习</strong>的方法；根据对监督知识的依赖，关系抽取可以分为有<strong>监督关系抽取、无监督关系抽取和弱监督</strong>关系抽取。</p>
+<h2 id="限定域关系抽取和开放域关系抽取"><a href="#限定域关系抽取和开放域关系抽取" class="headerlink" title="限定域关系抽取和开放域关系抽取"></a>限定域关系抽取和开放域关系抽取</h2><p>限定域关系抽取是指系统所抽取的关系是预先定义好的，比如从句子中抽取出知识图谱中定义好的关系。因为预定义关系的个数是有限的，部分文献 [Zeng et al.,2014] [Lin et al.,2016] [Jiang et al.,2016]将关系抽取任务视为多分类任务，其中每个关系为一个类别。</p>
+<p>开放域关系抽取是指不预先定义关系，由系统自动从文本中发现、抽取关系。由于限定域关系抽取可以抽取语义化三元组，近年来，越来越多的研究者关注限定域关系抽取。限定域关系抽取的工作将在下一小节中详细介绍，本节主要介绍开放域关系抽取。</p>
+<p>开放域关系抽取是为了处理大量异构数据而设计的，其所抽取的关系类型不受限制，数量也不定。开放域关系抽取的目的是处理单个句子，将其变成三元组样式的结构化表示。华盛顿大学在这方面做了大量代表性的工作，如TextRunner，Kylin，WOE，ReVerb等。TextRunner[Banko et al.,2007]能够直接从网页纯文本中抽取实体关系，在这一过程中只考虑文本中词与词之间的关系特征，而不考虑网页内部的结构特征。TextRunner首先利用简单的启发式规则，在宾州树库上产生训练语料，提取一些浅层句法特征，训练一个分类器，用来判断两个实体间是否存在语义关系；然后在海量网络数据上，找到候选句子，提取浅层句法特征，利用分类器判断所抽取的关系对是否可信；最后利用网络数据的冗余信息，对初步认定可信的关系进行评估。其过程类似于语义角色标注。它把动词作为关系名称，通过动词链接两个实体。Textrunner的平均错误率在12%左右，但是，TextRunner得到的大部分关系词往往没有意义，而且容易把关键论元信息丢失。Kylin和 WOE的数据都是基于距离监督的方式产生的，但是由于它们将Wikipedia中的 信息框作为距离监督中的结构化知识库，并利用其进行回标，而 wikipeida 中的信息框结构和内容是不断更新的，所以这里将Kylin和WOE归类到华盛顿大学 在开放域关系抽取的系列工作。ReVerb[Fader et al.,2011]是在分析TextRunner和WOE 中普遍的错误之后提出的基于句法和词汇约束的实体关系识别器。它主要解决了以前系统中普遍存在实体关系识别错误三元组和无信息量三元组的问题。上述系统都采用简单的启发方法识别论元，例如抽取简单的名词性短语或维基百科实体作为论元。但是这些启发式方法不能适应语言的复杂性。R2A2[Etzioni et al.,2011]系统通过增加一个论元识别器，大大改善了论元识别的准确性。此外，斯坦福的OpenIE工具包 [Angeli et al.,2015]也是一种典型的开放域抽取系统，其算法思想是通过将长句子切分为各种关联的片段，然后从这些子片段中抽取出三 元组信息。上述的方法都是开放域的不限制关系的类别，因此抽取出的关系缺乏语义信息，同一类关系会出现多种不同的抽取结果。</p>
+<h2 id="基于规则的关系抽取和基于机器学习的关系抽取"><a href="#基于规则的关系抽取和基于机器学习的关系抽取" class="headerlink" title="基于规则的关系抽取和基于机器学习的关系抽取"></a>基于规则的关系抽取和基于机器学习的关系抽取</h2><h3 id="基于规则的关系抽取"><a href="#基于规则的关系抽取" class="headerlink" title="基于规则的关系抽取"></a>基于规则的关系抽取</h3><p>所谓基于规则的关系抽取方法是指首先由通晓语言学知识的专家根据抽取任务的要求设计出一些包含词汇、句法和语义特征的手工规则（或称为模式），然后在文本分析的过程中寻找与这些模式相匹配的实例，从而推导出实体之间的语义关系。如 [Fukumoto et al.,1998] 依据两个实体之间相关联的特定谓词来判断 它们之间的关系，不过其召回率太低，导致在 MUC-7 测试中 F 指数只有 39.1%。 [Humphreys et al.,1998] 在篇章解释器（Discourse Interpreter）中利用一系列句法和语义规则识别出实体间的关系，其输入序列来源于增加了语义和指代等信息的句法分析器。虽然它们的结构较为复杂，但在 MUC-7 的模板任务中 F 指数也分别只有 23.7 和 54.7。 [Aone et al.,1998] [Aone et al.,2000] 则充分利用语义关系的 局部性特点，在名词短语标注的过程中识别出短语的中心词和它的修饰词之间可能存在的关系，在 MUC-7 的模板关系任务中取得了 75.6 的最高 F 指数。</p>
+<p>基于手工规则的方法需要领域专家构筑大规模的知识库，这不但需要有专业技能的专家，也需要付出大量劳动，因此这种方法的代价很大。知识库构建完成后，对于特定的领域的抽取具有较好的准确率，但移植到其他领域十分困难，效果往往较差。因此这种方法在可移植性方面存在着明显的不足。</p>
+<h3 id="基于机器学习的关系抽取"><a href="#基于机器学习的关系抽取" class="headerlink" title="基于机器学习的关系抽取"></a>基于机器学习的关系抽取</h3><p>按照机器学习放大对语料库的不同需求大致可分为三大类：无监督关系抽取、有监督关系抽取、弱监督关系抽取。无监督关系抽取希望把表示相同关系的模板聚合起来，不需要人工标注的数据。有监督关系抽取使用人工标注的训练预料进行训练。有监督关系抽取目前可以取得最好的抽取效果，但是由于其需要费时费力的人工标注，因此能以扩展到大规模的场景下。因此有学者提出了利用知识库回标文本来自动获得大量的弱监督数据。目前弱监督关系抽取是关系抽取轻语的一大热点。</p>
+<h4 id="无监督关系抽取"><a href="#无监督关系抽取" class="headerlink" title="无监督关系抽取"></a>无监督关系抽取</h4><p>无监督关系抽取方法主要基于分布假设（ Distributional Hypothesis[Harris et al.,1954]理论，分布假设的<strong>核心思想</strong>是：如果两个词的用法相似及出现在相同上下文，那么这两个词就意思相近。相应的，在实体关系抽取中，如果两个实体对具有相似的语境，那么这两个实体对倾向于具有相同的语义关系，基于此理论，无监督关系抽取将两个实体的上下文作为表征语义关系的特征。</p>
+<p>基于分布假设理论，首先由[Hasegawa et al.,2004]提出了一种基于无监督学习的实体关系发现方法，该方法将大量文本中同一实体对的所有上下文收集起来， 并把这些上下文作为表示语义关系的特征，然后采用层次聚类的方法将特征相似度较高的实体对聚集在一起，最后从一个聚类中挑选出频率最高的词作为该类关系的名称。[Chen et al.,2005] 对 Hasegawa 的方法进行了改进，他们的方法将每个实体对的上下文，而不是所有相同实体对的上下文，作为实体之间的语义关系特征。在聚类时，先采用基于熵的方法对词汇特征进行排序，以提高特征集的空间搜索效率。最后使用 Discriminative Category Matching（DCM）理论[Fung et al.,2002]来衡量特征在某个聚类中的重要性。</p>
+<p>无监督关系抽取的核心是选取表示实体之间关系的特征，然后再聚类。上文介绍的方法主要选取上下文特征，与之不同的是，[Bollegala et al.,2010]利用关系的对偶性（Relation Duality），提出实体对空间和模板空间可以相互表示，基于这个理论，使用协同聚类来发现实体对及其关系模板的聚类簇，从每个聚类的簇里面选择代表性的模板当作此簇对应的关系。另外，无监督关系抽取面临着关系聚类簇中的多义问题，即同一个模板可能表达不同的关系，针对此问题，[Yao et al.,2012]使用主题模型（Topic Model）将实体对及其对应的关系模板分配到不同的语义类别上，然后再使用聚类的方法将这些语义类别映射到语义关系。</p>
+<p>无监督关系抽取方法可以发现新的关系，但其发现的新的关系往往是相似模板的聚类，其缺点是得到的关系不具语义信息，难以规则化，很难被用来构建知识库，如果需要得到语义关系，需要通过将其同现有知识库的关系进行对齐，或者通过人工的方式来给每个聚类关系簇赋予语义信息。</p>
+<h4 id="有监督关系抽取"><a href="#有监督关系抽取" class="headerlink" title="有监督关系抽取"></a>有监督关系抽取</h4><p>在使用有监督的方法解决关系抽取问题时，一般将关系抽取看作是一个<strong>多分类问题</strong>，提取特征向量后再使用有监督的分类器进行关系抽取，有监督的方法性能较好[Zhou et al.,2005] [Mooney et al.,2006] [Bunescu et al.,2005] ，目前占据主导地位，研究人员在这方面做了大量的工作。有监督关系抽取可以分为：基于特征向量的方法、基于核函数的方法和基于神经网络的方法。</p>
+<h5 id="基于特征向量的方法"><a href="#基于特征向量的方法" class="headerlink" title="基于特征向量的方法"></a>基于特征向量的方法</h5><p>基于特征向量的方法特点是需要显式地将关系实例转换成分类器可以接受的特征向量，其研究重点在于<em>怎样提取具有区分性的特征，通过获取各种有效的词汇、句法和语义等特征，然后有效地集成起来，从而产生描述关系实例的各种局部和全局特征</em>。文献[Kambhatla et al.,2004]中的方法综合考虑实体本身、实体类型、依存树和解析树等特征，然后使用最大熵分类器判断实体间的关系。[Zhao et al.,2005]进一步将这些特征按照实体属性、二元属性、依存路径等类别进行划分。[Zhou et al.,2005]系统地研究了如何把包括基本词组块（Chunk）在内的各种特征组合起来， 探讨了各种语言特征对关系抽取性能的贡献， 特别研究了 WordNet 和 Name List 等语义信息的影响。[Wang et al.,2006]又进一步加入了从句 子的简化准逻辑形式（SQLF，Simplified Quasi Logical Form）导出的谓词语义属性，该属性定义了连接两个实体之间路径上的谓词序列，并且使用了多达 94 种语言特征。[Jiang et al.,2007]通过统一的特征空间表达形式来研究不同特征对关系抽取性能的影响，其中特征空间可划分为序列、句法树和依存树等特征子空间。 实验结果表明，从三个子空间中提取出的基本单元特征能取得较好的性能，而再加入复杂的特征所带来的性能提升很小，只有当不同子空间和不同复杂度的特征结合起来时，才能取得最好的性能。</p>
+<p>基于特征向量的方法尽管速度很快，也比较有效，但其缺点是在转换结构化特征时需要显式地给出一个特征集合，由于实体间语义关系表达的复杂性和可变性，要进一步提高关系抽取的性能已经很困难了，因为很难再找出适合语义关系抽取的新的有效的词汇、句法或语义特征。</p>
+<h5 id="基于核函数的方法"><a href="#基于核函数的方法" class="headerlink" title="基于核函数的方法"></a>基于核函数的方法</h5><p>不同于特征向量的方法，基于核函数的方法不需要构造固有的特征向量空间，能很好地弥补基于特征向量方法的不足。在关系抽取中，基于核函数的方法直接以结构树为处理对象，在计算关系之间的距离的时候不再使用特征向量的内积而是用核函数，核函数可以在高维的特征空间中隐式地计算对象之间的距离，不用枚举所有的特征也可以计算向量的点积，表示实体关系很灵活，可以方便地利用多种不同的特征，使用支持核函数的分类器进行关系抽取。基于核函数的关系抽取最早由[Zelenko et al.,2003]，他们在文本的浅层句法树的基础上定义了树核函数，并设计了一个计算树核函数相似度的动态规划算法，然后通过支持向量机 （SVM）和表决感知器（Voted Perceptron）等[Grishman et al.,2005]分类算法来抽取实体间语义关系。[Culotta et al.,2004]提出基于依存树核函数的关系抽取，他们使用一些依存规则将包含实体对的句法分析树转换成依存树，并在树节点上依次增加词性、实体类型、词组块、WordNet 上位词等特征，最后使用 SVM 分类器进行关系抽取。Mooney 和 Bunescu[Bunescu et al.,2005]进一步使用最短依存树核函数，该核函数计算在依存树中两个实体之间的最短路径上的相同节点的数目，要求对于具有相同关系的实体对，其对应的最短依存树具有相同的高度且达到根节点的路径相同。 为解决最短依存树核函数召回率较低的问题， Bunescu 和 Mooney[Mooney et al.,2006]又提出基于字符串序列核函数的关系抽取，首先提取出两个实体之间和前后一定数量的单词组成字符串并把其作为关系实例的表达形式，规定子序列中允许包含间隔项，进而实现关系抽取。[Zhou et al.,2007]提出最短路径包含树核，将语义关系实例表示为上下文相关的最短路径包含树，能根据句法结构动态扩充与上下文相关的谓词部分，并采用上下文相关的核函数计算方法，即在比较子树相似度时也考虑根结点的祖先结点，将该核函数同基于特征 的方法结合起来，充分考虑结构化信息和平面特征的互补性。然而该类方法依赖传统的句法分析等复杂的自然语言处理工具，很多语言没有此类工具，即使有的语言有此类工具但是也会造成误差传递，影响最终的性能。</p>
+<h5 id="基于神经网络的方法"><a href="#基于神经网络的方法" class="headerlink" title="基于神经网络的方法"></a>基于神经网络的方法</h5><p>近年来，深度学习的方法在有监督关系抽取任务中占据了主导地位。[Zeng et al.,2014] 首先将卷积神经网络应用在了有监督关系抽取任务中。他们主要是应 用了词向量将句子表示成了矩阵，再利用卷积神经网络和 maxpooling 得到句子 的向量表示。最后用 softmax 分类器对该向量进行分类，得到句子的关系类别。 同时期还有 [Thien et al.,2015] [Santos et al.,2015] 等工作也是采用了相似的方法。还有 [Socher et al.,2012] 利用了长短时记忆网络（LSTM）和句子的依存句法路径来建模句子的表示，最后再用 softmax 分类器进行分类。为了更好的建模句子，[Zhou et al.,2016] 提出使用双向长短时记忆网络和关注机制。目前大部分学者关注于如何更好的用深度学习模型建模句子。此类方法一般默认句子中已经标记出了候选实体，但是实际任务中，需要系统自动发现实体。而且此类方法需要大量的人工标注的语料作为训练数据才能取得较好的性能。</p>
+<h4 id="弱监督关系抽取"><a href="#弱监督关系抽取" class="headerlink" title="弱监督关系抽取"></a>弱监督关系抽取</h4><p>有监督关系抽取需要大量的标注样本，而人工标注数据费时费力、一致性差，尤其是面向海量异构的网络数据时，问题就更加明显，为此，研究人员提出弱监督关系抽取。弱监督关系抽取主要有两种框架，一种是使用半监督学习和主动学习等技术以尽可能少的代价提升抽取效果，如[Sun et al.,2011]通过大规模的词聚类作为额外的特征，以解决实体之间特征过于泛化的问题，从而帮助关系抽取；[Sun et al.,2012]利用主动学习的技术，通过少量的标注数据来发现分类面附近的未标注数据，对这些数据进行人工标注，从而以更少的标注代价获得更好的抽取效果。另外一种框架是使用回标的思想，利用现有知识库中的关系三元组，自动回标三元组中实体所在的文本作为训练数据，由于其训练数据产生过程不需要人工标注，所以这种方法代价很低，更加适合大规模多领域的网络文本，它在信息抽取领域近年来得到较广泛的应用。</p>
+<p>弱监督回标思想最早由[Craven et al.,1999]提出，主要研究怎样在文本中抽取结构化数据建立生物学知识库（ Biological Knowledge Bases ），他们利用 Yeast Protein Database 自动产生标注数据，然后训练朴素贝叶斯分类器抽取结构化数据。紧接着，[Mintz et al.,2009]使用利用 Freebase 作为知识库，将其中的关系实例所包含的实体同维基百科文本中的实体对齐，以此产生训练数据，然后使用逻辑斯蒂回归进行关系抽取。弱监督回标主要基于以下假设：如果两个实体在知识库中具有一定的关系，那么根据同时包含这两个实体的句子，就都能推断出实体对在知识库中具有的关系。由于语言表达的多样性，弱监督的这种假设往往太过强烈，两个实体出现在同一个句子中并不能表示它们就一定具有某种语义关系， 有可能这两个实体只是属于同一个话题而已[Riedel et al.,2010]。因此，虽然弱监督方法克服了有监督方法需要人工标注数据的不足，但也带来了新问题——回标噪声问题。研究人员提出了一系列模型和方法来克服回标噪声问题，Riedel 等将 弱监督关系抽取看作是一个多示例问题，他们的假设中，只需要在回标出来的所有句子中，有一个句子能表示两个实体间的关系。将所有回标的句子看作一个包，其中的每一个句子就是包中的一个示例，从而解决回标噪声的问题。[Hoffmann et al.,2011] 更进一步，在多实例模型中考虑实体对间可能不止有一种关系，取得了更好的效果。 [Surdeanu et al.,2012] 不但对噪声训练数据进行建模，并对实体对可能属于多个关系类型这个问题进行建模，他们提出了基于概率图模型的多实例多标签模型，在以 Freebase 为知识库和纽约时报作为回标语料的数据上进行 实验，结果表明其模型提升了原始方法的抽取效果。 [Takamatsu et al.,2012] 发 现多示例模型的“至少一句表达真实关系”’的假设有可能失败，其通过抽样统计显示，Freebase 知识库中 91.7%的实体对在英文维基百科文章中只能回标到一个句子，此时多示例模型的假设不能成立，他们的工作通过产生式图模型来预测可能具有噪声的特征模板，然后过滤包含这些模板的正样本，利用剩下的样本训练抽取模型。利用 Freebase 作为知识库，在 NYU 语料上进行回标，针对 15 类关 系选取置信度最高的 50 个结果进行人工评测，平均准确率为 89%。</p>
+<p>上述方法都是基于传统特征的，然而传统特征的设计耗时费力，扩展性差。近些年，基于神经网络的方法占据主导地位。[Zeng et al.,2015] 首先提出了用卷 积神经网络来建模句子，并依据 “至少一个假设” ，将整个学习过程视为多示例学习。利用 Freebase 作为知识库，在 NYU 语料上进行回标，针对 55 类关系 选取置信度最高的 100 个结果进行人工评测，平均准确率为 86%。 [Ji et al.,2017] [Lin et al.,2016] 认为 [Zeng et al.,2015] 的方法只能够利用包中的一个句子，提出了使用关注机制，自动学得包中每个句子的权重，然后将句子的表示按照权重加权表示为包的表示，最后对包进行分类，得到包的关系。其中 [Ji et al.,2017] 还使用了外部文本信息。 [Jiang et al.,2016] 提出了不同于 “至少一个” 假设， 他们认为很多情况下，要判断一个包的关系要同时使用多个句子的信息，因此提出了 Cross-sentence maxpooling 的方法。除此之外，最近有 [Luo et al.,2011] 提出使用动态矩阵来建模噪声，以此来增强弱监督关系抽取。 [Lin et al.,2017] 还关注了跨语言的弱监督关系抽取。</p>
+<p>目前，基于机器学习的关系抽取方法占据了主导地位。然而，无监督的关系抽取得到的知识缺乏语义信息、很难归一化；有监督关系抽取中需要大量人工标注的高质量数据作为训练语料，人工标注耗时费力成本高，所以很难大规模推广；弱监督关系抽取虽然可以自动生成大规模训练语料，但是自动生成训练语料的过程中需要大规模的已有知识图谱作为种子，而且生成的语料中会有噪音数据。</p>
+<h1 id="技术展望与发展趋势"><a href="#技术展望与发展趋势" class="headerlink" title="技术展望与发展趋势"></a>技术展望与发展趋势</h1><p>从 20 世纪 90 年代以来，关系抽取技术研究蓬勃发展，已经成为了自然语言处理和知识图谱等领域的重要分支。这一方面得益于系列国际权威评测和会议的推动，如消息理解系列会议（MUC，Message Understanding Conference），自动内容抽取评测（ACE，Automatic Content Extraction）和文本分析会议系列评测（TAC， Text Analysis Conference）。另一方面也是因为关系抽取技术的重要性和实用性，使其同时得到了研究界和工业界的广泛关注。关系抽取技术自身的发展也大幅度推进了中文信息处理研究的发展，迫使研究人员面向实际应用需求，开始重视之 前未被发现的研究难点和重点。纵观关系抽取研究发展的态势和技术现状，中国中文信息学会认为关系抽取的发展如下：</p>
+<ul>
+<li>面向开放域的可语义化的关系抽取技术</li>
+</ul>
+<p>目前，绝大部分的关系抽取研究集中预定义的关系抽取上，并致力于构建更精准的有监督抽取模型和方法，使用标注语料训练模型参数。然而，在构建真实环境下的关系抽取系统时，这些有监督方法往往存在如下不足：1）更换语料类型之后，现有模型往往会有一个大幅度的性能下降；2）无法抽取目标关系类别之外的实体关系知识；3）性能依赖于大规模的训练语料；4）现有监督模型往往依赖于高复杂度的自然语言处理应用，如句法分析。<br>目前已经有很多机构和学者进行开放域的关系抽取的研究，但是目前的方法抽取的关系很难语义化，同一个实体对的同一关系会抽取出不同的表达，另外不同的数据来源其质量和可信度不同，如何整合不同数据源抽取的关系知识，并将同一关系的知识进行消歧进而语义化是一个迫切需要解决的问题。</p>
+<ul>
+<li>篇章级的关系抽取</li>
+</ul>
+<p>现有大多数的关系抽取集中在从包含两个指定实体的一个或者多个句子中抽取关系，很少有工作将抽取范围扩大到篇章级别。然而，真实环境下，如产品说明书等，一篇文章会描述多个实体的多个属性或者关系，而且文本中存在大量的零指代的语言现象，因此必须利用篇章级的信息进行关系和属性值的抽取。</p>
+<ul>
+<li>具有时空特性的多元关系抽取</li>
+</ul>
+<p>目前，绝大部分的关系抽取研究集中在二元关系抽取上，即抽取目标为三元组（实体 1，关系，实体 2），然而二元关系很难表达实体关系的时间特性和空间特性，而且很多关系是多元的，例如：NBA 球星勒布朗詹姆斯效力过的球队。这就是一个多元关系，首先他效力过的球队有多支，其次效力于每支球队的时间也不同，这就是关系的时空性和多元性。具有时空特性的多元关系能建模和表达更丰富的关系知识，是未来研究的一个方向。<br>最后，纵观近 30 余年来关系抽取的现状和发展趋势，我们有理由相信，随着海量数据资源（如 Web）、大规模深度机器学习技术（如深度学习）和大规模知识资源（如知识图谱）的蓬勃发展，关系抽取这一极具挑战性同时也极具实用性的问题将会得到相当程度的解决。同时，随着低成本、高适应性、高可扩展性、可处理开放域的关系抽取研究的推进，关系抽取技术的实用化和产业化将在现有的良好基础之上取得进一步的长足发展。</p>
+<p>参考文献：<br>[Angeli et al.,2015] Gabor Angeli, Melvin Johnson Premkumar, and Christopher D Manning. Leveraging linguistic structure for open domain information extraction. In Proceedings of the 53rd Annual Meeting of the Association for Computational Linguistics (ACL 2015), 2015.</p>
+<p>[Aone et al.,1998] Aone C., Halverson L., Hampton T., and Ramos-Santacruz M. SRA:</p>
+<p>Description of the IE System Used for MUC-7. In Proceedings of the 7th Message Understanding Conference (MUC-7). 1998.</p>
+<p>[Aone et al.,2000] Aone C. and Ramos-Santacruz M. REES: A large-scale relation and event extraction system In Proceedings of the 6th Applied Natural Language Processing Conference (ANLP00), 2000, pages 76-83.</p>
+<p>[Banko et al.,2007] Michele Banko; Michael J Cafarella; Stephen Soderland; Matthew Broadhead and Oren Etzioni. Open Information Extraction for the Web.IJCAI2007</p>
+<p>[Betteridge et al.,2009] Justin Betteridge, Andrew Carlson, Sue Ann Hong, Estevam R Hruschka Jr, Edith LM Law, Tom M Mitchell, and Sophie H Wang. Toward never ending language learning. In AAAI Spring Symposium: Learning by Reading and Learning to Read, pages 1–2, 2009.</p>
+<p>[Bollegala et al.,2010] Danushka Tarupathi Bollegala, Yutaka Matsuo, and Mitsuru Ishizuka. Relational duality: Unsupervised extraction of semantic relations between entities on the web. In Proceedings of the 19th International Conference on World Wide Web, WWW ’10, pages 151–160, New York, NY, USA, 2010. ACM.</p>
+<p>[Bunescu et al.,2005] Razvan C. Bunescu and Raymond J. Mooney. A shortest path dependency kernel for relation extraction. In Proceedings of the conference on Human Language Technology and Empirical Methods in Natural Language Processing, HLT ’05, pages 724–731, Stroudsburg, PA, USA, 2005. Association for Computational Linguistics.</p>
+<p>[Carlson et al.,2010] Andrew Carlson, Justin Betteridge, Richard C Wang, Estevam R Hruschka Jr, and Tom M Mitchell. Coupled semi-supervised learning for information extraction. In Proceedings of the third ACM international conference on Web search and data mining, pages 101–110. ACM, 2010.</p>
+<p>[Chen et al.,2005] Jinxiu Chen, Donghong Ji, Chew Lim Tan, and Zhengyu Niu. Unsupervised feature selection for relation extraction. In Proceedings of the Second International Joint Conference on Natural Language Processing, IJCNLP ’05, pages 262–267, Berlin, Heidelberg, 2005. Springer-Verlag.</p>
+<p>[Collins et al.,2002] Michael Collins and Nigel Duffy. Convolution kernels for natural language. In T.G. Dietterich, S. Becker, and Z. Ghahramani, editors, Advances in Neural Information Processing Systems 14, pages 625–632. MIT Press, 2002.</p>
+<p>[Craven et al.,1999] Mark Craven and Johan Kumlien. Constructing biological knowledge bases by extracting information from text sources. In Proceedings of the Seventh International Conference on Intelligent Systems for Molecular Biology, pages 77–86. AAAI Press, 1999.</p>
+<p>[Culotta et al.,2004] Aron Culotta and Jeffrey Sorensen. Dependency tree kernels for relation extraction. In Proceedings of the 42nd Annual Meeting on Association for Computational Linguistics, ACL ’04, Stroudsburg, PA, USA, 2004. Association for Computational Linguistics.</p>
+<p>[Etzioni et al.,2011] Oren Etzioni, Anthony Fader, Janara Christensen, StephenSoderland, and Mausam Mausam. Open information extraction: The second generation. In IJCAI, volume 11, pages 3–10, 2011.</p>
+<p>[Fader et al.,2011] Anthony Fader; Stephen Soderland and Oren Etzioni. Identifying relations for open information extraction. ACL2011</p>
+<p>[Fukumoto et al.,1998] Fukumoto J., Masui F., Shimohata M., and Sasaki M. Oki Eletricity Industry: Description of the Oki System as Used for MUC-7 . In Proceedings of the 7th Message Understanding Conference (MUC-7). 1998.</p>
+<p>[Fung et al.,2002] Gabriel Pui Cheong Fung, Jeffrey Xu Yu, and Hongjun Lu. Discriminative category matching: Efficient text classification for huge document collections. In Data Mining, 2002. ICDM 2003. Proceedings. 2002 IEEE International Conference on, pages 187–194. IEEE, 2002.</p>
+<p>[Grishman et al.,1996] Grishman R. and Sundheim B. Message Understanding Conference-6: a brief history. In Proceeding of the 16th Conference on Computational Linguistics, August 05-09, 1996.</p>
+<p>[Grishman et al.,2005] Ralph Grishman, David Westbrook, and Adam Meyers. Nyu’s english ace 2005 system description. In Proceedings of ACE 2005 Evaluation Workshop. Washington,2005.</p>
+<p>[Harris et al.,1954] Zellig S Harris. Distributional structure. Word, 10:146–162, 1954.</p>
+<p>[Hasegawa et al.,2004] Takaaki Hasegawa, Satoshi Sekine, and Ralph Grishman. Discovering relations among named entities from large corpora. In Proceedings of the 42nd Annual Meeting on Association for Computational Linguistics, ACL ’04, Stroudsburg, PA, USA, 2004. Association for Computational Linguistics.</p>
+<p>[Hoffmann et al.,2011] Raphael Hoffmann, Congle Zhang, Xiao Ling, Luke Zettlemoyer, and Daniel S. Weld. Knowledge-based weak supervision for information extraction of overlapping relations. In Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies - Volume 1, HLT ’11, pages 541–550, Stroudsburg, PA, USA, 2011. Association for Computational Linguistics.</p>
+<p>[Humphreys et al.,1998] Humphreys H., R. Gaizauskas, S. Azzam, C. Huyck, B. Mitchell, H. Cunningham, and Y. Wilks.University of Sheffield: Description of the LaSIE-II System Used for MUC-7. In Proceedings of the 7th Message Understanding Conference (MUC-7). 1998.</p>
+<p>[Jiang et al.,2007] Jing Jiang and ChengXiang Zhai. A systematic exploration of the feature space for relation extraction. In Proceedings of Human Language Technologies 2007 and the North American Chapter of the Association forComputational Linguistics，HLT-NAACL ’07, pages 113–120, Stroudsburg, PA, USA, 2007. Association for Computational Linguistics</p>
+<p>[Jiang et al.,2016] Xiaotian Jiang; Quan Wang; Peng Li; Bin Wang. Relation Extraction with Multi-Instance Multi-Label Convolutional Neural Networks. COLING2016</p>
+<p>[Ji et al.,2017] Guoliang Ji; Kang Liu; Shizhu He; Jun Zhao. Distant Supervision for Relation Extraction with Sentence-level Attention and Entity Descriptions. AAAI2017</p>
+<p>[Kambhatla et al.,2004] Nanda Kambhatla. Combining lexical, syntactic, and semantic features with maximum entropy models for extracting relations. In Proceedings of the 42nd Annual Meeting on Association for Computational Linguistics on Interactive Poster and Demonstration Sessions, ACLdemo’04, Stroudsburg, PA, USA, 2004. Association for Computational Linguistics.</p>
+<p>[Lin et al.,2016] Yankai Lin; Shiqi Shen; Zhiyuan Liu; Huanbo Luan; Maosong Sun.Neural Relation Extraction with Selective Attention over Instances. ACL2016</p>
+<p>[Lin et al.,2017] Yankai Lin; Zhiyuan Liu; Maosong Sun. Neural Relation Extraction with Multi-lingual Attention. ACL2017</p>
+<p>[Luo et al.,2011] Bingfeng Luo; Yansong Feng; Zheng Wang; Zhanxing Zhu; Songfang Huang; Rui Yan and Dongyan Zhao. Learning with Noise: Enhance Distantly Supervised Relation Extraction with Dynamic Transition Matrix. ACL2011</p>
+<p>[Mintz et al.,2009] Mike Mintz, Steven Bills, Rion Snow, and Dan Jurafsky. Distant supervision for relation extraction without labeled data. In Proceedings of the Joint Conference of the 47th Annual Meeting of the Association for Computational Linguistics and the 4th International Joint Conference on Natural Language Processing of the AFNLP: Volume 2-Volume 2, pages 1003–1011. Association for Computational Linguistics, 2009.</p>
+<p>[Mitra et al.,2002] Pabitra Mitra, C. A. Murthy, and Sankar K. Pal. Unsupervised feature selection using feature similarity. IEEE Transactions on Pattern Analysis and Machine Intelligence, 24(3):301–312, March 2002.</p>
+<p>[Mooney et al.,2006] Raymond J. Mooney and Razvan C. Bunescu. Subsequence kernels for relation extraction. In Y. Weiss, B. Schölkopf, and J.C. Platt, editors, Advances in Neural Information Processing Systems 18, pages 171–178. MIT Press, 2006.</p>
+<p>[Riedel et al.,2010] Sebastian Riedel, Limin Yao, and Andrew McCallum. Modeling relations and their mentions without labeled text. In Proceedings of the 2010 European Conference on Machine Learning and Knowledge Discovery inDatabases: Part III, ECML PKDD’10, pages 148–163, Berlin, Heidelberg, 2010. Springer-Verlag.</p>
+<p>[Santos et al.,2015] Cicero Nogueira Dos Santos; Bing Xiang; Bowen Zhou.Classifying Relations by Ranking with Convolutional Neural Networks. ACL2015</p>
+<p>[Socher et al.,2012] Richard Socher, Brody Huval, Christopher D. Manning, and Andrew Y. Ng. Semantic compositionality through recursive matrix-vector spaces. In Proceedings of the 2012 Joint Conference on Empirical Methods in Natural Language Processing and Computational Natural Language Learning, pages 1201–1211, 2012.</p>
+<p>[Sun et al.,2011] Ang Sun, Ralph Grishman, and Satoshi Sekine. Semi-supervised relation extraction with large-scale word clustering. In Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies-Volume 1, ACL ’11, pages 521–529. Association for Computational Linguistics, 2011.</p>
+<p>[Sun et al.,2012] Ang Sun and Ralph Grishman. Active learning for relation type extension with local and global data views. In Proceedings of the 21st ACM International Conference on Information and Knowledge Management, CIKM ’12, pages 1105–1112. ACM, 2012.</p>
+<p>[Surdeanu et al.,2012] Mihai Surdeanu, Julie Tibshirani, Ramesh Nallapati, and Christopher D. Manning. Multi-instance multi-label learning for relation extraction. In Proceedings of the 2012 Joint Conference on Empirical Methods in Natural Language Processing and Computational Natural Language Learning, EMNLP-CoNLL ’12, pages 455–465, Stroudsburg, PA, USA, 2012. Association for Computational Linguistics.</p>
+<p>[Takamatsu et al.,2012] Shingo Takamatsu, Issei Sato, and Hiroshi Nakagawa. Reducing wrong labels in distant supervision for relation extraction. In Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Long Papers – Volume 1, ACL ’12, pages 721–729, Stroudsburg, PA, USA, 2012. Association for Computational Linguistics.</p>
+<p>[Thien et al.,2015] Nguyen Thien and Grishman Ralph. Relation Extraction:Perspective from Convolutional Neural Networks. Proceedings of the 1st Workshop on Vector Space Modeling for Natural Language Processing. 2015</p>
+<p>[Wang et al.,2006] Ting Wang, Yaoyong Li, Kalina Bontcheva, Hamish Cunningham, and Ji Wang. Automatic extraction of hierarchical relations from text. In Proceedings of the 3rd European Conference on The Semantic Web: Research andApplications, ESWC’06, pages 215–229, Berlin, Heidelberg, 2006. SpringerVerlag.</p>
+<p>[Wu et al.,2010] Fei Wu and Daniel S Weld. Open information extraction using Wikipedia. ACL2010</p>
+<p>[Yao et al.,2012] Limin Yao, Sebastian Riedel, and Andrew McCallum. Unsupervised relation discovery with sense disambiguation. In Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Long Papers - Volume 1, ACL’12, pages 712–720, Stroudsburg, PA, USA, 2012. Association for Computational Linguistics.</p>
+<p>[Zelenko et al.,2003] Dmitry Zelenko, Chinatsu Aone, and Anthony Richardella. Kernel methods for relation extraction. The Journal of Machine Learning Research, 3:1083–1106, 2003.</p>
+<p>[Zeng et al.,2014] Daojian Zeng; Kang Liu; Siwei Lai; Guangyou Zhou; Jun Zhao.Relation Classification via Convolutional Deep Neural Network. COLING2014</p>
+<p>[Zeng et al.,2015] Daojian Zeng; Kang Liu; yubo Chen; Jun Zhao. Distant Supervision for Relation Extraction via Piecewise Convolutional Neural Networks. EMNLP2015</p>
+<p>[Zhang et al.,2006] Min Zhang, Jie Zhang, Jian Su, and Guodong Zhou. A composite kernel to extract relations between entities with both flat and structured features. In Proceedings of the 21st International Conference on Computational Linguistics and the 44th Annual Meeting of the Association for Computational Linguistics, ACL ’06, pages 825–832, Stroudsburg, PA, USA, 2006. Association for Computational Linguistics.</p>
+<p>[Zhao et al.,2005] Shubin Zhao and Ralph Grishman. Extracting relations with integrated information using kernel methods. In Proceedings of the 43rd Annual Meeting on Association for Computational Linguistics, ACL ’05, pages 419–426, Stroudsburg, PA, USA, 2005. Association for Computational Linguistics.</p>
+<p>[Zhou et al.,2005] GuoDong Zhou, Jian Su, Jie Zhang, and Min Zhang. Exploring various knowledge in relation extraction. In Proceedings of the 43rd Annual Meeting on Association for Computational Linguistics, ACL ’05, pages 427–434, Stroudsburg, PA, USA, 2005. Association for Computational Linguistics.</p>
+<p>[Zhou et al.,2005] GuoDong Zhou, Jian Su, Jie Zhang, and Min Zhang. Exploring various knowledge in relation extraction. In Proceedings of the 43rd Annual Meeting on Association for Computational Linguistics, ACL ’05, pages 427–434, Stroudsburg, PA, USA, 2005. Association for Computational Linguistics.[Zhou et al.,2007] Guodong Zhou, Min Zhang, Donghong Ji, and Qiaoming Zhu. Tree kernelbased relation extraction with context-sensitive structured parse tree information. In Proceedings of the 2007 Joint Conference on Empirical Methods in Natural Language Processing and Computational Natural Language Learning, EMNLPCoNLL’07, pages 728–736, 2007.</p>
+<p>[Zhou et al.,2016] Peng Zhou; Wei Shi; Jun Tian; Zhenyu Qi; Bingchen Li; Hongwei Hao; Bo Xu. Attention-based bidirectional long short-term memory networks for relation classification. ACL2016</p>
+<blockquote>
+<p>节选自《知识图谱发展报告2018》</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/28/跟我一起写Makefile读书笔记(一)/" rel="next" title="跟我一起写Makefile读书笔记(一)">
+                <i class="fa fa-chevron-left"></i> 跟我一起写Makefile读书笔记(一)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avator.jpeg"
+                alt="Rilzob" />
+            
+              <p class="site-author-name" itemprop="name">Rilzob</p>
+              <p class="site-description motion-element" itemprop="description">一蓑烟雨任平生</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/rilzob" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:watermirrorsir@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/a-shui-rilzob" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.zzndb.com.cn/" title="zz-db" target="_blank">zz-db</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#任务定义"><span class="nav-number">1.</span> <span class="nav-text">任务定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#研究内容"><span class="nav-number">2.</span> <span class="nav-text">研究内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#限定域关系抽取"><span class="nav-number">2.1.</span> <span class="nav-text">限定域关系抽取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开放域关系抽取"><span class="nav-number">2.2.</span> <span class="nav-text">开放域关系抽取</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#挑战"><span class="nav-number">3.</span> <span class="nav-text">挑战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自然语言表达的多样性"><span class="nav-number">3.1.</span> <span class="nav-text">自然语言表达的多样性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关系表达的隐含性"><span class="nav-number">3.2.</span> <span class="nav-text">关系表达的隐含性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实体关系的复杂性"><span class="nav-number">3.3.</span> <span class="nav-text">实体关系的复杂性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#技术方法和研究现状"><span class="nav-number">4.</span> <span class="nav-text">技术方法和研究现状</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#限定域关系抽取和开放域关系抽取"><span class="nav-number">4.1.</span> <span class="nav-text">限定域关系抽取和开放域关系抽取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于规则的关系抽取和基于机器学习的关系抽取"><span class="nav-number">4.2.</span> <span class="nav-text">基于规则的关系抽取和基于机器学习的关系抽取</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于规则的关系抽取"><span class="nav-number">4.2.1.</span> <span class="nav-text">基于规则的关系抽取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于机器学习的关系抽取"><span class="nav-number">4.2.2.</span> <span class="nav-text">基于机器学习的关系抽取</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无监督关系抽取"><span class="nav-number">4.2.2.1.</span> <span class="nav-text">无监督关系抽取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#有监督关系抽取"><span class="nav-number">4.2.2.2.</span> <span class="nav-text">有监督关系抽取</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基于特征向量的方法"><span class="nav-number">4.2.2.2.1.</span> <span class="nav-text">基于特征向量的方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于核函数的方法"><span class="nav-number">4.2.2.2.2.</span> <span class="nav-text">基于核函数的方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于神经网络的方法"><span class="nav-number">4.2.2.2.3.</span> <span class="nav-text">基于神经网络的方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#弱监督关系抽取"><span class="nav-number">4.2.2.3.</span> <span class="nav-text">弱监督关系抽取</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#技术展望与发展趋势"><span class="nav-number">5.</span> <span class="nav-text">技术展望与发展趋势</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rilzob</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+</body>
+</html>
