@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="读书笔记,C++," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="极氙世界" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="本章介绍并实现更基本、更常用的两种数据结构——栈和队列。与之前介绍的向量和列表一样，同属于线性序列结构，故其中存放的数据对象之间也具有线性次序。相对于一般的序列结构，栈与队列的数据操作范围仅限于逻辑上的特定某端。">
+<meta name="keywords" content="读书笔记,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第四章 栈和队列">
+<meta property="og:url" content="https://rilzob.com/2019/04/09/数据结构第四章 栈与队列/index.html">
+<meta property="og:site_name" content="极氙世界">
+<meta property="og:description" content="本章介绍并实现更基本、更常用的两种数据结构——栈和队列。与之前介绍的向量和列表一样，同属于线性序列结构，故其中存放的数据对象之间也具有线性次序。相对于一般的序列结构，栈与队列的数据操作范围仅限于逻辑上的特定某端。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-09T07:24:18.180Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第四章 栈和队列">
+<meta name="twitter:description" content="本章介绍并实现更基本、更常用的两种数据结构——栈和队列。与之前介绍的向量和列表一样，同属于线性序列结构，故其中存放的数据对象之间也具有线性次序。相对于一般的序列结构，栈与队列的数据操作范围仅限于逻辑上的特定某端。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://rilzob.com/2019/04/09/数据结构第四章 栈与队列/"/>
+
+
+
+
+
+  <title>第四章 栈和队列 | 极氙世界</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/Rilzob" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">极氙世界</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">追求梦想，永不止步</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://rilzob.com/2019/04/09/数据结构第四章 栈与队列/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rilzob">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="极氙世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">第四章 栈和队列</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-09T14:36:15+08:00">
+                2019-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机科学与技术/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机科学与技术</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机科学与技术/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本章介绍并实现更基本、更常用的两种数据结构——栈和队列。与之前介绍的向量和列表一样，同属于线性序列结构，故其中存放的数据对象之间也具有线性次序。相对于一般的序列结构，栈与队列的数据操作范围仅限于逻辑上的特定某端。<br><a id="more"></a></p>
+<h1 id="4-1-栈"><a href="#4-1-栈" class="headerlink" title="4.1 栈"></a>4.1 栈</h1><h2 id="4-1-1-ADT接口"><a href="#4-1-1-ADT接口" class="headerlink" title="4.1.1 ADT接口"></a>4.1.1 ADT接口</h2><h3 id="入栈与出栈"><a href="#入栈与出栈" class="headerlink" title="入栈与出栈"></a>入栈与出栈</h3><p><strong>栈（Stack）</strong> 是存放数据对象的一种特殊容器，其中的数据元素按线性的逻辑次序排列，故也可定义首、末元素。栈结构的插入和删除操作仅限于栈的某一特定端，即若约定新的元素只能从某一端插入其中，则反过来只能从这一端删除已有的元素。禁止操作的另一端称作<strong>盲端</strong>。</p>
+<p>栈中可操作的一端被称作为<strong>栈顶（stack top）</strong> ，而另一无法直接操作的盲端被称为<strong>栈底（stack bottom）</strong>。插入和删除操作分别被称作<strong>入栈（push）</strong> 和<strong>出栈（pop）</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>操作接口</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>size()</code></td>
+<td>报告栈的规模</td>
+</tr>
+<tr>
+<td><code>empty()</code></td>
+<td>判断栈是否为空</td>
+</tr>
+<tr>
+<td><code>push(e)</code></td>
+<td>将e插至栈顶</td>
+</tr>
+<tr>
+<td><code>pop()</code></td>
+<td>删除栈顶对象</td>
+</tr>
+<tr>
+<td><code>top()</code></td>
+<td>引用栈顶对象</td>
+</tr>
+</tbody>
+</table>
+<h3 id="后进先出"><a href="#后进先出" class="headerlink" title="后进先出"></a>后进先出</h3><p>栈中元素接收操作的次序必然始终遵循所谓的<strong>“后进先出（last-in-first-out，LIFO）”</strong>的规律：<em>从栈结构的整个生命期来看，更晚（早）出栈的元素，应为更早（晚）入栈者；反之，更晚（早）入栈者应更早（晚）出栈。</em></p>
+<h2 id="4-1-3-Stack模板类"><a href="#4-1-3-Stack模板类" class="headerlink" title="4.1.3 Stack模板类"></a>4.1.3 Stack模板类</h2><p>由于栈可视作序列的特例，因此可将栈作为向量的派生类。利用C++的继承机制，基于之前定义的向量模板类实现栈结构并将接口重新命名。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// stack@vector.h</span></span><br><span class="line"><span class="comment">// 代码4.1 Stack模板类</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"../Vector/Vector.h"</span></span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="class"><span class="keyword">class</span> <span class="title">Stack</span>:</span> <span class="keyword">public</span> Vector&lt;T&gt; &#123; <span class="comment">// 将向量的首/末端作为栈底/顶</span></span><br><span class="line"><span class="keyword">public</span>: <span class="comment">// size()、empty()以及其它开放接口，均可直接沿用</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push</span> <span class="params">(T <span class="keyword">const</span>&amp; e)</span> </span>&#123; insert(size(), e); &#125; <span class="comment">// 入栈：等效于将新元素作为向量的末元素插入</span></span><br><span class="line">    <span class="function">T <span class="title">pop</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> remove(size() - <span class="number">1</span>); &#125; <span class="comment">// 出栈：等效于删除向量的末元素</span></span><br><span class="line">    <span class="function">T&amp; <span class="title">top</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> (*<span class="keyword">this</span>)[size() - <span class="number">1</span>]; &#125; <span class="comment">// 取顶：直接返回向量的末元素</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>由于栈操作都限制于向量的末端，参与操作的元素没有任何后继，因此栈接口的时间复杂度均为常数。</p>
+<p>同理，也可基于List模板类派生出Stack类。（习题【4-1】）</p>
+<p><em>特别说明一下：<code>top()</code>操作的位置不可颠倒，因为如果插入和删除操作都集中在前端进行，那么每一次操作都要涉及到向量中的当前所有元素，于是入栈和出栈操作的复杂度都上升到$O(n)$。</em></p>
+<h1 id="4-2-栈与递归"><a href="#4-2-栈与递归" class="headerlink" title="4.2 栈与递归"></a>4.2 栈与递归</h1><p>习题【1-17】指出，递归算法所需的空间量，主要决定于最大递归深度。在达到这一时刻，同时活跃的递归实例达到最多。</p>
+<p>通过栈可以解决如下问题：</p>
+<ol>
+<li>操作系统具体是如何实现函数（递归）调用的？</li>
+<li>如何记录调用与被调用函数（递归）实例之间的关系？</li>
+<li>如何实现函数（递归）调用的返回？</li>
+<li>如何维护同时活跃的所有函数（递归）实例的？</li>
+</ol>
+<h2 id="4-2-1-函数调用栈"><a href="#4-2-1-函数调用栈" class="headerlink" title="4.2.1 函数调用栈"></a>4.2.1 函数调用栈</h2><p>在 Windows 等大部分操作系统中，每个运行中的二进制程序都配有一个<strong>调用栈（call stack）</strong>或<strong>执行栈（execution stack）</strong>。借助调用栈可以跟踪属于同一程序的所有函数，记录它们之间的相互调用关系，并保证在每一调用实例执行完毕之后，可以准确返回。</p>
+<h3 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h3><p>调用栈的基本单位是<strong>帧（frame）</strong>。每次函数调用时，都会相应地创建一帧，记录该函数实例在二进制程序中的<strong>返回地址（return address）</strong>，以及局部变量、传入参数等，并将该帧压入调用栈。若在该函数返回之前又发生新的调用，则同样地要将新函数对应的一帧压入栈中，成为新的栈顶。函数一旦运行完毕，对应的帧随即弹出，运行控制权将被交还给该函数的上层调用函数，并按照该帧中记录的返回地址确定在二进制程序中继续执行的位置。</p>
+<p>在任一时刻，调用栈中的各帧，依次对应于那些尚未返回的调用实例，亦即当时的<strong>活跃函数实例（active function instance）</strong>。特别地，位于栈底的那一帧必然对应于入口主函数<code>main()</code>，若它从调用栈中弹出，则意味着整个程序的运行结束，此后控制权将交还给操作系统。</p>
+<p>仿照递归跟踪法，程序执行过程出现过的函数实例及其调用关系，也可构成一棵树，，称作该程序的<strong>运行树</strong>。任一时刻的所有活跃函数实例，在调用栈中自底到顶，对应于运行树中从根节点到最新活跃函数实例的一条调用路径。</p>
+<p>此外，调用栈中各帧还需存放其他内容。比如，因各帧规模不一，它们还需记录前一帧的起始地址，以保证其出栈之后前一帧能正确地恢复。</p>
+<h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><p>作为函数调用的特殊形式，递归也可借助上述调用栈得以实现。同一函数可能同时拥有多个实例，并在调用栈中各自占有一帧。这些帧的结构完全相同，但其中同名的参数或变量，都是独立的副本。</p>
+<h2 id="4-2-2-避免递归"><a href="#4-2-2-避免递归" class="headerlink" title="4.2.2 避免递归"></a>4.2.2 避免递归</h2><p>系统在后台隐式地维护调用栈的过程中，难以区分哪些参数和变量是对计算过程有实质作用的，更无法以通用的方式对它们进行优化，因此不得不将描述调用现场的所有参数和变量悉数入栈。更加上每一帧都必须保存的执行返回地址以及前一帧起始位置，往往会导致程序的空间效率不高甚至极低；同时，隐式的入栈和出栈操作也会令实际的运行时间增加不少。</p>
+<p>因此在追求高效率的场合，应尽可能地避免递归。可以考虑使用将尾递归转换为等效的迭代形式（1.4.4节介绍过）或者采用动态规划策略将 Fibonacci数算法中的二分递归改为线性递归，直至完全消除递归（1.4.5节）。</p>
+<p>这样做的话，尽管算法原递归版本的高度概括性和简洁性将大打折扣，但毕竟在空间效率方面可以获得足够的补偿。</p>
+<h1 id="4-3-栈的典型应用"><a href="#4-3-栈的典型应用" class="headerlink" title="4.3 栈的典型应用"></a>4.3 栈的典型应用</h1><h2 id="4-3-1-逆序输出"><a href="#4-3-1-逆序输出" class="headerlink" title="4.3.1 逆序输出"></a>4.3.1 逆序输出</h2><p>逆序输出类问题特征：<em>首先，虽有明确的算法，但其解答却以线性序列的形式给出；其次，无论是递归还是迭代实现，该序列都是依逆序计算输出的；最后，输入和输出规模不确定，难以事先确定盛放输出数据的容器大小。</em>因其特有的“后进先出”特性及其在容量方面的自适应性，使用栈来解决此类问题可谓恰到好处。</p>
+<h3 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h3><p>给定任一10进制非负整数，将其转换为其他进制表示形式。若使用向量，则扩容策略必须得当；若使用列表，则多数接口均被闲置；使用栈栈，即可满足以上要求，又可有效控制计算成本。</p>
+<h4 id="递归实现"><a href="#递归实现" class="headerlink" title="递归实现"></a>递归实现</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// convert_a.cpp</span></span><br><span class="line"><span class="comment">// 代码4.2 进制转换算法（递归版）</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">convert</span><span class="params">(Stack&lt;<span class="keyword">char</span>&gt;&amp; S, <span class="keyword">__int64_t</span> n, <span class="keyword">int</span> base)</span></span>&#123; <span class="comment">// 十进制正整数n到base进制的转换(递归版)</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">char</span> digit[] <span class="comment">// 0 &lt; n, 1 &lt; base &lt;= 16, 新进制下的数位符号，可视base取指范围适当扩充</span></span><br><span class="line">            = &#123; <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>, <span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>, <span class="string">'E'</span>, <span class="string">'F'</span> &#125;;</span><br><span class="line">    <span class="keyword">if</span> (<span class="number">0</span> &lt; n) &#123; <span class="comment">// 在尚有余数之前，反复地</span></span><br><span class="line">        S.push(digit[n % base]); <span class="comment">// 逆向记录当前最低位，再</span></span><br><span class="line">        convert(S, n/base, base); <span class="comment">// 通过递归得到所有更高位</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="comment">// 新进制下由高到低的各数位，自顶向下保存于栈S中</span></span><br><span class="line"></span><br><span class="line">main()&#123;</span><br><span class="line">    Stack&lt;<span class="keyword">char</span>&gt; S; convert(S, n, base); <span class="comment">// 用栈记录转换得到的各数位</span></span><br><span class="line">    <span class="keyword">while</span>(!S.empty()) <span class="built_in">printf</span>(<span class="string">"%c"</span>, S.pop()); <span class="comment">// 逆序输出</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>尽管新进制下的各数位须由低到高次序算出，但只要引入一个栈并将算得的数位依次入栈，则在计算结束后只需通过反复的出栈操作即可由高到低将其顺序输出。</p>
+<p>这里的静态数位符号表在全局只需保留一份，但与一般的递归函数一样，该函数在递归调用栈中的每一帧都仍需记录参数S、n和base。将它们改为全局变量固然可以节省这部分空间，但依然不能彻底地避免因调用栈操作而导致的空间和时间消耗。为此，可将其改写为迭代形式，既能充分发挥栈处理此类问题的特长，又可将空间消耗降至$O(1)$。</p>
+<h4 id="迭代实现"><a href="#迭代实现" class="headerlink" title="迭代实现"></a>迭代实现</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// convert_b.cpp</span></span><br><span class="line"><span class="comment">// 代码4.3 进制转换算法（迭代版）</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">convert</span><span class="params">(Stack&lt;<span class="keyword">char</span>&gt;&amp; S, <span class="keyword">__int64_t</span> n, <span class="keyword">int</span> base)</span></span>&#123; <span class="comment">// 十进制数n到base进制的转换(迭代版)</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">char</span> digit[] <span class="comment">// 0 &lt; n, 1 &lt; base &lt;= 16, 新进制下的数位符号，可视base取指范围适当扩充</span></span><br><span class="line">            = &#123; <span class="string">'0'</span>, <span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>, <span class="string">'7'</span>, <span class="string">'8'</span>, <span class="string">'9'</span>, <span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>, <span class="string">'E'</span>, <span class="string">'F'</span> &#125;;</span><br><span class="line">    <span class="keyword">while</span> (n &gt; <span class="number">0</span>)&#123; <span class="comment">// 由低到高，逐一计算出新进制下的各数位</span></span><br><span class="line">        <span class="keyword">int</span> remainder = (<span class="keyword">int</span>) (n % base); S.push(digit[remainder]); <span class="comment">// 余数(当前位)入栈</span></span><br><span class="line">        n /= base; <span class="comment">// n更新为其对base的除商</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="comment">// 新进制下由高到低的各数位，自顶向下保存于栈S中</span></span><br><span class="line"></span><br><span class="line">main()&#123;</span><br><span class="line">    Stack&lt;<span class="keyword">char</span>&gt; S; convert(S, n, base); <span class="comment">// 用栈记录转换得到的各数位</span></span><br><span class="line">    <span class="keyword">while</span>(!S.empty()) <span class="built_in">printf</span>(<span class="string">"%c"</span>, S.pop()); <span class="comment">// 逆序输出</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-3-2-递归嵌套"><a href="#4-3-2-递归嵌套" class="headerlink" title="4.3.2 递归嵌套"></a>4.3.2 递归嵌套</h2><p>递归嵌套类问题特征：<em>具有自相似性的问题多可嵌套地递归描述，但因分支位置和嵌套深度并不固定，其递归算法的复杂度不易控制。</em>栈结构及其操作天然地具有递归嵌套性，故可用以高效地解决这类问题。</p>
+<h3 id="栈混洗"><a href="#栈混洗" class="headerlink" title="栈混洗"></a>栈混洗</h3><p>栈混洗问题定义：考察三个栈 A、B 和 S。其中，B 和 S 初始为空；A 含有 n 个元素，自顶向下构成输入序列：<br>$A = &lt; a_1,a_2,…,a_n ]$<br>这里，分别用尖括号、方括号示意栈顶、栈底。<br>以下，若只允许通过<code>S.push(A.pop())</code>弹出栈 A 的顶元素并随即压入栈 S 中，或通过<code>B.push(S.pop())</code>弹出 S 的顶元素并随即压入栈 B 中，则在经过这两类操作各 n 次之后，栈 A 和 S 有可能均为空，原 A 中的元素均已转入栈 B 。此时，若将 B 中元素自底向上构成的序列记作：<br>$B = [ a_{k1},a_{k2},…,a_{kn} &gt;$<br>则该序列称作原输入序列的一个<strong>栈混洗（stack permutation）</strong>。</p>
+<p>除了“实施出栈操作时栈不得为空”，以上过程并无更多限制，故<strong>栈混洗并不唯一</strong>。</p>
+<p>一般地对于长度为 n 的输入序列，每一栈混洗都对应于由栈 S 的 n 次<code>push</code>和 n 次 <code>pop</code>构成的某一合法操作序列。反之，由 n 次<code>push</code>和 n 次<code>pop</code>构成的任何操作序列，只要满足“任一前缀中<code>push</code>不少于<code>pop</code>”这一限制，则该序列也必然对应于一个栈混洗（习题【4-4】）</p>
+<h4 id="计数（PPT-P340）"><a href="#计数（PPT-P340）" class="headerlink" title="计数（PPT P340）"></a>计数（PPT P340）</h4><p>长度为 n 的序列可能栈混洗总数:<br>$$<br>\begin{aligned}<br>SP &amp; = \sum_{k = 1}^n SP(k-1) \cdot SP(n-k) \<br>&amp; = Catalan(n) \<br>&amp; = \frac{(2n)!}{(n+1)!n!} \<br>\end{aligned}<br>$$<br>其中，$k$为第$k$次<code>pop()</code>操作。</p>
+<h4 id="甄别（PPT-P342）"><a href="#甄别（PPT-P342）" class="headerlink" title="甄别（PPT P342）"></a>甄别（PPT P342）</h4><p>甄别是判断新生成的序列能否经过栈混洗原序列得到。</p>
+<p>充要条件（1）：<em>对于任何$1 \leq i &lt; j &lt; k  \leq n$，$ […,k,…,i,…，j,…&gt;$并非栈混洗。A permutation is a stack permutation iff it does NOT  involve the permutation 312.——Knuth, 1968（习题【4-3】</em>，由此可得到一个$O(n^3)$的甄别算法。</p>
+<p>充要条件（2）：<em>$[p_1,p_2,p_3,….,p_n&gt;$是$&lt;1,2,3,…,n]$的栈混洗，当且仅当对于任意$i &lt; j$，不含模式$[…,j+1,…,i,…,j,…&gt;$</em>，由此可得到一个$O(n^2)$的甄别算法。</p>
+<p>$O(n)​$算法：直接借助栈A、B 和 S ，模拟混洗过程。每次<code>S.pop()</code>之前，检查 S 是否已空；或需弹出的元素在 S 中，却非顶元素。</p>
+<h3 id="括号匹配"><a href="#括号匹配" class="headerlink" title="括号匹配"></a>括号匹配</h3><p>括号匹配问题定义：<em>对任一程序块，判断其中的括号是否在嵌套定义下完全匹配（简称匹配）</em>。</p>
+<h4 id="递归实现-1"><a href="#递归实现-1" class="headerlink" title="递归实现"></a>递归实现</h4><p>构思：先只考虑圆括号。用“+”表示表达式的串接。<br>一般地，若表达式S可分解为如下格式：<br>$S = S_0 + “(“ + S_1 + “)” + S_2 + S_3​$<br>其中$S_0​$和$S_3​$不含括号，且$S_1​$中左、右括号数目相等，则S匹配当且仅当$S_1​$和$S_2​$均匹配。<br>按照这一理解，可采用分治策略设计算法如下：<em>将表达式划分为子表达式$S_0​$、$S_1​$和$S_2​$，分别递归地判断$S_1​$和$S_2​$是否匹配。</em>这一构思代码实现如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// nest_a.cpp</span></span><br><span class="line"><span class="comment">// 代码4.4 括号匹配算法（递归版）</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">trim</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> <span class="built_in">exp</span>[], <span class="keyword">int</span>&amp; lo, <span class="keyword">int</span>&amp; hi)</span></span>&#123; <span class="comment">// 删除exp[lo, hi]不含括号的最长前缀、后缀</span></span><br><span class="line">    <span class="keyword">while</span> ((lo &lt;= hi) &amp;&amp; (<span class="built_in">exp</span>[lo] != <span class="string">'('</span>) &amp;&amp; (<span class="built_in">exp</span>[lo] != <span class="string">')'</span>)) lo++; <span class="comment">// 查找第一个和最后一个括号</span></span><br><span class="line">    <span class="keyword">while</span> ((lo &lt;= hi) &amp;&amp; (<span class="built_in">exp</span>[hi] != <span class="string">'('</span>) &amp;&amp; (<span class="built_in">exp</span>[hi] != <span class="string">')'</span>)) hi--;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">divide</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> <span class="built_in">exp</span>[], <span class="keyword">int</span> lo, <span class="keyword">int</span> hi)</span></span>&#123; <span class="comment">// 切分exp[lo, hi], 使exp匹配仅当子表达式匹配</span></span><br><span class="line">    <span class="keyword">int</span> mi = lo; <span class="keyword">int</span> crc = <span class="number">1</span>; <span class="comment">// crc为[lo, mi]范围内左、右括号数目之差</span></span><br><span class="line">    <span class="keyword">while</span> ((<span class="number">0</span> &lt; crc) &amp;&amp; (++mi &lt; hi)) <span class="comment">// 逐个检查各字符，直到左、右括号数目相等，或者越界</span></span><br><span class="line">    &#123;<span class="keyword">if</span> (<span class="built_in">exp</span>[mi] == <span class="string">')'</span>) crc--; <span class="keyword">if</span> (<span class="built_in">exp</span>[mi] == <span class="string">'('</span>) crc++; &#125; <span class="comment">// 左、右括号分别计数</span></span><br><span class="line">    <span class="keyword">return</span> mi; <span class="comment">// 若mi &lt;= hi,则为合法切分点；否则，意味着局部不可能匹配</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">paren</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> <span class="built_in">exp</span>[], <span class="keyword">int</span> lo, <span class="keyword">int</span> hi)</span></span>&#123; <span class="comment">// 检查表达式exp[lo,hi]是否括号匹配(递归版)</span></span><br><span class="line">    trim(<span class="built_in">exp</span>, lo, hi); <span class="keyword">if</span> (lo &gt; hi) <span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">// 清除不含括号的前缀、后缀</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">exp</span>[lo] != <span class="string">'('</span>) <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 首字符非左括号，则必不匹配</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">exp</span>[hi] != <span class="string">')'</span>) <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 末字符非右括号，则必不匹配</span></span><br><span class="line">    <span class="keyword">int</span> mi = divide(<span class="built_in">exp</span>, lo, hi); <span class="comment">// 确定适当的切分点</span></span><br><span class="line">    <span class="keyword">if</span> (mi &gt; hi) <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 切分点不合法，意味着局部以至整体不匹配</span></span><br><span class="line">    <span class="keyword">return</span> paren(<span class="built_in">exp</span>, lo + <span class="number">1</span>, mi - <span class="number">1</span>) &amp;&amp; paren(<span class="built_in">exp</span>, mi + <span class="number">1</span>, hi); <span class="comment">// 分别检查左、右子表达式</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>trim()</code>函数用于截除表达式中不含括号的头部和尾部，即前缀$S_0$和后缀$S_3$。<code>divide()</code>函数对表达式做线性扫描，并动态地记录已经扫描的左、右括号数目之差。如此，当已扫过同样多的左、右括号时，即确定了一个合适的切分点 mi ，并得到一个子表达式$S_1 = exp(lo,mi)$和$S_2 = exp(mi, hi]$。以下，经递归地检查$S_1$和$S_2$，即可判断原表达式是否匹配。</p>
+<p>在最坏情况下<code>divide()</code>需要线性时间，且递归深度为$O(n)$，故以上算法共需$O(n^2)$时间。此外，该方法也难以处理含有多种括号的表达式（习题【4-5】和【4-15】），故有必要进一步优化。</p>
+<p><em>特别说明：实际上若仅考虑一种括号，只需一个计数器即可，但推广至多种括号并存的情况，则不可以使用多个计数器，因为有括号嵌套的情况存在。（PPT P334）</em></p>
+<h4 id="迭代实现-1"><a href="#迭代实现-1" class="headerlink" title="迭代实现"></a>迭代实现</h4><p>实际上，只要将<code>push</code>、<code>pop</code>操作分别与左、右括号相对应，则长度为 n 的栈混洗，必然与由 n 对括号组成的合法表达式彼此对应（习题【4-4】）（n 个元素的栈混洗等价于 n 对括号的匹配）。按照这一理解，借助栈结构，只需扫描一趟表达式，即可在线性时间内，判定其中的括号是否匹配。</p>
+<p>代码实现:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// nest_b.cpp</span></span><br><span class="line"><span class="comment">// 代码4.5 括号匹配算法（迭代版）</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">paren</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> <span class="built_in">exp</span>[], <span class="keyword">int</span> lo, <span class="keyword">int</span> hi)</span></span>&#123; <span class="comment">// 表达式括号匹配检查，可兼顾三种括号</span></span><br><span class="line">    Stack&lt;<span class="keyword">char</span>&gt; S; <span class="comment">// 使用栈记录已发现但尚未匹配的左括号</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = lo; i &lt;= hi; i++) <span class="comment">/* 逐一检查当前字符 */</span></span><br><span class="line">        <span class="keyword">switch</span> (<span class="built_in">exp</span>[i]) &#123; <span class="comment">// 左括号直接进栈；右括号若与栈顶失配，则表达式必不匹配</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'('</span>:</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'['</span>:</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'&#123;'</span>: S.push(<span class="built_in">exp</span>[i]);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">')'</span>: <span class="keyword">if</span> ((S.empty()) || (<span class="string">'('</span> != S.pop())) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">']'</span>: <span class="keyword">if</span> ((S.empty()) || (<span class="string">'['</span> != S.pop())) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'&#125;'</span>: <span class="keyword">if</span> ((S.empty()) || (<span class="string">'&#123;'</span> != S.pop())) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>; <span class="comment">// 非括号字符一律忽略</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> S.empty(); <span class="comment">// 整个表达式扫描过后，栈中若仍残留(左)括号，则不匹配；否则(栈空)匹配</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>新算法的流程控制简单，而且便于推广至多类括号并存的场合。</p>
+<p>算法描述：<em>它自左向右逐个考察各字符，忽略所有非括号字符。凡遇到左括号，无论属于哪类均统一压入栈 S 中。若遇右括号，则弹出栈顶的左括号与之比对。若二者属于同类，则继续检查下一字符；否则，即可断定表达式不匹配。同时若栈 S 提前变空或者表达式扫描过后栈 S 非空，同样意味着不匹配。</em></p>
+<h2 id="4-3-3-延迟缓冲"><a href="#4-3-3-延迟缓冲" class="headerlink" title="4.3.3 延迟缓冲"></a>4.3.3 延迟缓冲</h2><p>延迟缓冲类问题特征：<em>在一些应用问题中，输入可分解为多个单元并通过迭代依次扫描处理，但过程中的各步计算往往滞后于扫描的进度，需要待到必要的信息已完整到一定程度之后，才能作出判断并实施计算。</em>在这类场合，栈结构则可以扮演数据缓冲区的角色。</p>
+<h3 id="表达式求值"><a href="#表达式求值" class="headerlink" title="表达式求值"></a>表达式求值</h3><p>在编译 C++ 程序的预处理阶段，源程序中的所有常量表达式都需首先计算并替换为对应的具体数值。而在解释型语言中，算术表达式的求值也需随着脚本执行过程中反复进行。</p>
+<p>可见，不能简单地按照“先左后右”的次序执行表达式中的运算符。关于运算符执行次序的规则（即运算优先级），一部分决定于事先约定的惯例（比如乘除优先于加减），另一部分则决定于括号。也就是说，仅根据表达式的某一前缀，并不能完全确定各运算符能否执行以及执行的次序；只有在已获得足够多后续信息之后，才能确定其中哪些运算符可以执行。</p>
+<h3 id="优先级表"><a href="#优先级表" class="headerlink" title="优先级表"></a>优先级表</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// priority.h</span></span><br><span class="line"><span class="comment">// 代码4.6 运算符优先级关系的定义</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N_OPTR 9 <span class="comment">// 运算符总数</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> &#123; ADD, SUB, MUL, DIV, POW, FAC, L_P, R_P, EOE &#125; Operator; <span class="comment">// 运算符集合</span></span><br><span class="line"><span class="comment">// 加、减、乘、除、乘方、阶乘、左括号、右括号、起始符与终止符</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> pri[N_OPTR][N_OPTR] = &#123; <span class="comment">// 运算符优先等级[栈顶][当前]</span></span><br><span class="line">        <span class="comment">/*              |-------------------- 当 前 运 算 符 --------------------| */</span></span><br><span class="line">        <span class="comment">/*              +      -      *      /      ^      !      (      )      \0 */</span></span><br><span class="line">        <span class="comment">/* --  + */</span>    <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,</span><br><span class="line">        <span class="comment">/* |   - */</span>    <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,</span><br><span class="line">        <span class="comment">/* 栈  * */</span>    <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,</span><br><span class="line">        <span class="comment">/* 顶  / */</span>    <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,</span><br><span class="line">        <span class="comment">/* 运  ^ */</span>    <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,</span><br><span class="line">        <span class="comment">/* 算  ! */</span>    <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,   <span class="string">' '</span>,   <span class="string">'&gt;'</span>,   <span class="string">'&gt;'</span>,</span><br><span class="line">        <span class="comment">/* 符  ( */</span>    <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'='</span>,   <span class="string">' '</span>,</span><br><span class="line">        <span class="comment">/* |   ) */</span>    <span class="string">' '</span>,   <span class="string">' '</span>,   <span class="string">' '</span>,   <span class="string">' '</span>,   <span class="string">' '</span>,   <span class="string">' '</span>,   <span class="string">' '</span>,   <span class="string">' '</span>,   <span class="string">' '</span>,</span><br><span class="line">        <span class="comment">/* -- \0 */</span>    <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">'&lt;'</span>,   <span class="string">' '</span>,   <span class="string">'='</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在常规的四则运算之外，这里还引入了乘方和阶乘运算。其中阶乘属于一元运算，且优先级最高。为统一算法的处理流程，将左、右括号以及标识表达式尾部的字符’\0’，也视作运算符。</p>
+<h3 id="求值算法"><a href="#求值算法" class="headerlink" title="求值算法"></a>求值算法</h3><p>基于运算符优先级如上的定义和判定规则，可实现表达式求值算法如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// rpn.cpp</span></span><br><span class="line"><span class="comment">// 代码4.7 表达式的求值及RPN的转换</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">evaluate</span><span class="params">(<span class="keyword">char</span>* S, <span class="keyword">char</span>*&amp; RPN)</span></span>&#123; <span class="comment">// 对(已剔除空白格的)表达式S求值，并转换为逆波兰式RPN</span></span><br><span class="line">    Stack&lt;<span class="keyword">float</span>&gt; opnd; Stack&lt;<span class="keyword">char</span>&gt; optr; <span class="comment">// 运算数栈、运算符栈</span></span><br><span class="line">    optr.push(<span class="string">'\0'</span>); <span class="comment">// 尾哨兵'\0'也作为头哨兵首先入栈</span></span><br><span class="line">    <span class="keyword">while</span> (!optr.empty())&#123; <span class="comment">// 在运算符栈非空之前，逐个处理表达式中各字符</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">isdigit</span>(*S))&#123; <span class="comment">// 若当前字符为操作数，则</span></span><br><span class="line">            readNumber(S, opnd); append(RPN, opnd.top()); <span class="comment">// 读入操作数，并将其接至RPN末尾</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="comment">// 若当前字符为运算符，则</span></span><br><span class="line">        <span class="keyword">switch</span> (orderBetween(optr.top(), *S))&#123; <span class="comment">// 视其与栈顶运算符之间优先级高低分别处理</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'&lt;'</span>: <span class="comment">// 栈顶运算符优先级更低时</span></span><br><span class="line">                optr.push(*S); S++; <span class="comment">// 计算推迟，当前运算符进栈</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'='</span>: <span class="comment">// 优先级相等（当前运算符为右括号或者尾部哨兵'\0'）时</span></span><br><span class="line">                optr.pop(); S++; <span class="comment">// 脱括号并接收下一个字符</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'&gt;'</span>: &#123;<span class="comment">// 栈顶运算符优先级更高时，可实施相应的计算，并将结果重新入栈</span></span><br><span class="line">                <span class="keyword">char</span> op = optr.pop();</span><br><span class="line">                append(RPN, op); <span class="comment">// 栈顶运算符出栈并续接至RPN末尾</span></span><br><span class="line">                <span class="keyword">if</span> (<span class="string">'!'</span> == op) &#123; <span class="comment">// 若属于一元运算符</span></span><br><span class="line">                    <span class="keyword">float</span> pOpnd = opnd.pop(); <span class="comment">// 只需取出一个操作数，并</span></span><br><span class="line">                    opnd.push(calcu(op, pOpnd)); <span class="comment">// 实施一元计算，结果入栈</span></span><br><span class="line">                &#125; <span class="keyword">else</span> &#123; <span class="comment">// 对于其它（二元）运算符</span></span><br><span class="line">                    <span class="keyword">float</span> pOpnd2 = opnd.pop(), pOpnd1 = opnd.pop(); <span class="comment">// 取出后、前操作数</span></span><br><span class="line">                    opnd.push(calcu(pOpnd1, op, pOpnd2)); <span class="comment">// 实施二元计算，结果入栈</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">default</span> : <span class="built_in">exit</span>(<span class="number">-1</span>); <span class="comment">// 逢语法错误，不做处理直接退出</span></span><br><span class="line">        &#125; <span class="comment">// switch</span></span><br><span class="line">    &#125;<span class="comment">// while</span></span><br><span class="line">    <span class="keyword">return</span> opnd.pop(); <span class="comment">// 弹出并返回最后的计算结果</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>算法描述：<em>该算法自左向右扫描表达式，并对其中字符逐一做相应的处理。那些已经扫描过但（因信息不足）尚不能处理的操作数与运算符，将分别缓冲至栈<code>opnd</code>和栈<code>optr</code>。一旦判定已缓存的子表达式优先级足够高（这里优先级足够高的意思是当前读取算符优先级低于栈顶算符的优先级），便弹出相关的操作数和运算符，随即执行运算，并将结果压入栈<code>opnd</code>。</em></p>
+<p>留意这里区分操作数和运算符的技巧。一旦当前字符由非数字转为数字，则意味着开始进入一个对应于操作数的子串范围。由于这里允许操作数含有多个数位，甚至可能是小数，故可调用<code>readNumber()</code>函数（习题【4-6】），根据当前字符及其后续的若干字符，利用另一个栈解析出当前的操作数。解析完毕，当前字符将再次聚焦于一个非数字字符。</p>
+<h3 id="不同优先级的处置"><a href="#不同优先级的处置" class="headerlink" title="不同优先级的处置"></a>不同优先级的处置</h3><p>按照代码4.7，若当前字符为运算符，则在调用<code>orderBetween()</code>函数（习题【4-7】），将其与栈<code>optr</code>的栈顶操作符做一比较之后，即可视二者的优先级高低，分三种情况相应地处置。</p>
+<p><strong>（1）若当前运算符的优先级更高，则<code>optr</code>中的栈顶元素运算符尚不能执行。</strong><br>注意，根据代码4.6定义的优先级表，无论栈顶元素如何，当前操作符为’(‘的所有情况也统一按此处理。也就是说，所有左括号及其后紧随的一个操作符都会相继地被直接压入<code>optr</code>栈中，而此前的运算符则一律押后执行——这与左括号应有的功能完全吻合。</p>
+<p><strong>（2）反之，一旦栈顶运算符的优先级更高，则可以立即弹出并执行对应的运算。</strong><br>同理，无论栈顶元素如何，当前操作符为’)’的情况也几乎全部归入这一处理方式。也就是说，一旦抵达右括号，此前在<code>optr</code>栈缓冲的运算符大都可以逐一弹出并执行——这与右括号应有的功能也完全吻合。</p>
+<p><strong>（3）当前运算符与栈顶运算符的优先级“相等”。</strong><br>对右括号的上述处理方式，将在<code>optr</code>栈顶出现操作符’(‘时终止——由代码4.6可知,<code>pri[&#39;(&#39;][&#39;)&#39;] = &#39;&gt;&#39;</code>。此时，将弹出栈顶的’(‘，然后继续处理’)’之后的字符。这对左、右括号在表达式中必然相互匹配，其作用在于约束介乎二者之间的那段子表达式的优先级关系，故在其“历史使命”完成之后，算法做如上处置理所应当。</p>
+<p>除左、右括号外，还有一种优先级相等的合法情况，即<code>pri[&#39;\0&#39;][&#39;\0&#39;] = &#39;=&#39;</code>。由于在算法启动之初已经首先将字符’\0’压入<code>optr</code>栈，故在整个表达式已被正确解析并抵达表达式结束标识符’\0’时，即出现这一情况。对于合法的表达式，这种情况只在算法中介前出现一次，算法将这种情况按照优先级相等的方式处置。</p>
+<h3 id="语法检查及鲁棒性"><a href="#语法检查及鲁棒性" class="headerlink" title="语法检查及鲁棒性"></a>语法检查及鲁棒性</h3><p>为简洁起见，以上算法假设输入表达式的语法完全正确；否则，有可能会导致荒诞的结果。习题【4-12】在此基础上尝试扩充语法语法以及对各种非法情况的处理功能。</p>
+<h2 id="4-3-4-逆波兰表达式"><a href="#4-3-4-逆波兰表达式" class="headerlink" title="4.3.4 逆波兰表达式"></a>4.3.4 逆波兰表达式</h2><h3 id="RPN"><a href="#RPN" class="headerlink" title="RPN"></a>RPN</h3><p><strong>逆波兰表达式（reverse Polish notation，RPN）</strong>是数学表达式的一种，其语法规则可概括为：<em>操作符紧邻于对应的（最后一个）操作数之后</em>。</p>
+<p>RPN表达式亦称作<strong>后缀表达式（postfix）</strong>，原表达式则称作<strong>中缀表达式（infix）</strong>。尽管RPN表达式不够直观易读，但其对算符优先级的表述能力，却毫不逊色于常规的中缀表达式；而且其在计算效率方面的优势，更是常规表达式无法比拟的。RPN表达式中优先级的执行次序，可更为简洁地确定，既不必在实现做任何规定，更无需借助括号强制改变优先级。具体而言，各运算符被执行的次序，与其在RPN表达式中出现的次序完全吻合。</p>
+<h3 id="求值算法-1"><a href="#求值算法-1" class="headerlink" title="求值算法"></a>求值算法</h3><p>根据以上分析，采用算法4.1即可高效地实现对RPN表达式的求值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">rpnEvaluation(expr)</span><br><span class="line">输入：RPN表达式expr(假定语法正确)</span><br><span class="line">输出：表达式数值</span><br><span class="line">&#123;</span><br><span class="line">  引入栈S，用以存放操作数；</span><br><span class="line">  while (expr尚未扫描完毕)&#123;</span><br><span class="line">    从expr中读入下一元素x;</span><br><span class="line">    if (x是操作数) 将x压入S;</span><br><span class="line">    else &#123; // 将x压入S</span><br><span class="line">      从栈S中弹出运算符x所需数目的操作数;</span><br><span class="line">      对弹出的操作数实施x运算，并将运算结果重新压入S;</span><br><span class="line">    &#125; // else</span><br><span class="line">  &#125; // while</span><br><span class="line">  返回栈顶; // 也是栈底</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>除了一个辅助栈 S 外，该算法不需要借助任何更多的数据结构。此外，算法的控制流程也十分简明，只需对RPN表达式做单向的顺序扫描，既无需更多判断，也不含任何分支或回溯。</p>
+<p>只有操作数可能需要借助栈 S 做缓存，运算符则均可直接执行而不必保留。另外，只要RPN表达式合法，在整个求值计算的过程中，当前运算符所需的操作数无论多少，都必然恰好按次序存放在当前栈的顶部。</p>
+<h3 id="手工转换"><a href="#手工转换" class="headerlink" title="手工转换"></a>手工转换</h3><p>假设：事先未就运算符之间的优先级关系做过任何约定。</p>
+<ol>
+<li>增添足够多的括号显式地指定该表达式的运算次序；</li>
+<li>将各运算符后移，使之紧邻于其对应的右括号的右侧；</li>
+<li>抹去所有括号；</li>
+</ol>
+<p>操作数之间的相对次序在转换前后是一定保持不变的；而运算符在RPN中所处的位置有可能颠倒，但恰好就是其对应的操作数均已就绪且该运算可以执行的位置。</p>
+<h3 id="自动转换"><a href="#自动转换" class="headerlink" title="自动转换"></a>自动转换</h3><p>代码4.7中的<code>evaluate()</code>算法在对表达式求值的同时，也顺便完成了从常规表达式到RPN表达式的转换。在求值过程中，该算法借助<code>append()</code>函数（习题【4-8】）将各操作数和运算符适时地追加至串rpn的末尾，直至得到完整的RPN表达式（习题【4-9】）。</p>
+<p>采用的规则十分简明：<em>凡遇到操作数，即追加至rpn；而运算符只有从栈中弹出并执行时，才被追加（与中缀表达式求值对比记忆）。</em>这一过程与上述手工转换的方法完全等效，其正确性也因此得以确立。</p>
+<p>将RPN自动转换过程与RPN求值过程做一对照可以发现后者只是前者的再现。</p>
+<h1 id="4-4-试探回溯法"><a href="#4-4-试探回溯法" class="headerlink" title="4.4 试探回溯法"></a>4.4 试探回溯法</h1><h2 id="4-4-1-试探与回溯"><a href="#4-4-1-试探与回溯" class="headerlink" title="4.4.1 试探与回溯"></a>4.4.1 试探与回溯</h2><h3 id="旅行商问题"><a href="#旅行商问题" class="headerlink" title="旅行商问题"></a>旅行商问题</h3><p>在计算机中很多应用问题的解，在形式上都可以看作若干元素按特定次序构成的一个序列。以经典的<strong>旅行商问题（traveling salesman problem，TSP）</strong>为例，其目标是计算出由给定的 n 个城市构成的一个序列，使得按此序列对这些城市的环游成本（比如机票价格）最低。尽管此类问题本身的描述并不复杂，但由于所涉及元素（比如城市）的每一排列都是一个候选解，它们往往构成一个极大的搜索空间。通常其搜索空间的规模与全排列总数大体相当，为$n! = O(n^n)$。因此若采用蛮力策略，逐一生成可能的候选解并检查其是否合理，则必然无法将运行时间控制在多项式的范围以内。</p>
+<h3 id="剪枝"><a href="#剪枝" class="headerlink" title="剪枝"></a>剪枝</h3><p>为此，必须基于对应用问题的深刻理解，利用问题本身具有的某些规律尽可能多、尽可能早地排除搜索空间中的候选解。其中一种重要的技巧就是，根据候选解的某些局部特征，以候选解子集为单位批量地排除。搜索空间多呈树状结构，而被排除的候选解往往隶属于同一分支，故这一技巧也可以形象地称作<strong>剪枝（prunning）</strong>。</p>
+<p>与之对应的算法多呈现如下模式。从零开始，尝试逐步增加候选解的长度。更准确地，这一过程是在成批地考察具有特定前缀的所有候选解。这种从长度上逐步向目标靠近的尝试，称作<strong>试探（probing）</strong>。作为解的局部特征，特征前缀在试探的过程中一旦被发现与目标解不合，则收缩到此前一步的长度，然后继续试探下一可能的结果。特征前缀长度缩减的这类操作，称作<strong>回溯（backtracking）</strong>，其效果等同于剪枝。如此，只要目标解的确存在就迟早会被发现，而且只要剪枝所依据的特征设计得当，计算的效率就会大大提高。</p>
+<h2 id="4-4-2-八皇后"><a href="#4-4-2-八皇后" class="headerlink" title="4.4.2 八皇后"></a>4.4.2 八皇后</h2><p>n 皇后问题：在$n \times n$的棋盘上放置 n 个皇后，如何使得她们彼此互不攻击——此时称她们构成一个可行的棋局。对于任何整数$n \geq 4$，这就是<strong>n皇后问题</strong>。</p>
+<h3 id="皇后"><a href="#皇后" class="headerlink" title="皇后"></a>皇后</h3><p>皇后是组成棋局和最终解的基本单元，用如下代码实现对应的Queen类：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// queen.h</span></span><br><span class="line"><span class="comment">// 代码4.8 皇后类</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Queen</span>&#123;</span> <span class="comment">// 皇后类</span></span><br><span class="line">    <span class="keyword">int</span> x, y; <span class="comment">// 皇后在棋盘上的位置坐标</span></span><br><span class="line">    Queen(<span class="keyword">int</span> xx = <span class="number">0</span>, <span class="keyword">int</span> yy = <span class="number">0</span>) : x(xx), y(yy) &#123;&#125;;</span><br><span class="line">    <span class="keyword">bool</span> <span class="keyword">operator</span> == (Queen <span class="keyword">const</span>&amp; q) <span class="keyword">const</span> &#123; <span class="comment">// 重载判等操作符，以检测不同皇后之间可能的冲突</span></span><br><span class="line">        <span class="keyword">return</span> (x == q.x) <span class="comment">// 行冲突 （这一情况其实并不会发生，可省略）</span></span><br><span class="line">        || (y == q.y) <span class="comment">// 列冲突</span></span><br><span class="line">        || (x + y == q.x + q.y) <span class="comment">// 沿正对角线冲突</span></span><br><span class="line">        || (x - y == q.x - q.y); <span class="comment">// 沿反对角线冲突</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">bool</span> <span class="keyword">operator</span> != (Queen <span class="keyword">const</span>&amp; q) <span class="keyword">const</span> &#123; <span class="keyword">return</span> !(*<span class="keyword">this</span> == q); &#125; <span class="comment">// 重载不等操作符</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>每个皇后对象均由其在棋盘上的位置坐标确定。此外，还通过重载判等操作符，实现了对皇后位置是否相互冲突的判断。这里将同行、同列或同对角线的任意两个皇后视作“相等”，于是两个皇后冲突当且仅当二者被判作“相等”。</p>
+<h3 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h3><p>基于试探回溯策略，可如代码4.9所示，实现通用的N皇后算法。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">\\ placeQueens.cpp</span><br><span class="line">\\ 代码<span class="number">4.9</span> N皇后算法</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">placeQueens</span><span class="params">(<span class="keyword">int</span> N)</span></span>&#123; <span class="comment">// N皇后算法（迭代版）：采用试探/回溯的策略，借助栈记录查找的结果</span></span><br><span class="line">    Stack&lt;Queen&gt; solu; <span class="comment">// 存放（部分）解的栈</span></span><br><span class="line">    <span class="function">Queen <span class="title">q</span><span class="params">(<span class="number">0</span>, <span class="number">0</span>)</span></span>; <span class="comment">// 从原点位置出发</span></span><br><span class="line">    <span class="keyword">do</span> &#123;  <span class="comment">// 反复试探、回溯</span></span><br><span class="line">        <span class="keyword">if</span> ( N &lt;= solu.size() || N &lt;= q.y)&#123; <span class="comment">// 若已出界，则</span></span><br><span class="line">            q = solu.pop(); q.y++; <span class="comment">// 回溯一行，并继续试探下一列</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// 否则，试探下一行</span></span><br><span class="line">            <span class="keyword">while</span> ((q.y &lt; N) &amp;&amp; (<span class="number">0</span> &lt;= solu.find(q))) <span class="comment">// 通过与已有皇后的比对</span></span><br><span class="line">            &#123;q.y++; nCheck++;&#125; <span class="comment">// 尝试找到可摆放下一皇后的列</span></span><br><span class="line">            <span class="keyword">if</span> ( N &gt; q.y )&#123; <span class="comment">// 若存在可摆放的列，则</span></span><br><span class="line">                solu.push(q); <span class="comment">// 摆上当前皇后，并</span></span><br><span class="line">                <span class="keyword">if</span> ( N &lt;= solu.size() ) nSolu++; <span class="comment">// 若部分解已成为全局解，则通过全局变量nSolu计数</span></span><br><span class="line">                q.x++; q.y = <span class="number">0</span>; <span class="comment">// 转入下一行，从第0列开始，试探下一皇后</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> ((<span class="number">0</span> &lt; q.x) || (q.y &lt; N)); <span class="comment">// 所有分支均已或穷举或剪枝之后，算法结束</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>算法描述：<em>首先将各皇后分配至每一行。然后，从空棋盘开始，逐个尝试着将他们放置到无冲突的某列。每放置好一个皇后，才继续试探下一个。若当前皇后在任何列都会造成冲突，则后续皇后的试探都必将是徒劳的，故此时应该回溯到上一皇后。</em></p>
+<p>这里借助栈<code>solu</code>来动态地记录各皇后的列号。当该栈的规模增至 N 时，即得到全局解。该栈即可依次给出各皇后在可行棋局中所处的位置。书中101页给出了利用N皇后算法，得到四皇后问题第一个解的完整过程。</p>
+<p><em>N皇后问题解的个数可能不唯一。</em></p>
+<h2 id="4-4-3-迷宫寻径"><a href="#4-4-3-迷宫寻径" class="headerlink" title="4.4.3 迷宫寻径"></a>4.4.3 迷宫寻径</h2><h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>简化版本：<em>空间区域限定为由$n \times n$个方格组成的迷宫，除了四周的围墙，还有分布其间的若干障碍物；只能水平或垂直移动。任务是，在任意指定的起始格点与目标格点之间找出一条通路（如果的确存在）。</em></p>
+<h3 id="迷宫格点"><a href="#迷宫格点" class="headerlink" title="迷宫格点"></a>迷宫格点</h3><p>格点是迷宫的基本组成单位，故首先需要实现的Cell类如代码4.10所示：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Cell.h</span></span><br><span class="line"><span class="comment">// 代码4.10 迷宫格点类</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> &#123; AVAILABLE, ROUTE, BACKTRACKED, WALL&#125; Status; <span class="comment">// 迷宫单元状态</span></span><br><span class="line"><span class="comment">// 原始可用的、在当前路径上的、所有方向均尝试失败后回溯过的、不可用的（墙）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> &#123; UNKNOWN, EAST, SOUTH, WEST, NORTH, NO_WAY&#125; ESWN; <span class="comment">// 单元的相对邻接方向</span></span><br><span class="line"><span class="comment">// 未定、东、南、西、北、无路可通</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> ESWN <span class="title">nextESWN</span><span class="params">(ESWN eswn)</span></span>&#123; <span class="keyword">return</span> ESWN(eswn + <span class="number">1</span>); &#125; <span class="comment">// 依次转至下一邻接方向</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Cell</span> &#123;</span> <span class="comment">// 迷宫格点</span></span><br><span class="line">    <span class="keyword">int</span> x, y; Status status; <span class="comment">// x坐标、y坐标、类型</span></span><br><span class="line">    ESWN incoming, outgoing; <span class="comment">// 进入、走出方向</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LABY_MAX 24 <span class="comment">// 最大迷宫尺寸</span></span></span><br><span class="line">Cell laby[LABY_MAX][LABY_MAX]; <span class="comment">// 迷宫</span></span><br></pre></td></tr></table></figure></p>
+<p>可见，除了记录其位置坐标外，格点还需记录其所处的状态。共有四种可能的状态：原始可用的（AVAILABLE）、在当前路径上的（ROUTE）、所有方向均尝试失败后回溯过的（BACKTRACKED）、不可穿越的（WALL）。属于当前路径的格点，还需记录其前驱和后继格点的方向。用EAST、SOUTH、WEST、NORTH区分上、下、左、右四个连通方向。特别地，因尚未搜索到而仍处于初始AVAILABLE状态的格点，邻格的方向都是未知的（UNKNOWN）；经过回溯后处于BACKTRACKED状态的格点，与邻格之间的连通关系均已关闭，故标记为NO_WAY。</p>
+<h3 id="邻格查询"><a href="#邻格查询" class="headerlink" title="邻格查询"></a>邻格查询</h3><p>在路径试探过程中需反复确定当前位置的相邻格点，可如代码4.11所示实现查询功能：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// neighbor.h</span></span><br><span class="line"><span class="comment">// 代码4.11 查询相邻格点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> Cell* <span class="title">neighbor</span><span class="params">(Cell* cell)</span></span>&#123; <span class="comment">// 查询当前位置的相邻格点</span></span><br><span class="line">    <span class="keyword">switch</span> (cell -&gt; outgoing)&#123;</span><br><span class="line">        <span class="keyword">case</span> EAST:</span><br><span class="line">            <span class="keyword">return</span> cell + LABY_MAX; <span class="comment">// 向东</span></span><br><span class="line">        <span class="keyword">case</span> SOUTH:</span><br><span class="line">            <span class="keyword">return</span> cell + <span class="number">1</span>; <span class="comment">// 向南</span></span><br><span class="line">        <span class="keyword">case</span> WEST:</span><br><span class="line">            <span class="keyword">return</span> cell - LABY_MAX; <span class="comment">// 向西</span></span><br><span class="line">        <span class="keyword">case</span> NORTH:</span><br><span class="line">            <span class="keyword">return</span> cell - <span class="number">1</span>; <span class="comment">// 向北</span></span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="邻格转入"><a href="#邻格转入" class="headerlink" title="邻格转入"></a>邻格转入</h3><p>在确认某一相邻格点可用之后，算法将朝对应的方向向前试探一步，同时路径延长一个单元。为此，需如代码4.12所示实现相应的格点转入功能。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// advance.h</span></span><br><span class="line"><span class="comment">// 代码4.12 转入相邻格点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> Cell* <span class="title">advance</span><span class="params">(Cell* cell)</span></span>&#123; <span class="comment">// 从当前位置转入相邻格点</span></span><br><span class="line">    Cell* next;</span><br><span class="line">    <span class="keyword">switch</span> (cell -&gt; outgoing)&#123;</span><br><span class="line">        <span class="keyword">case</span> EAST: next = cell + LABY_MAX; next -&gt; incoming = WEST;</span><br><span class="line">            <span class="keyword">break</span>; <span class="comment">// 向东</span></span><br><span class="line">        <span class="keyword">case</span> SOUTH: next = cell + <span class="number">1</span>; next -&gt; incoming = NORTH;</span><br><span class="line">            <span class="keyword">break</span>; <span class="comment">// 向南</span></span><br><span class="line">        <span class="keyword">case</span> WEST: next = cell - LABY_MAX; next -&gt; incoming = EAST;</span><br><span class="line">            <span class="keyword">break</span>; <span class="comment">// 向西</span></span><br><span class="line">        <span class="keyword">case</span> NORTH: next = cell - <span class="number">1</span>; next -&gt; incoming = SOUTH;</span><br><span class="line">            <span class="keyword">break</span>; <span class="comment">// 向北</span></span><br><span class="line">        <span class="keyword">default</span>: <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现"></a>算法实现</h3><p>在以上功能的基础上，可基于试探回溯策略实现寻径算法如代码4.13所示：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Laby.h</span></span><br><span class="line"><span class="comment">// 代码4.13</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">labyrinth</span><span class="params">(Cell Laby[LABY_MAX][LABY_MAX], Cell* s, Cell* t)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ((AVAILABLE != s -&gt; status) || (AVAILABLE != t -&gt; status)) <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// 退化情况</span></span><br><span class="line">    Stack&lt;Cell*&gt; path; <span class="comment">// 用栈记录通路</span></span><br><span class="line">    s -&gt; incoming = UNKNOWN; s -&gt; status = ROUTE; path.push(s); <span class="comment">// 起点</span></span><br><span class="line">    <span class="keyword">do</span> &#123; <span class="comment">// 从起点出发不断试探、回溯，直到抵达终点，或者穷尽所有可能</span></span><br><span class="line">        Cell* c = path.top(); <span class="comment">// 检查当前位置(栈顶)</span></span><br><span class="line">        <span class="keyword">if</span> (c == t) <span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">// 若已抵达终点，则找到了一条通路；否则，沿尚未试探的方向继续试探</span></span><br><span class="line">        <span class="keyword">while</span> (NO_WAY &gt; (c -&gt; outgoing = nextESWN(c -&gt; outgoing))) <span class="comment">// 逐一检查所有方向</span></span><br><span class="line">            <span class="keyword">if</span> (AVAILABLE == neighbor(c) -&gt; status) <span class="keyword">break</span>; <span class="comment">// 试图找到尚未试探的方向</span></span><br><span class="line">            <span class="keyword">if</span> (NO_WAY &lt;= c -&gt; outgoing) <span class="comment">// 若所有方向都已尝试过</span></span><br><span class="line">            &#123;c -&gt; status = BACKTRACKED; c = path.pop(); &#125; <span class="comment">// 则向后回溯一步</span></span><br><span class="line">            <span class="keyword">else</span> <span class="comment">// 否则，向前试探一步</span></span><br><span class="line">            &#123;path.push(c = advance(c)); c -&gt; outgoing = UNKNOWN; c -&gt; status = ROUTE; &#125;</span><br><span class="line">    &#125; <span class="keyword">while</span> (!path.empty());</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>该问题的搜索过程中，局部解是一条源自起始格点的路径，它随着试探、回溯相应地伸长、缩短。因此，这里借助栈<code>path</code>按次序记录组成当前路径的所有格点，并动态地随着试探、回溯做入栈、出栈操作。路径的起始格点、当前的末端格点分别对应于<code>path</code>的栈底和栈顶，当后者抵达目标格点时搜索成功，此时<code>path</code>所对应的路径即可作为全局解返回。书中P104页给出了以上迷宫寻径算法的一次运行实例。</p>
+<h3 id="正确性"><a href="#正确性" class="headerlink" title="正确性"></a>正确性</h3><p>该算法会尝试当前格点的所有相邻格点，因此通过数学归纳可知，若在找到全局解后依然继续查找，则该算法可以抵达与起始格点连通的所有格点。因此，只要目标格点与起始格点的确相互连通，则这一算法必将找出一条联接于二者之间的通路。</p>
+<h3 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h3><p>算法的每一步迭代仅需常数时间，故总体时间复杂度线性正比于试探、回溯操作的总数。由于每个格点至多参与试探和回溯各一次，故亦可度量为所有被访问过的格点总数。</p>
+<h1 id="4-5-队列"><a href="#4-5-队列" class="headerlink" title="4.5 队列"></a>4.5 队列</h1><h2 id="4-5-1-概述"><a href="#4-5-1-概述" class="headerlink" title="4.5.1 概述"></a>4.5.1 概述</h2><h3 id="入队与出队"><a href="#入队与出队" class="headerlink" title="入队与出队"></a>入队与出队</h3><p>与栈一样，<strong>队列（queue）</strong>也是存放数据对象的一种容器，其中的数据对象也按线性的逻辑次序排列。队列结构同样支持对象的插入和删除，但两种操作的范围分别被限制于队列的两端——若约定新对象只能从某一端插入其中，则只能从另一端删除已有的元素。允许去除元素的一端称作<strong>队头（front）</strong>，而允许插入元素的另一端称作<strong>队尾（rear）</strong>。</p>
+<p>元素的插入与删除也是修改队列结构的两种主要形式，站在被操作对象的角度，分别称作<strong>入队（enqueue）</strong>和<strong>出队（dequeue）</strong>。</p>
+<h3 id="先进先出"><a href="#先进先出" class="headerlink" title="先进先出"></a>先进先出</h3><p>与栈结构相反，队列中各对象的操作次序遵循所谓的<strong>先进先出（first-in-first-out，FIFO）</strong>的规律：<em>更早（晚）出队的元素的应为更早（晚）入队者，反之，更早（晚）入队者应更早（晚）出队。</em></p>
+<h2 id="4-5-2-ADT接口"><a href="#4-5-2-ADT接口" class="headerlink" title="4.5.2 ADT接口"></a>4.5.2 ADT接口</h2><p>作为一种抽象数据类型，队列结构必须支持以下操作接口：</p>
+<table>
+<thead>
+<tr>
+<th>操作接口</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>size()</code></td>
+<td>报告队列的规模（元素总数）</td>
+</tr>
+<tr>
+<td><code>empty()</code></td>
+<td>判断队列是否为空</td>
+</tr>
+<tr>
+<td><code>enqueue(e)</code></td>
+<td>将e插至队尾</td>
+</tr>
+<tr>
+<td><code>dequeue</code></td>
+<td>删除队首对象</td>
+</tr>
+<tr>
+<td><code>front()</code></td>
+<td>引用队首对象</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-5-3-Queue模板类"><a href="#4-5-3-Queue模板类" class="headerlink" title="4.5.3 Queue模板类"></a>4.5.3 Queue模板类</h2><p>由于队列可视作序列的特例，因此可将队列作为列表的派生类。利用C++的继承机制，基于之前定义的列表模板类实现队列结构并将接口重新命名。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Queue.h</span></span><br><span class="line"><span class="comment">// 代码4.14 Queue模板类</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"../List/list.h"</span> <span class="comment">// 以List为基类</span></span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="class"><span class="keyword">class</span> <span class="title">Queue</span>:</span> <span class="keyword">public</span> List&lt;T&gt; &#123; <span class="comment">// 队列模板类（继承List原有接口）</span></span><br><span class="line"><span class="keyword">public</span>: <span class="comment">// size()、empty()以及其它开放接口均可直接沿用</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">enqueue</span><span class="params">(T <span class="keyword">const</span>&amp; e)</span></span>&#123; insertAsLast(e); &#125; <span class="comment">// 入队：尾部插入</span></span><br><span class="line">    <span class="function">T <span class="title">dequeue</span><span class="params">()</span></span>&#123; <span class="keyword">return</span> remove(first()); &#125; <span class="comment">// 出队：首部删除</span></span><br><span class="line">    <span class="function">T&amp; <span class="title">front</span><span class="params">()</span></span>&#123; <span class="keyword">return</span> first()-&gt;data; &#125; <span class="comment">// 队首</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>队列的<code>enqueue()</code>操作等效于将新元素作为列表的末元素插入，<code>dequeue()</code>操作等效于删除列表的首元素，<code>front()</code>操作可直接返回对列表首元素的引用。而<code>size()</code>及<code>empty()</code>等接口，均直接沿用基类的同名接口。</p>
+<p>由于插入和删除操作分别限制于列表的末端和首端，故队列结构以上接口的时间复杂度均为常数。</p>
+<p>套用以上思路，也可直接基于Vector模板类派生出Stack类（习题【4-2】）。</p>
+<h1 id="4-6-队列应用"><a href="#4-6-队列应用" class="headerlink" title="4.6 队列应用"></a>4.6 队列应用</h1><h2 id="4-6-1-循环分配器"><a href="#4-6-1-循环分配器" class="headerlink" title="4.6.1 循环分配器"></a>4.6.1 循环分配器</h2><p>队列结构非常适合定义和实现一套公平且高效的分配规则，这种分配规则适用于在客户(client)群体中共享某一资源(比如多个应用程序共享同一CPU)。</p>
+<p>具体地，可以借助队列Q实现一个资源循环分配器，其总体流程大致如算法4.2所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">RoundRobin &#123; // 循环分配器</span><br><span class="line">    Queue Q(clients); // 参与资源分配的所有客户组成队列Q</span><br><span class="line">    while (!ServiceClosed()) &#123; // 在服务关闭之前，反复地</span><br><span class="line">        e = Q.dequeue(); // 队首的客户出队，并</span><br><span class="line">        serve(e); // 接收服务，然后</span><br><span class="line">        Q.enqueue(e); // 重新入队</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在以上所谓<strong>轮值(round robin)算法</strong>中，首先令所有参与资源分配的客户组成一个队列Q。接下来是一个反复轮回式的调度过程：取出当前位于队头的客户，将资源交予该客户使用；在经过固定的时间之后，回收资源，并令该客户重新入队。得益于队列“先进先出”的特性，如此既可在所有客户之间达成一种均衡的公平，也可使得资源得以充分利用。</p>
+<p>这里，每位客户持续占用资源的时间，对该算法的成败至关重要。一方面，为保证响应速度，这一时间值通常都不能过大。另一方面，因占有权的切换也需要消耗一定的时间，故若该时间值取得过小，切换过于频繁，又会造成整体效率的下降。因此，往往需要通过实测确定最佳值。反过来，在单一客户使用多个资源的场合，队列也可用以保证资源的均衡使用，提高整体使用效率。</p>
+<p>4.6.2小节以银行为例，介绍如何利用队列结构实现顾客服务的调度与优化，有兴趣的可以翻阅书中该部分内容。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/06/跟我一起写Makefile(二)/" rel="next" title="跟我一起写Makefile读书笔记(二)">
+                <i class="fa fa-chevron-left"></i> 跟我一起写Makefile读书笔记(二)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avator.jpeg"
+                alt="Rilzob" />
+            
+              <p class="site-author-name" itemprop="name">Rilzob</p>
+              <p class="site-description motion-element" itemprop="description">一蓑烟雨任平生</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/rilzob" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:watermirrorsir@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/a-shui-rilzob" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.zzndb.com.cn/" title="zz-db" target="_blank">zz-db</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#4-1-栈"><span class="nav-number">1.</span> <span class="nav-text">4.1 栈</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-1-ADT接口"><span class="nav-number">1.1.</span> <span class="nav-text">4.1.1 ADT接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#入栈与出栈"><span class="nav-number">1.1.1.</span> <span class="nav-text">入栈与出栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后进先出"><span class="nav-number">1.1.2.</span> <span class="nav-text">后进先出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-3-Stack模板类"><span class="nav-number">1.2.</span> <span class="nav-text">4.1.3 Stack模板类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-2-栈与递归"><span class="nav-number">2.</span> <span class="nav-text">4.2 栈与递归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-1-函数调用栈"><span class="nav-number">2.1.</span> <span class="nav-text">4.2.1 函数调用栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数调用"><span class="nav-number">2.1.1.</span> <span class="nav-text">函数调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#递归"><span class="nav-number">2.1.2.</span> <span class="nav-text">递归</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-2-避免递归"><span class="nav-number">2.2.</span> <span class="nav-text">4.2.2 避免递归</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-3-栈的典型应用"><span class="nav-number">3.</span> <span class="nav-text">4.3 栈的典型应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-1-逆序输出"><span class="nav-number">3.1.</span> <span class="nav-text">4.3.1 逆序输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进制转换"><span class="nav-number">3.1.1.</span> <span class="nav-text">进制转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#递归实现"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">递归实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代实现"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">迭代实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-2-递归嵌套"><span class="nav-number">3.2.</span> <span class="nav-text">4.3.2 递归嵌套</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#栈混洗"><span class="nav-number">3.2.1.</span> <span class="nav-text">栈混洗</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#计数（PPT-P340）"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">计数（PPT P340）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#甄别（PPT-P342）"><span class="nav-number">3.2.1.2.</span> <span class="nav-text">甄别（PPT P342）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#括号匹配"><span class="nav-number">3.2.2.</span> <span class="nav-text">括号匹配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#递归实现-1"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">递归实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代实现-1"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">迭代实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-3-延迟缓冲"><span class="nav-number">3.3.</span> <span class="nav-text">4.3.3 延迟缓冲</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#表达式求值"><span class="nav-number">3.3.1.</span> <span class="nav-text">表达式求值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优先级表"><span class="nav-number">3.3.2.</span> <span class="nav-text">优先级表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#求值算法"><span class="nav-number">3.3.3.</span> <span class="nav-text">求值算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不同优先级的处置"><span class="nav-number">3.3.4.</span> <span class="nav-text">不同优先级的处置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法检查及鲁棒性"><span class="nav-number">3.3.5.</span> <span class="nav-text">语法检查及鲁棒性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-4-逆波兰表达式"><span class="nav-number">3.4.</span> <span class="nav-text">4.3.4 逆波兰表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RPN"><span class="nav-number">3.4.1.</span> <span class="nav-text">RPN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#求值算法-1"><span class="nav-number">3.4.2.</span> <span class="nav-text">求值算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手工转换"><span class="nav-number">3.4.3.</span> <span class="nav-text">手工转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动转换"><span class="nav-number">3.4.4.</span> <span class="nav-text">自动转换</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-4-试探回溯法"><span class="nav-number">4.</span> <span class="nav-text">4.4 试探回溯法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-1-试探与回溯"><span class="nav-number">4.1.</span> <span class="nav-text">4.4.1 试探与回溯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#旅行商问题"><span class="nav-number">4.1.1.</span> <span class="nav-text">旅行商问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#剪枝"><span class="nav-number">4.1.2.</span> <span class="nav-text">剪枝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-2-八皇后"><span class="nav-number">4.2.</span> <span class="nav-text">4.4.2 八皇后</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#皇后"><span class="nav-number">4.2.1.</span> <span class="nav-text">皇后</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法实现"><span class="nav-number">4.2.2.</span> <span class="nav-text">算法实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-3-迷宫寻径"><span class="nav-number">4.3.</span> <span class="nav-text">4.4.3 迷宫寻径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题描述"><span class="nav-number">4.3.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迷宫格点"><span class="nav-number">4.3.2.</span> <span class="nav-text">迷宫格点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邻格查询"><span class="nav-number">4.3.3.</span> <span class="nav-text">邻格查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邻格转入"><span class="nav-number">4.3.4.</span> <span class="nav-text">邻格转入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法实现-1"><span class="nav-number">4.3.5.</span> <span class="nav-text">算法实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正确性"><span class="nav-number">4.3.6.</span> <span class="nav-text">正确性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂度"><span class="nav-number">4.3.7.</span> <span class="nav-text">复杂度</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-5-队列"><span class="nav-number">5.</span> <span class="nav-text">4.5 队列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-1-概述"><span class="nav-number">5.1.</span> <span class="nav-text">4.5.1 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#入队与出队"><span class="nav-number">5.1.1.</span> <span class="nav-text">入队与出队</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先进先出"><span class="nav-number">5.1.2.</span> <span class="nav-text">先进先出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-2-ADT接口"><span class="nav-number">5.2.</span> <span class="nav-text">4.5.2 ADT接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-3-Queue模板类"><span class="nav-number">5.3.</span> <span class="nav-text">4.5.3 Queue模板类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-6-队列应用"><span class="nav-number">6.</span> <span class="nav-text">4.6 队列应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-6-1-循环分配器"><span class="nav-number">6.1.</span> <span class="nav-text">4.6.1 循环分配器</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rilzob</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+</body>
+</html>

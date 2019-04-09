@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="极氙世界">
 <meta property="og:description" content="本章围绕列表结构的高效实现逐步展开，包括其ADT接口规范以及对应的算法。此外还针对有序列表，系统地介绍排序等经典算法，并就其性能做一分析和对比。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-28T15:10:43.341Z">
+<meta property="og:updated_time" content="2019-04-09T06:11:00.586Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第三章 列表">
 <meta name="twitter:description" content="本章围绕列表结构的高效实现逐步展开，包括其ADT接口规范以及对应的算法。此外还针对有序列表，系统地介绍排序等经典算法，并就其性能做一分析和对比。">
@@ -405,23 +405,23 @@
 </thead>
 <tbody>
 <tr>
-<td>data()</td>
-<td>data()</td>
+<td><code>data()</code></td>
+<td>当前节点所存数据对象</td>
 </tr>
 <tr>
-<td>pred()</td>
+<td><code>pred()</code></td>
 <td>当前节点前驱节点的位置</td>
 </tr>
 <tr>
-<td>succ()</td>
+<td><code>succ()</code></td>
 <td>当前节点后继节点的位置</td>
 </tr>
 <tr>
-<td>insertAsPred()</td>
+<td><code>insertAsPred()</code></td>
 <td>插入前驱节点，存入被引用对象e，返回新节点位置</td>
 </tr>
 <tr>
-<td>insertAsSucc()</td>
+<td><code>insertAsSucc()</code></td>
 <td>插入后继节点，存入被引用对象e，返回新节点位置</td>
 </tr>
 </tbody>
@@ -439,62 +439,62 @@
 </thead>
 <tbody>
 <tr>
-<td>size()</td>
+<td><code>size()</code></td>
 <td style="text-align:left">报告列表当前的规模(节点总数)</td>
 <td>列表</td>
 </tr>
 <tr>
-<td>first()、last()</td>
+<td><code>first()</code> <code>last()</code></td>
 <td style="text-align:left">返回值、末节点的位置</td>
 <td>列表</td>
 </tr>
 <tr>
-<td>insertAsFirst(e)  insertAsLast(e)</td>
+<td><code>insertAsFirst(e)</code>  <code>insertAsLast(e)</code></td>
 <td style="text-align:left">将e当作首、末节点插入</td>
 <td>列表</td>
 </tr>
 <tr>
-<td>insertA(p, e) insertB(p, e)</td>
+<td><code>insertA(p, e)</code> <code>insertB(p, e)</code></td>
 <td style="text-align:left">将e当作节点p的直接后继、前驱插入</td>
 <td>列表</td>
 </tr>
 <tr>
-<td>remove(p)</td>
+<td><code>remove(p)</code></td>
 <td style="text-align:left">删除位置p处的节点，返回其数值</td>
 <td>列表</td>
 </tr>
 <tr>
-<td>disordered()</td>
+<td><code>disordered()</code></td>
 <td style="text-align:left">判断所有节点是否已按非降序排列</td>
 <td>列表</td>
 </tr>
 <tr>
-<td>sort()</td>
+<td><code>sort()</code></td>
 <td style="text-align:left">调整各节点的位置，使之按非降序排列</td>
 <td>列表</td>
 </tr>
 <tr>
-<td>find(e)</td>
+<td><code>find(e)</code></td>
 <td style="text-align:left">查找目标元素e，失败时返回NULL</td>
 <td>列表</td>
 </tr>
 <tr>
-<td>search(e)</td>
+<td><code>search(e)</code></td>
 <td style="text-align:left">查找目标元素e，返回不大于e且秩最大的节点</td>
 <td>有序列表</td>
 </tr>
 <tr>
-<td>deduplicate()</td>
+<td><code>deduplicate()</code></td>
 <td style="text-align:left">剔除重复节点</td>
 <td>列表</td>
 </tr>
 <tr>
-<td>uniquify()</td>
+<td><code>uniquify()</code></td>
 <td style="text-align:left">剔除重复节点</td>
 <td>有序列表</td>
 </tr>
 <tr>
-<td>traverse()</td>
+<td><code>traverse()</code></td>
 <td style="text-align:left">遍历并统一处理所有节点，处理方法由函数对象指定</td>
 <td>列表</td>
 </tr>
@@ -687,7 +687,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -709,7 +709,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
