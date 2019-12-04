@@ -3,7 +3,11 @@
   <entry>
     <title><![CDATA[中文维基百科语料的获取与处理]]></title>
     <url>%2F2019%2F12%2F03%2F%E4%B8%AD%E6%96%87%E7%BB%B4%E5%9F%BA%E7%99%BE%E7%A7%91%E8%AF%AD%E6%96%99%E7%9A%84%E8%8E%B7%E5%8F%96%E4%B8%8E%E5%A4%84%E7%90%86%2F</url>
-    <content type="text"><![CDATA[维基百科的中文语料算是中文语料库中质量高且又容易获取的语料库了。并且维基百科每个一段时间都会将所有条目都打包一次，供全世界下载使用(下载地址zhwiki)。维基百科开元的中文词条内容，收集了100w+词条，虽较百度百科或英文维基百科的上千万条相差很多，但是中文维基百科仍是最高质量的中文语料库。 获取中文维基百科语料zhwiki-20191120-pages-articles-multistream.xml.bz2 是主文件；zhwiki-20191120-pages-articles-multistream-index.txt.bz2 是每个词条的编号信息。 处理中文维基百科语料直接下载下来的维基百科语料是一个带有诸多html和markdown标记的文本压缩包，基本不能直接使用。有两种有效处理该原始语料的方法： Wikipedia Extractor(attardi/wikiextractor: A tool for extracting plain text from Wikipedia dumps) gensim的wikicorpus库 然而这两种主流的处理方法都存在一些缺陷。首先，Wikipedia Extractor提取出来的结果会去掉大括号标记的内容，这样会导致以下情形：西方语言中“数学”（；）一词源自于古希腊语的（）这是因为括号里的词带有大括号标记被清空了。其次，按照网上的教程，直接使用gensim.corpora.wikicorpus.WikiCorpus处理问题更为严重，因为它连所有标点都去掉了。 故借鉴获取并处理中文维基百科语料 - 科学空间|Scientific Spaces的代码对语料进行处理。12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849from gensim.corpora.wikicorpus import extract_pages, filter_wikiimport bz2fileimport refrom opencc import OpenCCfrom tqdm import tqdmimport codecsdef wiki_replace(d): openCC = OpenCC('t2s') # 从繁体转化为简体 s = d[1] s = re.sub(':*&#123;\|[\s\S]*?\|&#125;', '', s) s = re.sub('&lt;gallery&gt;[\s\S]*?&lt;/gallery&gt;', '', s) s = re.sub('(.)&#123;&#123;([^&#123;&#125;\n]*?\|[^&#123;&#125;\n]*?)&#125;&#125;', '\\1[[\\2]]', s) s = filter_wiki(s) s = re.sub('\* *\n|\'&#123;2,&#125;', '', s) s = re.sub('\n+', '\n', s) s = re.sub('\n[:;]|\n +', '\n', s) s = re.sub('\n==', '\n\n==', s) s = u'【' + d[0] + u'】\n' + s return openCC.convert(s)def wiki_process(input_file, save_path): """ wikicorpus解析 :param input_file: :param save_path: :return: """ wiki = extract_pages(bz2file.open((input_file))) # 处理并导出 i = 0 f = codecs.open(save_path, 'w', encoding='utf-8') w = tqdm(wiki, desc=u'已获取0篇文章') for d in w: if not re.findall('^[a-zA-Z]+:', d[0]) and d[0] and not re.findall(u'^#', d[1]): s = wiki_replace(d) f.write(s+'\n\n\n') i += 1 if i % 100 == 0: w.set_description(u'已获取%s篇文章' %i) f.close()if __name__ == '__main__': input_file = '/Users/rilzob/Downloads/zhwiki-20191120-pages-articles-multistream.xml.bz2' save_path = '/Users/rilzob/Downloads/zhwiki.txt' wiki_process(input_file, save_path) 可见，代码的主要部分是正则表达式。首先通过b2zfile直接不解压来读取下载下来的语料，然后用gensim的extract_pages来提取每个页面，提取后，先处理页面的一些特殊的、非文本的标记，然后将部分有用的大括号标记替换为[[]]，因为[[]]标记不会被完全清空，然后用gensim的filter_wiki函数直接清理，接着再处理一下换行的问题，最后通过OpenCC将繁体转化为简体。后面的循环中，re.findall(&#39;^[a-zA-Z]+:&#39;,d[0])这个条件是去掉那些帮助页面，re.findall(u&#39;^#&#39;,d[1])这个条件是去掉重定向的页面，最后得到大概是1085900篇文章。tqdm是用来显示进度的，这个必须有。程序在我的笔记本上运行了3:16:03，得到了1.87G左右的纯文本语料。运行时间不重要，因为预处理是一次性的。 副产物上文提到了重定向，重定向意味着两个词具有相同的意思，因此可以将中文维基内的所有的重定向提取出来做一个匹配表。也就是说，此表中每一行的两个词都是相同含义的。 基于中文维基重定向的同义词表： wiki_cn_mapping.7z openCC库安装借助openCC库实现繁体转中文。openCC的安装方式参照openCC的Github原文，在命令行运行指令：pip install opencc-python-reimplemented，或者下载压缩包后运行指令python setup.py install。 使用示例1234567from opencc import OpenCCopenCC = OpenCC('s2t') # convert from Simplified Chinese to Traditional Chinese# can also set conversion by calling set_conversion# openCC.set_conversion('s2tw')to_convert = '开放中文转换'converted = openCC.convert(to_convert) 支持的转换模式12345678910111213141516171819&apos;hk2s&apos;: Traditional Chinese (Hong Kong standard) to Simplified Chinese&apos;s2hk&apos;: Simplified Chinese to Traditional Chinese (Hong Kong standard)&apos;s2t&apos;: Simplified Chinese to Traditional Chinese&apos;s2tw&apos;: Simplified Chinese to Traditional Chinese (Taiwan standard)&apos;s2twp&apos;: Simplified Chinese to Traditional Chinese (Taiwan standard, with phrases)&apos;t2hk&apos;: Traditional Chinese to Traditional Chinese (Hong Kong standard)&apos;t2s&apos;: Traditional Chinese to Simplified Chinese&apos;t2tw&apos;: Traditional Chinese to Traditional Chinese (Taiwan standard)&apos;tw2s&apos;: Traditional Chinese (Taiwan standard) to Simplified Chinese&apos;tw2sp&apos;: Traditional Chinese (Taiwan standard) to Simplified Chinese (with phrases) 如何判断一个句子中是否有繁体字当有繁体字的时候，可以编码为’big5hkscs’。12345678910line = '我们今天去吃饭了' l = '我們今天去吃飯了' #print(line.encode('utf-8')) #print(l.encode('utf-8')) try: print(l.encode('big5hkscs')) print(line.encode('big5hkscs')) except: print(111) 苏剑林. (2017, Jan 06). 《获取并处理中文维基百科语料 》[Blog post]. Retrieved from https://spaces.ac.cn/archives/4176ChineseWiki︱百万中文维基百科词条下载与整理 - 云+社区 - 腾讯云]]></content>
+    <content type="text"><![CDATA[维基百科的中文语料算是中文语料库中质量高且又容易获取的语料库了。并且维基百科每个一段时间都会将所有条目都打包一次，供全世界下载使用(下载地址zhwiki)。维基百科开源的中文词条内容，收集了100w+词条，虽较百度百科或英文维基百科的上千万条相差很多，但是中文维基百科仍是最高质量的中文语料库。 获取中文维基百科语料zhwiki-20191120-pages-articles-multistream.xml.bz2 是主文件；zhwiki-20191120-pages-articles-multistream-index.txt.bz2 是每个词条的编号信息。 处理中文维基百科语料直接下载下来的维基百科语料是一个带有诸多html和markdown标记的文本压缩包，基本不能直接使用。有两种有效处理该原始语料的方法： Wikipedia Extractor(attardi/wikiextractor: A tool for extracting plain text from Wikipedia dumps) gensim的wikicorpus库 然而这两种主流的处理方法都存在一些缺陷。首先，Wikipedia Extractor提取出来的结果会去掉大括号标记的内容，这样会导致以下情形：西方语言中“数学”（；）一词源自于古希腊语的（）这是因为括号里的词带有大括号标记被清空了。其次，按照网上的教程，直接使用gensim.corpora.wikicorpus.WikiCorpus处理问题更为严重，因为它连所有标点都去掉了。 故借鉴获取并处理中文维基百科语料 - 科学空间|Scientific Spaces的代码对语料进行处理。12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849from gensim.corpora.wikicorpus import extract_pages, filter_wikiimport bz2fileimport refrom opencc import OpenCCfrom tqdm import tqdmimport codecsdef wiki_replace(d): openCC = OpenCC('t2s') # 从繁体转化为简体 s = d[1] s = re.sub(':*&#123;\|[\s\S]*?\|&#125;', '', s) s = re.sub('&lt;gallery&gt;[\s\S]*?&lt;/gallery&gt;', '', s) s = re.sub('(.)&#123;&#123;([^&#123;&#125;\n]*?\|[^&#123;&#125;\n]*?)&#125;&#125;', '\\1[[\\2]]', s) s = filter_wiki(s) s = re.sub('\* *\n|\'&#123;2,&#125;', '', s) s = re.sub('\n+', '\n', s) s = re.sub('\n[:;]|\n +', '\n', s) s = re.sub('\n==', '\n\n==', s) s = u'【' + d[0] + u'】\n' + s return openCC.convert(s)def wiki_process(input_file, save_path): """ wikicorpus解析 :param input_file: :param save_path: :return: """ wiki = extract_pages(bz2file.open((input_file))) # 处理并导出 i = 0 f = codecs.open(save_path, 'w', encoding='utf-8') w = tqdm(wiki, desc=u'已获取0篇文章') for d in w: if not re.findall('^[a-zA-Z]+:', d[0]) and d[0] and not re.findall(u'^#', d[1]): s = wiki_replace(d) f.write(s+'\n\n\n') i += 1 if i % 100 == 0: w.set_description(u'已获取%s篇文章' %i) f.close()if __name__ == '__main__': input_file = '/Users/rilzob/Downloads/zhwiki-20191120-pages-articles-multistream.xml.bz2' save_path = '/Users/rilzob/Downloads/zhwiki.txt' wiki_process(input_file, save_path) 可见，代码的主要部分是正则表达式。首先通过b2zfile直接不解压来读取下载下来的语料，然后用gensim的extract_pages来提取每个页面，提取后，先处理页面的一些特殊的、非文本的标记，然后将部分有用的大括号标记替换为[[]]，因为[[]]标记不会被完全清空，然后用gensim的filter_wiki函数直接清理，接着再处理一下换行的问题，最后通过OpenCC将繁体转化为简体。后面的循环中，re.findall(&#39;^[a-zA-Z]+:&#39;,d[0])这个条件是去掉那些帮助页面，re.findall(u&#39;^#&#39;,d[1])这个条件是去掉重定向的页面，最后得到大概是1085900篇文章。tqdm是用来显示进度的，这个必须有。程序在我的笔记本上运行了3:16:03，得到了1.87G左右的纯文本语料。运行时间不重要，因为预处理是一次性的。 副产物上文提到了重定向，重定向意味着两个词具有相同的意思，因此可以将中文维基内的所有的重定向提取出来做一个匹配表。也就是说，此表中每一行的两个词都是相同含义的。 基于中文维基重定向的同义词表： wiki_cn_mapping.7z openCC库安装借助openCC库实现繁体转中文。openCC的安装方式参照openCC的Github原文，在命令行运行指令：pip install opencc-python-reimplemented，或者下载压缩包后运行指令python setup.py install。 使用示例1234567from opencc import OpenCCopenCC = OpenCC('s2t') # convert from Simplified Chinese to Traditional Chinese# can also set conversion by calling set_conversion# openCC.set_conversion('s2tw')to_convert = '开放中文转换'converted = openCC.convert(to_convert) 支持的转换模式12345678910111213141516171819&apos;hk2s&apos;: Traditional Chinese (Hong Kong standard) to Simplified Chinese&apos;s2hk&apos;: Simplified Chinese to Traditional Chinese (Hong Kong standard)&apos;s2t&apos;: Simplified Chinese to Traditional Chinese&apos;s2tw&apos;: Simplified Chinese to Traditional Chinese (Taiwan standard)&apos;s2twp&apos;: Simplified Chinese to Traditional Chinese (Taiwan standard, with phrases)&apos;t2hk&apos;: Traditional Chinese to Traditional Chinese (Hong Kong standard)&apos;t2s&apos;: Traditional Chinese to Simplified Chinese&apos;t2tw&apos;: Traditional Chinese to Traditional Chinese (Taiwan standard)&apos;tw2s&apos;: Traditional Chinese (Taiwan standard) to Simplified Chinese&apos;tw2sp&apos;: Traditional Chinese (Taiwan standard) to Simplified Chinese (with phrases) 如何判断一个句子中是否有繁体字当有繁体字的时候，可以编码为’big5hkscs’。12345678910line = '我们今天去吃饭了' l = '我們今天去吃飯了' #print(line.encode('utf-8')) #print(l.encode('utf-8')) try: print(l.encode('big5hkscs')) print(line.encode('big5hkscs')) except: print(111) 苏剑林. (2017, Jan 06). 《获取并处理中文维基百科语料 》[Blog post]. Retrieved from https://spaces.ac.cn/archives/4176ChineseWiki︱百万中文维基百科词条下载与整理 - 云+社区 - 腾讯云]]></content>
+      <categories>
+        <category>计算机科学与技术</category>
+        <category>自然语言处理</category>
+      </categories>
   </entry>
   <entry>
     <title><![CDATA[第四章 栈和队列]]></title>
@@ -114,8 +118,8 @@
         <category>推荐系统</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>读书笔记</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -127,8 +131,8 @@
         <category>推荐系统</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>读书笔记</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -140,8 +144,8 @@
         <category>推荐系统</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>读书笔记</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -153,8 +157,8 @@
         <category>推荐系统</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>读书笔记</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -166,8 +170,8 @@
         <category>推荐系统</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>读书笔记</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -179,8 +183,8 @@
         <category>推荐系统</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>读书笔记</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -192,8 +196,8 @@
         <category>推荐系统</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>读书笔记</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -205,8 +209,8 @@
         <category>推荐系统</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>读书笔记</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -218,8 +222,8 @@
         <category>推荐系统</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>读书笔记</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
