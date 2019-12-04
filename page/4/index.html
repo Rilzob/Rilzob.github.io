@@ -288,6 +288,199 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://rilzob.com/2018/10/25/Python中*args和**kwargs的用法总结的副本/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rilzob">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="极氙世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/25/Python中*args和**kwargs的用法总结的副本/" itemprop="url">Python中*args和**kwargs的用法总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-25T19:29:45+08:00">
+                2018-10-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Python中-args和-kwargs的用法总结"><a href="#Python中-args和-kwargs的用法总结" class="headerlink" title="Python中*args和**kwargs的用法总结"></a>Python中*args和**kwargs的用法总结</h1><h2 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a>一、基本概念</h2><p>Python支持可变参数，最简单的方法莫过于使用默认参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_defargs</span><span class="params">(one, two=<span class="number">2</span>)</span>:</span> <span class="comment"># 参数one没有默认值，two的默认值为2</span></span><br><span class="line">    print(<span class="string">'Required argument:'</span>, one)</span><br><span class="line">    print(<span class="string">'Optional argument:'</span>, two)</span><br><span class="line">    </span><br><span class="line">test_defargs(<span class="number">1</span>)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">Required argument: 1</span></span><br><span class="line"><span class="string">Optional argument: 2</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line">test_defargs(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">Required argument: 1</span></span><br><span class="line"><span class="string">Optional argument: 3</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<p>另一种达到可变参数(Variable Argument)的方法：</p>
+<p>使用<code>*args</code>和<code>**kwargs</code>语法。</p>
+<p><code>*args</code>是可变的<strong>位置参数(postional arguments)</strong>列表；</p>
+<p><code>**kwargs</code>是可变的<strong>关键词参数(keyword arguments)</strong>列表；</p>
+<p>并且<u>规定位置参数必须位于关键词参数之前，即<code>*args</code>必须位于<code>**kwargs</code>之前</u>。</p>
+<h2 id="二、位置参数"><a href="#二、位置参数" class="headerlink" title="二、位置参数"></a>二、位置参数</h2><p>以下是用位置参数正确调用函数的实例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_hello</span><span class="params">(name, sex)</span>:</span></span><br><span class="line">	sex_dict = &#123;<span class="number">1</span>: <span class="string">'先生'</span>, <span class="number">2</span>: <span class="string">'女士'</span>&#125;</span><br><span class="line">    print(<span class="string">'Hello %s %s, welcome to Python World!'</span> % (name, sex_dict.get(sex, <span class="string">'先生'</span>))) <span class="comment"># if no such a key, print '先生'</span></span><br><span class="line">    </span><br><span class="line">print_hello(<span class="string">'Chen'</span>, <span class="number">2</span>) <span class="comment"># 位置参数要求先后顺序，对应name和sex</span></span><br><span class="line">print_hello(<span class="string">'Chen'</span>, <span class="number">3</span>) <span class="comment"># 两个参数的顺序必须一一对应，且少一个参数都不可以</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">Hello Chen 女士, welcome to Python World!</span></span><br><span class="line"><span class="string">Hello Chen 先生, welcome to Python World!</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h2 id="三、关键字参数"><a href="#三、关键字参数" class="headerlink" title="三、关键字参数"></a>三、关键字参数</h2><p>用于函数调用，通过“键-值”形式加以指定。</p>
+<p>使用关键字参数可以让函数更加清晰，容易使用，同时也清除了参数的顺序需求。</p>
+<p>以下是用关键字参数正确调用函数的实例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print_hello(<span class="string">'Chen'</span>, sex=<span class="number">1</span>) <span class="comment"># 有位置参数时，位置参数必须在关键字参数的前面</span></span><br><span class="line"><span class="comment"># print_hello(1, name='Chen') # Python 3.x中这种写法是错误的</span></span><br><span class="line">print_hello(name=<span class="string">'Chen'</span>, sex=<span class="number">1</span>) <span class="comment"># 关键字参数之间不存在先后顺序的,等价于print_hello(sex=1, name='Chen')</span></span><br></pre></td></tr></table></figure>
+<p>以下是错误的调用方式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># print_hello(name='Chen', 1) # 有位置参数时，位置参数必须在关键字参数前面</span></span><br><span class="line"><span class="comment"># print_hello(sex=1, 'Chen')</span></span><br></pre></td></tr></table></figure>
+<h2 id="四、可变参数"><a href="#四、可变参数" class="headerlink" title="四、可变参数"></a>四、可变参数</h2><p>顾名思义，可变参数就是传入的参数个数是可变的，可以是任意个。<code>*args</code>和<code>**kwargs</code>两者都是Python中的可变参数。</p>
+<h4 id="1-可变位置参数-args"><a href="#1-可变位置参数-args" class="headerlink" title="1.可变位置参数*args"></a>1.可变位置参数<code>*args</code></h4><p>Python中规定参数前带<code>*</code>的，称为<strong>可变位置参数</strong>，只是我们通常称这个可变位置参数为<code>*args</code>而已，叫其他的也是一样的。</p>
+<p>以数学题为例，给定一组数字a，b，c……，请计算a^2 + b^2 + c^2 + ……。</p>
+<p>要定义这个函数，必须确定输入的参数。由于参数个数不确定，我们可以首先想到把a，b，c……作为一个list或者tuple传进来，这样函数就可以定义为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calc</span><span class="params">(numbers)</span>:</span></span><br><span class="line">	sum = <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> n <span class="keyword">in</span> numbers:</span><br><span class="line">		sum = sum + n * n</span><br><span class="line">    <span class="keyword">return</span> sum</span><br></pre></td></tr></table></figure>
+<p>但是调用的时候，需要先组装出一个list或tuple：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>calc([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="number">14</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>calc([<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>])</span><br><span class="line"><span class="number">84</span></span><br></pre></td></tr></table></figure>
+<p>所以，为了方便起见我们把函数的参数改为可变位置函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calc</span><span class="params">(*numbers)</span> # 可变位置参数</span></span><br><span class="line">	sum = 0</span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> numbers:</span><br><span class="line">        sum = sum + n * n</span><br><span class="line">    <span class="keyword">return</span> sum</span><br></pre></td></tr></table></figure>
+<p>定义可变位置参数和定义一个list或tuple参数相比，仅仅在参数前面加了一个<code>*</code>号。在函数内部，参数<code>numbers</code>接收到的是一个tuple，因此函数代码完全不变。但是，调用该函数时，可以传入任意个参数，包括0个参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;calc(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line"><span class="number">5</span></span><br><span class="line">&gt;&gt;&gt;calc()</span><br><span class="line"><span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>如果已经有一个list或tuple，要调用一个可变位置参数怎么办？可以这么做：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">&gt;&gt;&gt;calc(nums[<span class="number">0</span>], nums[<span class="number">1</span>], nums[<span class="number">2</span>])</span><br><span class="line"><span class="number">14</span></span><br></pre></td></tr></table></figure>
+<p>这种做法当然是可行的，问题是太繁琐了，所以Python允许在list或tuple前面加一个<code>*</code>，把list或tuple的元素变成可变位置参数传进去：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">&gt;&gt;&gt;calc(*nums)</span><br><span class="line"><span class="number">14</span></span><br></pre></td></tr></table></figure>
+<p>总而言之，<code>*args</code>用来表示函数接收可变长度的非关键字参数列表作为函数的输入。我们可以通过以下这个例子进一步理解<code>*args</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_args</span><span class="params">(normal_arg, *args)</span>:</span></span><br><span class="line">	print(<span class="string">'first normal arg:'</span> + normal_arg)</span><br><span class="line">	<span class="keyword">for</span> arg <span class="keyword">in</span> args:</span><br><span class="line">        print(<span class="string">'another arg through *args:'</span> + arg)</span><br><span class="line">    </span><br><span class="line">test_args(<span class="string">"normal"</span>, <span class="string">"python"</span>, <span class="string">"java"</span>, <span class="string">"C#"</span>)</span><br></pre></td></tr></table></figure>
+<p>上面代码的执行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">first normal arg: normal</span><br><span class="line">another arg through *args : python</span><br><span class="line">another arg through *args : java</span><br><span class="line">another arg through *args :C#</span><br></pre></td></tr></table></figure>
+<h4 id="2-可变关键字参数-kwargs"><a href="#2-可变关键字参数-kwargs" class="headerlink" title="2.可变关键字参数**kwargs"></a>2.可变关键字参数<code>**kwargs</code></h4><p>同理，Python中规定参数前带<code><strong> </strong></code>的，称为可变关键字参数<strong>，通常用<code></code></strong>kwargs表示。</p>
+<p><code>**kwargs</code>表示函数接收可变长度的关键字参数字典作为函数的输入。当我们需要函数接收带关键字的参数作为输入的时候，应当使用<code>**kwargs</code>。我们可以通过以下的例子进一步理解<code>**kwargs</code>:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_kwargs</span><span class="params">(**kwargs)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> kwargs <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="keyword">for</span> key, value <span class="keyword">in</span> kwargs.iteritems():</span><br><span class="line">            print(<span class="string">"&#123;&#125; = &#123;&#125;"</span>.format(key,value))</span><br><span class="line">        <span class="comment"># Or you can visit kwargs like a dict() object</span></span><br><span class="line">        <span class="comment"># for key in kwargs:</span></span><br><span class="line">        <span class="comment">#    print("&#123;&#125; = &#123;&#125;".format(key, kwargs[key]))</span></span><br><span class="line">        </span><br><span class="line">test_kwargs(name=<span class="string">"python"</span>, value=<span class="string">"5"</span>)</span><br></pre></td></tr></table></figure>
+<p>以上代码的执行效果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = python</span><br><span class="line">value = 5</span><br></pre></td></tr></table></figure>
+<p>以上例子只是<code>*args</code>和<code>**kwargs</code>基本使用的例子。下面再给出一个用<code>*args</code>和<code>**kwargs</code>来定义能够接受列表输入和字典输入的函数的例子。</p>
+<h4 id="3-使用-args和-kwargs来调用函数"><a href="#3-使用-args和-kwargs来调用函数" class="headerlink" title="3.使用*args和**kwargs来调用函数"></a>3.使用<code>*args</code>和<code>**kwargs</code>来调用函数</h4><p>比如我们有如下接受普通输入参数的函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normal_func</span><span class="params">(arg1, arg2, arg3)</span>:</span></span><br><span class="line">    print(<span class="string">"arg1: "</span> + arg1)</span><br><span class="line">    print(<span class="string">"arg2: "</span> + arg2)</span><br><span class="line">    print(<span class="string">"arg3: "</span> + arg3)</span><br><span class="line"></span><br><span class="line">normal_func(<span class="string">"python"</span>, <span class="number">1</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<p>使用<code>*args</code>和<code>**kwargs</code>来调用这个函数的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用*args</span></span><br><span class="line">args_list = (<span class="string">"python"</span>, <span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">normal_func(*args_list)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用**kwargs</span></span><br><span class="line">kwargs_dict = &#123;<span class="string">"arg3"</span>: <span class="number">3</span>, <span class="string">"arg1"</span>: <span class="string">"python"</span>, <span class="string">"arg2"</span>: <span class="number">1</span>&#125;</span><br><span class="line">normal_func(**kwargs_dict)</span><br></pre></td></tr></table></figure>
+<p>以上三段代码的输出均为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arg1: python</span><br><span class="line">arg2: 1</span><br><span class="line">arg3: 3</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>引用文章：</p>
+<p>1.<a href="https://www.jianshu.com/p/61507f60fa29" target="_blank" rel="noopener">Python中的 *args 和 **kwargs - 简书</a></p>
+<p>2.<a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431752945034eb82ac80a3e64b9bb4929b16eeed1eb9000" target="_blank" rel="noopener">函数的参数 - 廖雪峰的官方网站</a></p>
+<p>3.<a href="https://www.jianshu.com/p/be92113116c8" target="_blank" rel="noopener">python参数传递的*args和**kwargs - 简书</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://rilzob.com/2018/10/21/通过Hexo将文章上传到git.io的方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -767,7 +960,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -778,7 +971,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
