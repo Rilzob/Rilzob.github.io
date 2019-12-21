@@ -610,6 +610,179 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://rilzob.com/2019/12/07/Virtuoso的安装与使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Rilzob">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avator.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="极氙世界">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/07/Virtuoso的安装与使用/" itemprop="url">Virtuoso的安装与使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-07T08:42:05+08:00">
+                2019-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工具使用/" itemprop="url" rel="index">
+                    <span itemprop="name">工具使用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>知识库的存储最常见的是采用<a href="http://vos.openlinksw.com/owiki/wiki/VOS/" target="_blank" rel="noopener">Virtuoso SPARQL engine</a>，配合lambda-DCS进行存储的方式。因此下载了Virtuoso工具并学习了相关的使用。Virtuoso的官方文章地址：<a href="http://vos.openlinksw.com/owiki/wiki/VOS" target="_blank" rel="noopener">vos.openlinksw.com/owiki/wiki/VOS</a> 。</p>
+<h1 id="下载与安装"><a href="#下载与安装" class="headerlink" title="下载与安装"></a>下载与安装</h1><p>Virtuoso有很多下载版本，包括Open Source和Commerical版本。</p>
+<p><img src="/2019/12/07/Virtuoso的安装与使用/Virtuoso的下载.png" alt="Virtuoso的下载"></p>
+<p>我下载的是<a href="https://sourceforge.net/projects/virtuoso/files/virtuoso/7.2.5/virtuoso-opensource-7.2.5-macosx-app.dmg/download" target="_blank" rel="noopener">Mac系统下Open Source的版本</a>，其他的版本<a href="http://vos.openlinksw.com/owiki/wiki/VOS/VOSDownload" target="_blank" rel="noopener">下载地址</a>(我第一次用的是Chrome自带的下载器下载速度很慢，第二次用的是迅雷下载器速度可以，因此推荐使用迅雷下载)。下载之后就是安装了，Mac平台的安装就是点点点就可以了，其他平台的安装如果遇到问题，再查阅其他资料吧。</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>安装之后我启动了这个应用程序发现没有任何动作，等了很长时间也没有任何响应。我以为是我安装有错，又尝试下载了Commerical的版本，依旧没有响应。后来发现了程序原来早就启动了，只不过显示在屏幕上方的状态栏了。<br><img src="/2019/12/07/Virtuoso的安装与使用/Mac状态栏.png" alt="Mac状态栏" style="zoom:50%;"></p>
+<p>点击该图标，再点击Start VOS Database。<br><img src="/2019/12/07/Virtuoso的安装与使用/Virtuoso工具栏.png" alt="Virtuoso工具栏" style="zoom:50%;"></p>
+<p>之后该工具栏的Open Virtuoso Conductor选项会变亮，点击，浏览器会自动打开<a href="http://localhost:8890/conductor/" target="_blank" rel="noopener">http://localhost:8890/conductor/</a> 即初始界面。<br><img src="/2019/12/07/Virtuoso的安装与使用/Virtuoso的初始界面.png" alt="Virtuoso的初始界面"></p>
+<p>对Virtuoso进行操作首先需要登录，在初始界面的左侧边栏输入用户名和密码(默认用户名和密码都是dba)登录即可。</p>
+<h2 id="数据集-RDF数据-导入"><a href="#数据集-RDF数据-导入" class="headerlink" title="数据集(RDF数据)导入"></a>数据集(RDF数据)导入</h2><p>进入数据库服务页面后，找到”Linked Data”并点击，随后点击它下方一行刚出现的”Quad Store Upload”就可以加载RDF数据了，其中File是需要上传的ttl格式、xml格式或者nt格式的RDF数据(Virtuoso支持多种格式的RDF数据，不止这一种)，Named Graph IRI 需要自己来设定。</p>
+<p>这里使用利用部分 FB2M 数据转换而来 fb2m_test.nt文件来进行尝试。</p>
+<ol>
+<li>登录后选择菜单”Linked Data” -&gt; “Quad Store Upload”。</li>
+<li>选中”Create graph explicity”前的 checkbox 框，输入 Name Graph IRI*:<a href="http://www.example.com/graph/fb2m_test" target="_blank" rel="noopener">http://www.example.com/graph/fb2m_test</a> ，原则上Graph这里可以随便输入。</li>
+<li>选择 fb2m_test.nt 文件。</li>
+<li>点击”Upload”按钮进行导入，导入后会自动创建出 GRAPH:<a href="http://www.example.com/graph/fb2m_test" target="_blank" rel="noopener">http://www.example.com/graph/fb2m_test</a> 。如果导入有误，系统会有提示。</li>
+</ol>
+<p><img src="/2019/12/07/Virtuoso的安装与使用/数据集导入.png" alt="数据集导入"></p>
+<p>之后打开Graphs就可以看到所创建的 Named Graph IRI了。<img src="/2019/12/07/Virtuoso的安装与使用/Graphs.png" alt="Graphs"></p>
+<p>然后点击SPARQL就可以进行SPARQL检索了。<em>注意其中的 Default Graph IRI 需要设为刚刚所创建的 <a href="http://www.example.com/graph/fb2m_test" target="_blank" rel="noopener">http://www.example.com/graph/fb2m_test</a> 。</em></p>
+<h2 id="常用的Graph操作命令"><a href="#常用的Graph操作命令" class="headerlink" title="常用的Graph操作命令"></a>常用的Graph操作命令</h2><p>导入RDF数据后可以简单地查看下数据量。”Linked Data” -&gt; “SPARQL”菜单。这里的 Default Graph IRI 输入上一步的 <a href="http://www.example.com/graph/fb2m_test" target="_blank" rel="noopener">http://www.example.com/graph/fb2m_test</a> ，SPARQL语句为：<code>select count(*) where {?s ?p ?o}</code>。<img src="/2019/12/07/Virtuoso的安装与使用/查询导入数据量.png" alt="查询导入数据量"><br>运行结果为:82。所有的SPARQL检索都可以在这里运行。</p>
+<p>针对GRAPH的相关操作则需要在ISQL(Interative SQL)中操作。ISQL是数据库的命令管理工具ISQL。点击数据库服务界面左上角的”Interactive SQL(ISQL)”即可进入。</p>
+<h3 id="COPY"><a href="#COPY" class="headerlink" title="COPY"></a>COPY</h3><p>在ISQL中运行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SPARQL COPY &lt;http://www.example.com/graph/fb2m_test&gt; TO &lt;http://www.example.com/graph/test&gt;;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/2019/12/07/Virtuoso的安装与使用/COPY.png" alt="COPY"><br><em>注意不要省略代码中的SPARQL，否则会产生报错。</em></p>
+<p>即可复制出新的GRAPH: <a href="http://www.example.com/graph/test" target="_blank" rel="noopener">http://www.example.com/graph/test</a> 。可以用之前的SPARQL进行数量统计，<em>注意这样的话 Default Graph IRI 要用新的 GRAPH：</em> <a href="http://www.example.com/graph/test" target="_blank" rel="noopener">http://www.example.com/graph/test</a> 。</p>
+<h3 id="DROP和CLEAR"><a href="#DROP和CLEAR" class="headerlink" title="DROP和CLEAR"></a>DROP和CLEAR</h3><p>这里要注意DROP和CLEAR的区别：DROP删除、CLEAR清除。</p>
+<p>CLEAR可以用来清除通过COPY创建的GRAPH(此时GRAPH并不实际存在，为虚拟GRAPH)；DROP只能删除通过”Create graph explicity”创建的GRAPH(之前的导入方式)。这里可以通过”Linked Data” -&gt; “Graphs” -&gt; “Graphs”菜单来查看结果。</p>
+<h3 id="MOVE"><a href="#MOVE" class="headerlink" title="MOVE"></a>MOVE</h3><p>MOVE命名常用来修改GRAPH名称。</p>
+<h3 id="CREATE"><a href="#CREATE" class="headerlink" title="CREATE"></a>CREATE</h3><p>创建新的GRAPH，等同于通过导入创建。</p>
+<h3 id="ADD"><a href="#ADD" class="headerlink" title="ADD"></a>ADD</h3><p>在GRAPH中加入数据。</p>
+<blockquote>
+<p>[1]<a href="https://www.linuxidc.com/Linux/2018-11/155594.htm" target="_blank" rel="noopener">Linux系统下virtuoso数据库安装与使用_数据库技术_Linux公社-Linux系统门户网站</a><br>[2]<a href="https://cloud.tencent.com/developer/news/385234" target="_blank" rel="noopener">SPARQL和Virtuoso数据库（1） - 云+社区 - 腾讯云</a><br>[3]<a href="https://cloud.tencent.com/developer/news/385773" target="_blank" rel="noopener">SPARQL和Virtuoso数据库（2） - 云+社区 - 腾讯云</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://rilzob.com/2019/12/03/中文维基百科语料的获取与处理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1674,177 +1847,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://rilzob.com/2019/03/17/启动、中断、异常和系统调用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Rilzob">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avator.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="极氙世界">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/17/启动、中断、异常和系统调用/" itemprop="url">启动、中断、异常和系统调用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-17T21:25:37+08:00">
-                2019-03-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/计算机科学与技术/" itemprop="url" rel="index">
-                    <span itemprop="name">计算机科学与技术</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/计算机科学与技术/操作系统/" itemprop="url" rel="index">
-                    <span itemprop="name">操作系统</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="内容摘要"><a href="#内容摘要" class="headerlink" title="内容摘要"></a>内容摘要</h1><ul>
-<li>启动<ul>
-<li>计算机结构概述</li>
-<li>计算机内存和硬盘布局</li>
-<li>系统启动流程</li>
-</ul>
-</li>
-<li>中断、异常和系统调用<ul>
-<li>背景(3.3)</li>
-<li>中断、异常和系统调用相比较(3.3)</li>
-<li>中断和异常处理机制(3.3)</li>
-<li>系统调用的概念和实现(3.4)</li>
-<li>程序调用与系统调用的不同之处(3.4)</li>
-<li>开销(3.4)</li>
-<li>系统调用示例</li></ul></li></ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/17/启动、中断、异常和系统调用/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1899,7 +1901,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1910,7 +1912,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
