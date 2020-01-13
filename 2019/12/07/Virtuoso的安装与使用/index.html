@@ -89,6 +89,10 @@
 <meta property="og:description" content="知识库的存储最常见的是采用Virtuoso SPARQL engine，配合lambda-DCS进行存储的方式。因此下载了Virtuoso工具并学习了相关的使用。Virtuoso的官方文章地址：vos.openlinksw.com/owiki/wiki/VOS 。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://rilzob.com/2019/12/07/Virtuoso的安装与使用/Virtuoso的下载.png">
+<meta property="og:image" content="https://rilzob.com/2019/12/07/Virtuoso的安装与使用/无法找到lssb和lcrypto文件.png">
+<meta property="og:image" content="https://rilzob.com/2019/12/07/Virtuoso的安装与使用/so文件链接丢失.jpg">
+<meta property="og:image" content="https://rilzob.com/2019/12/07/Virtuoso的安装与使用/丢失的两个库.jpg">
+<meta property="og:image" content="https://rilzob.com/2019/12/07/Virtuoso的安装与使用/Virtuoso安装成功.jpg">
 <meta property="og:image" content="https://rilzob.com/2019/12/07/Virtuoso的安装与使用/Mac状态栏.png">
 <meta property="og:image" content="https://rilzob.com/2019/12/07/Virtuoso的安装与使用/Virtuoso工具栏.png">
 <meta property="og:image" content="https://rilzob.com/2019/12/07/Virtuoso的安装与使用/Virtuoso的初始界面.png">
@@ -96,7 +100,7 @@
 <meta property="og:image" content="https://rilzob.com/2019/12/07/Virtuoso的安装与使用/Graphs.png">
 <meta property="og:image" content="https://rilzob.com/2019/12/07/Virtuoso的安装与使用/查询导入数据量.png">
 <meta property="og:image" content="https://rilzob.com/2019/12/07/Virtuoso的安装与使用/COPY.png">
-<meta property="og:updated_time" content="2019-12-21T07:30:40.634Z">
+<meta property="og:updated_time" content="2020-01-11T11:40:29.177Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Virtuoso的安装与使用">
 <meta name="twitter:description" content="知识库的存储最常见的是采用Virtuoso SPARQL engine，配合lambda-DCS进行存储的方式。因此下载了Virtuoso工具并学习了相关的使用。Virtuoso的官方文章地址：vos.openlinksw.com/owiki/wiki/VOS 。">
@@ -391,6 +395,19 @@
 <h1 id="下载与安装"><a href="#下载与安装" class="headerlink" title="下载与安装"></a>下载与安装</h1><p>Virtuoso有很多下载版本，包括Open Source和Commerical版本。</p>
 <p><img src="/2019/12/07/Virtuoso的安装与使用/Virtuoso的下载.png" alt="Virtuoso的下载"></p>
 <p>我下载的是<a href="https://sourceforge.net/projects/virtuoso/files/virtuoso/7.2.5/virtuoso-opensource-7.2.5-macosx-app.dmg/download" target="_blank" rel="noopener">Mac系统下Open Source的版本</a>，其他的版本<a href="http://vos.openlinksw.com/owiki/wiki/VOS/VOSDownload" target="_blank" rel="noopener">下载地址</a>(我第一次用的是Chrome自带的下载器下载速度很慢，第二次用的是迅雷下载器速度可以，因此推荐使用迅雷下载)。下载之后就是安装了，Mac平台的安装就是点点点就可以了，其他平台的安装如果遇到问题，再查阅其他资料吧。</p>
+<h2 id="服务器上virtuoso的安装"><a href="#服务器上virtuoso的安装" class="headerlink" title="服务器上virtuoso的安装"></a>服务器上virtuoso的安装</h2><p>在实验室的服务器上安装Virtuoso真的很麻烦，各种小问题层出不穷，差点就崩溃了。</p>
+<p>总体的过程根据<a href="http://ws.nju.edu.cn/blog/2017/03/virtuoso%e5%ae%89%e8%a3%85%e5%92%8c%e5%af%bc%e5%85%a5%e6%95%b0%e6%8d%ae/#more-47" target="_blank" rel="noopener">Virtuoso安装和导入数据 – Websoft技术经验分享</a>这篇文章，在进行<code>./autogen.sh</code>这一步时，由于在实验室的服务器不是root用户，所以首先遇到的问题就是非root用户安装依赖，具体的过程可以参照《Centos非root用户（普通用户）替换yum安装软件方法》这篇文章。然而我并没有安装全部欠缺的依赖，我觉得这个脚本有点问题但是我说不清问题在哪，可能是它查找路径的问题——不知道是在我的目录下/home/rzb/usr/查找还是/usr/下查找，我没有细究，因为后面才是大坑。之后就是配置编译和安装，首先是编译。<code>./configure –prefix=/home/rzb/virtuoso</code>，<code>--prefix</code>参数指定的是virtuoso安装路径，如果没有root权限建议安装在自己目录下。Virtuoso有点特殊它需要的openssl版本要求在0.9.8和1.1.0之间，我首先用<code>openssl version</code>查看我的openssl版本，发现是1.1.1版本不适用，于是我开始想办法将版本降下来，甚至求学长用root用户操作然而并没有什么用，但是学长突然说了一句他使用<code>openssl version</code>查看openssl版本是1.0.2k版本。我又上了另一个同学的账户看一下，他也是1.1.1版本，奇怪了，为什么就学长的不一样呢？我又开始想这个问题，百度openssl版本不同，看到这篇文章<a href="https://blog.csdn.net/geng333abc/article/details/95390007" target="_blank" rel="noopener">openssl 版本问题 anaconda导致的openssl版本变化_ANONYMOUSLYCN的专栏-CSDN博客</a>才知道是anaconda同样也有openssl，于是我按照这篇文章的方法将anaconda的openssl改名。此时我使用的是系统的openssl，版本也是正确的，但是还是报错<em>checking OpenSSL version… configure: error: OpenSSL version 0.9.8e or greater</em>，见鬼了。明明版本是对的为什么还会报错？我查看了当前目录下的config.log文件发现原因是报错<em>no such file or directory:openssl/opensslv.h</em>，我在根目录下查找了一番根本没有openssl文件夹更何谈opensslv.h了，于是我<strong>在自己目录下重新安装了openssl和openssl-devel</strong>。然后将~/.bashrc中/home/rzb/usr/bin提前，这样使用的openssl才是/home/rzb/usr/bin/openssl。同时在编译时指定参数<code>--with-enable-openssl=/home/rzb/usr</code>，即使用使用指定目录下的openssl，确保万无一失。重新编译一遍<code>./configure –prefix=/home/rzb/virtuoso --with-enable-openssl=/home/rzb/usr</code>报错终于发生了变化(虽然仍然有报错，但是报错变了我真的很激动)，新的报错是<em>checking usability of the OpenSSL header files and library in /home/rzb/usr… configure: error: bad. Check config.log for details</em>。我又去查看config.log文件，这时的错误原因是<em>/usr/bin/ld cannot find -lssl /usr/bin/ld cannot find -lcrypto</em>，查阅资料了解到lssl和lcrypto是两个库，并且这两个库是随着openssl安装一起安装的，ld是系统的肯定没有问题，而查找这两个库的位置是/home/rzb/usr/lib，我觉得问题出在这。</p>
+<p><img src="/2019/12/07/Virtuoso的安装与使用/无法找到lssb和lcrypto文件.png" alt="无法找到lssb和lcrypto文件"></p>
+<p>为什么查找地址是这个？我改变了编译指令中的<code>--with-enable-openssl</code>参数，重新编译一遍发现查找地址变了，于是我猜测这个地址与<code>--with-enable-openssl</code>参数是对应的，于是我 cd 到 /home/rzb/usr 发现都没有lib文件夹只有lib64文件夹，我这里投机取巧了把lib64文件夹 mv 重命名成lib（我没尝试别的方法，不知道有没有其他方法），在 lib 文件夹下（原lib64文件夹）下有两个libcrypto.so和libssl.so文件，正是我要用的两个库，然而我用<code>ls -al</code>查看这两个文件所链接的文件发现所对应的文件丢失了。这个我真的不知道什么原因导致的这两个文件不见了，正常是一起生成的，为了统一才建的软链接。</p>
+<p><img src="/2019/12/07/Virtuoso的安装与使用/so文件链接丢失.jpg" alt="so文件链接丢失"></p>
+<p>但是我猜测系统目录下会有这两个文件，因为系统的openssl版本和我自己安装的一样，我就去系统目录下找，果然在/usr/lib64目录下找到了。</p>
+<p><img src="/2019/12/07/Virtuoso的安装与使用/丢失的两个库.jpg" alt="丢失的两个库"></p>
+<p>回到libcrypto.so和libssl.so文件所在目录下，使用如下指令重新建立链接：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sf /usr/lib64/libssl.so.1.0.2k libssl.so</span><br><span class="line">ln -sf /usr/lib64/libcrypto.so.1.0.2k libcrypto.so</span><br></pre></td></tr></table></figure>
+<p>再一次重新编译，终于没有报错了，可以下一步了，这个问题纠结了我三四天，差点自闭了。</p>
+<p><img src="/2019/12/07/Virtuoso的安装与使用/Virtuoso安装成功.jpg" alt="Virtuoso安装成功"></p>
+<p>接下来就是<code>make &amp; make install</code>虽然有警告，但是没有报错，也算是顺利。之后将安装目录下的bin文件夹加入环境变量中。Virtuoso的第一次启动还不能直接用<code>virtuoso-t</code>指令启动，否则可能出现<em>Error S2801: [Virtuoso Driver]CL033: Connect failed to localhost:1111 = localhost:1111</em>报错，需要到virtuoso.ini所在的文件夹下使用<code>virtuoso-t -df</code>启动，具体过程可以参照<a href="http://vos.openlinksw.com/owiki/wiki/VOS/VOSCentosNotes" target="_blank" rel="noopener">vos.openlinksw.com/owiki/wiki/VOS/VOSCentosNotes</a>。之后我打算启动命令行指令<code>isql</code>操作Virtuoso时发生了报错，<em>[ISQL]ERROR:  Could not SQLConnect</em>，这个报错的原因是Virtuoso的ISQL与系统现有的ODBC的ISQL冲突，可以将virtuoso的bin目录下的isql重命名解决，我选择将其重命名为<code>isql-vt</code>，这样在终端输入<code>isql-vt 1111 dba dba</code>即可进入isql（<a href="https://www.jb51.net/article/151486.htm" target="_blank" rel="noopener">Linux系统下virtuoso数据库安装与使用详解<em>Linux</em>脚本之家</a>）。</p>
+<p>Virtuoso在服务器的配置算是全部解决了。</p>
 <h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>安装之后我启动了这个应用程序发现没有任何动作，等了很长时间也没有任何响应。我以为是我安装有错，又尝试下载了Commerical的版本，依旧没有响应。后来发现了程序原来早就启动了，只不过显示在屏幕上方的状态栏了。<br><img src="/2019/12/07/Virtuoso的安装与使用/Mac状态栏.png" alt="Mac状态栏" style="zoom:50%;"></p>
 <p>点击该图标，再点击Start VOS Database。<br><img src="/2019/12/07/Virtuoso的安装与使用/Virtuoso工具栏.png" alt="Virtuoso工具栏" style="zoom:50%;"></p>
 <p>之后该工具栏的Open Virtuoso Conductor选项会变亮，点击，浏览器会自动打开<a href="http://localhost:8890/conductor/" target="_blank" rel="noopener">http://localhost:8890/conductor/</a> 即初始界面。<br><img src="/2019/12/07/Virtuoso的安装与使用/Virtuoso的初始界面.png" alt="Virtuoso的初始界面"></p>
@@ -453,8 +470,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/12/12/从Word-Embedding到Bert模型——NLP中的预训练技术发展史/" rel="prev" title="从Word Embedding到Bert模型——NLP中的预训练技术发展史">
-                从Word Embedding到Bert模型——NLP中的预训练技术发展史 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/12/08/Freebase及其处理和导入数据库/" rel="prev" title="Freebase及其处理和导入数据库">
+                Freebase及其处理和导入数据库 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -536,7 +553,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -634,7 +651,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#下载与安装"><span class="nav-number">1.</span> <span class="nav-text">下载与安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据集-RDF数据-导入"><span class="nav-number">2.1.</span> <span class="nav-text">数据集(RDF数据)导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的Graph操作命令"><span class="nav-number">2.2.</span> <span class="nav-text">常用的Graph操作命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#COPY"><span class="nav-number">2.2.1.</span> <span class="nav-text">COPY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DROP和CLEAR"><span class="nav-number">2.2.2.</span> <span class="nav-text">DROP和CLEAR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MOVE"><span class="nav-number">2.2.3.</span> <span class="nav-text">MOVE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CREATE"><span class="nav-number">2.2.4.</span> <span class="nav-text">CREATE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADD"><span class="nav-number">2.2.5.</span> <span class="nav-text">ADD</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#下载与安装"><span class="nav-number">1.</span> <span class="nav-text">下载与安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#服务器上virtuoso的安装"><span class="nav-number">1.1.</span> <span class="nav-text">服务器上virtuoso的安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据集-RDF数据-导入"><span class="nav-number">2.1.</span> <span class="nav-text">数据集(RDF数据)导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的Graph操作命令"><span class="nav-number">2.2.</span> <span class="nav-text">常用的Graph操作命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#COPY"><span class="nav-number">2.2.1.</span> <span class="nav-text">COPY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DROP和CLEAR"><span class="nav-number">2.2.2.</span> <span class="nav-text">DROP和CLEAR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MOVE"><span class="nav-number">2.2.3.</span> <span class="nav-text">MOVE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CREATE"><span class="nav-number">2.2.4.</span> <span class="nav-text">CREATE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADD"><span class="nav-number">2.2.5.</span> <span class="nav-text">ADD</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
