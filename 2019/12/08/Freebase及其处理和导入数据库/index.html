@@ -81,19 +81,19 @@
 
 
 
-<meta name="description" content="Freebase最近在研究基于知识图谱的问答系统(Knowledge-based Question Answering，KBQA)，这个领域的论文大多是基于 Freebase 的，所以就有机会了解一下 Freebase 。 Freebase 作为典型的知识图谱，其采用结构化的数据形式（Wikipedia并不是）。Freebase 的内容主要源于 Wikipedia、NNDB、MusicBrainz">
+<meta name="description" content="最近在研究基于知识图谱的问答系统(Knowledge-based Question Answering，KBQA)，这个领域的论文大多是基于 Freebase 的，所以就有机会了解一下 Freebase 。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Freebase及其处理和导入数据库">
 <meta property="og:url" content="https://rilzob.com/2019/12/08/Freebase及其处理和导入数据库/index.html">
 <meta property="og:site_name" content="极氙世界">
-<meta property="og:description" content="Freebase最近在研究基于知识图谱的问答系统(Knowledge-based Question Answering，KBQA)，这个领域的论文大多是基于 Freebase 的，所以就有机会了解一下 Freebase 。 Freebase 作为典型的知识图谱，其采用结构化的数据形式（Wikipedia并不是）。Freebase 的内容主要源于 Wikipedia、NNDB、MusicBrainz">
+<meta property="og:description" content="最近在研究基于知识图谱的问答系统(Knowledge-based Question Answering，KBQA)，这个领域的论文大多是基于 Freebase 的，所以就有机会了解一下 Freebase 。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://rilzob.com/2019/12/08/Freebase及其处理和导入数据库/查看数据集装载情况.png">
 <meta property="og:image" content="https://rilzob.com/2019/12/08/Freebase及其处理和导入数据库/查看三元组数量.png">
-<meta property="og:updated_time" content="2020-01-13T06:33:32.377Z">
+<meta property="og:updated_time" content="2020-01-13T06:40:06.027Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Freebase及其处理和导入数据库">
-<meta name="twitter:description" content="Freebase最近在研究基于知识图谱的问答系统(Knowledge-based Question Answering，KBQA)，这个领域的论文大多是基于 Freebase 的，所以就有机会了解一下 Freebase 。 Freebase 作为典型的知识图谱，其采用结构化的数据形式（Wikipedia并不是）。Freebase 的内容主要源于 Wikipedia、NNDB、MusicBrainz">
+<meta name="twitter:description" content="最近在研究基于知识图谱的问答系统(Knowledge-based Question Answering，KBQA)，这个领域的论文大多是基于 Freebase 的，所以就有机会了解一下 Freebase 。">
 <meta name="twitter:image" content="https://rilzob.com/2019/12/08/Freebase及其处理和导入数据库/查看数据集装载情况.png">
 
 
@@ -331,6 +331,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工具使用/" itemprop="url" rel="index">
+                    <span itemprop="name">工具使用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -358,8 +380,8 @@
       
 
       
-        <h1 id="Freebase"><a href="#Freebase" class="headerlink" title="Freebase"></a>Freebase</h1><p>最近在研究基于知识图谱的问答系统(Knowledge-based Question Answering，KBQA)，这个领域的论文大多是基于 Freebase 的，所以就有机会了解一下 Freebase 。</p>
-<p>Freebase 作为典型的知识图谱，其采用结构化的数据形式（Wikipedia并不是）。Freebase 的内容主要源于 Wikipedia、NNDB、MusicBrainz 以及社会用户的贡献。该项目由 MetaWeb 公司在2005年启动，Google于2010年收购了该公司，并将 Freebase 作为Google知识图谱的核心部分。2016年8月，Google停止了对 Freebase 的维护，并将其整体迁移合并到 WikiData 项目中[1]。目前我知道的有以下几种方法获取到 Freebase 数据。</p>
+        <p>最近在研究基于知识图谱的问答系统(Knowledge-based Question Answering，KBQA)，这个领域的论文大多是基于 Freebase 的，所以就有机会了解一下 Freebase 。<br><a id="more"></a></p>
+<h1 id="Freebase"><a href="#Freebase" class="headerlink" title="Freebase"></a>Freebase</h1><p>Freebase 作为典型的知识图谱，其采用结构化的数据形式（Wikipedia并不是）。Freebase 的内容主要源于 Wikipedia、NNDB、MusicBrainz 以及社会用户的贡献。该项目由 MetaWeb 公司在2005年启动，Google于2010年收购了该公司，并将 Freebase 作为Google知识图谱的核心部分。2016年8月，Google停止了对 Freebase 的维护，并将其整体迁移合并到 WikiData 项目中[1]。目前我知道的有以下几种方法获取到 Freebase 数据。</p>
 <ol>
 <li><strong>Freebase Data Dump</strong>：Freebase 官网提供 N-Triple RDF格式（.nt文件)的数据压缩包的下载，整个压缩包30G，解压后300G+。下载后，可以用压缩软件解压，也可以通过编程工具(比如Java的GzipInputStream)边读取边解压。[2][3] (我并没有尝试这个方法)</li>
 <li><strong>FB2M和FB5M</strong>：FB2M和FB5M是 Freebase 的两个子集，其中 FB2M 含有2M实体和5k实体关系，FB5M含5M实体和7k实体关系。CSDN上有这个两个文件的下载链接，其中使用 FB5M 还需要下载一个 FB5M 中 entity linke 到 entity name 的映射文件来将语料集的 link 替换掉[4]（参考文章[4]中作者也提供了3个文件的下载链接，但可能过期）。下载之后三个文件都是 txt 文件，需要转换为 RDF 格式，文章后面会介绍如何转换为 RDF 格式并配合 Virtuoso 使用，我暂时只处理了 FB2M 数据，所以只说明 FB2M 数据的处理。</li>
